@@ -3801,7 +3801,7 @@ begin
 //
     //temp := glGetString(GL_VERSION);
 if Assigned(glGetString) then
-   AnsiBuffer := String.FromPAnsiChars(glGetString(GL_VERSION));
+   AnsiBuffer := Platformstring.FromPAnsiChars(glGetString(GL_VERSION));
   
  //   AnsiBuffer := '"2.1';
   Buffer := String(AnsiBuffer);
@@ -3894,7 +3894,7 @@ begin
 
     if Assigned(gluGetString) then 
     begin
-        AnsiBuffer :=  String.FromPAnsiChars( gluGetString(GLU_VERSION));
+        AnsiBuffer :=  PlatformString.FromPAnsiChars( gluGetString(GLU_VERSION));
         Buffer := String(AnsiBuffer);
         TrimAndSplitVersionString(Buffer, var  Majorversion, var MinorVersion);
 

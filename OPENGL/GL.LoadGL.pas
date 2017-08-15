@@ -60,7 +60,8 @@ namespace OpenGl;
 
 interface
 uses 
- rtl;
+ rtl,
+ RemObjects.Elements.system;
  
 
 var
@@ -97,7 +98,7 @@ method dglLoadLibrary(const Name: String): GLHMODULE;
 method dglFreeLibrary(LibHandle: GLHMODULE): Boolean;
 method TrimAndSplitVersionString( Buffer: String; var Max, Min: Integer) : Boolean;
 
-//method InitOpenGL(LibName: String := ''; GLULibName: String := ''): Boolean;
+method InitOpenGL(LibName: String := ''; GLULibName: String := ''): Boolean;
 
 {$IF ISLAND and WINDOWS}
 method CreateRenderingContext(DC: HDC; Options: TRCOptions; ColorBits, ZBits, StencilBits, AccumBits, AuxBuffers: Integer; Layer: Integer): HGLRC;
@@ -152,8 +153,8 @@ begin
       if not Assigned(wglGetExtensionsStringARB) then
         wglGetExtensionsStringARB := TwglGetExtensionsStringARB(dglGetProcAddress('wglGetExtensionsStringARB'));
 
-      if Assigned(wglGetExtensionsStringARB) then
-        Result := Result + #32 + String.FromPAnsiChars(wglGetExtensionsStringARB('wglGetCurrentDC'));
+//      if Assigned(wglGetExtensionsStringARB) then
+//        Result := Result + #32 + String.FromPAnsiChars(wglGetExtensionsStringARB('wglGetCurrentDC'));
     {$ENDIF}
   end;
 
