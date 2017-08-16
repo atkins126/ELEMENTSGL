@@ -61,6 +61,7 @@ namespace OpenGL;
 
 interface
 uses 
+    RemObjects.Elements.System,
     rtl;
 
     method RaiseLastOSError;
@@ -3801,7 +3802,7 @@ begin
 //
     //temp := glGetString(GL_VERSION);
 if Assigned(glGetString) then
-   AnsiBuffer := Platformstring.FromPAnsiChars(glGetString(GL_VERSION));
+   AnsiBuffer := String.FromPAnsiChars(glGetString(GL_VERSION));
   
  //   AnsiBuffer := '"2.1';
   Buffer := String(AnsiBuffer);
@@ -3894,7 +3895,7 @@ begin
 
     if Assigned(gluGetString) then 
     begin
-        AnsiBuffer :=  PlatformString.FromPAnsiChars( gluGetString(GLU_VERSION));
+        AnsiBuffer :=  String.FromPAnsiChars( gluGetString(GLU_VERSION));
         Buffer := String(AnsiBuffer);
         TrimAndSplitVersionString(Buffer, var  Majorversion, var MinorVersion);
 
@@ -4546,7 +4547,7 @@ begin
  if Error <> 0 then
     raise new Exception('OS Error '+Error.ToString);
   {$ELSE}
-   Raise new excption();
+   //Raise new exception('OS Error');
 {$ENDIF}
 end;
 

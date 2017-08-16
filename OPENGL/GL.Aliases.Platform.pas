@@ -59,30 +59,50 @@ namespace OpenGl;
 {$GLOBALS ON}
 
 uses 
-rtl,
+    rtl,
 {$IF ISLAND}
   RemObjects.Elements.System;
  {$ENDIF}
  
 type
- BYTEBOOL = public Boolean;
+    BYTEBOOL = public Boolean;
  {$IF ISLAND}
  Pointer = public ^Void;
  PPointer = public ^Pointer;
 {$ENDIF}
- Trect = public rtl.RECT;
+ 
  PAnsiChar= public ^Ansichar;
  
  Pcardinal = public ^Cardinal;
  PInteger = public ^Integer;
- {$IF ISLAND AND WINDOWS}
+ {$IF ISLAND}
+  {$IF WINDOWS}
+  Trect = public rtl.RECT;
   THandle = public HANDLE;
   GLHMODULE = public HMODULE;
   const 
       GLNULLMODULE : GLHMODULE = NIL;
 const
    PlatformConvention = CallingConvention.Stdcall;
+{$ELSE IF LINUX}
+ DWORD = UInt32;
+ Trect = public record end;
+ FARPROC = public Pointer;
+ THandle = public Pointer;
+  GLHMODULE = public Pointer;
+
+  //PDisplay = public Pointer;
+  const 
+      GLNULLMODULE : GLHMODULE = NIL;
+
+
+
+
+const
+    PlatformConvention = CallingConvention.CDecl;
  {$ENDIF}
+{$ENDIF}
+ 
 
 
 

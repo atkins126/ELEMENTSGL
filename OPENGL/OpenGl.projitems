@@ -9,6 +9,7 @@
     <Import_RootNamespace>OpenGl</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)GL.Core.Linux.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)GL.Core.Windows.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)GL.Core.Const.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)GL.LoadGL.pas" />

@@ -11,7 +11,7 @@ https://github.com/ProHolz/ELEMENTSGL
 
 
  ======================================
- These is a translation form 
+ These is a translation form
 https://bitbucket.org/saschawillems/dglopengl
 Originale Headers:
 
@@ -19,14 +19,14 @@ Originale Headers:
 
        OpenGL 4.5 - Headertranslation
 
-       
+
        Supported environments and targets :
         - (Win32) Delphi 6 and up
         - (Win32, Win64) Delphi XE2
         - (Win32, Win64, Linux, MacOSX) FreePascal (1.9.3 and up)
 
 ==============================================================================
-  
+
 
        Copyright (C) DGL-OpenGL-Portteam
        All Rights Reserved
@@ -59,24 +59,24 @@ namespace OpenGl;
 {$GLOBALS ON}
 
 interface
-uses 
- rtl,
- RemObjects.Elements.system;
- 
+uses
+    rtl,
+    RemObjects.Elements.system;
 
-var
-  GL_LibHandle: GLHMODULE := GLNULLMODULE;
-  GLU_LibHandle: GLHMODULE := GLNULLMODULE;
 
-  LastPixelFormat: Integer;
-  ExtensionsRead: Boolean;
-  ImplementationRead: Boolean;
+    var
+        GL_LibHandle: GLHMODULE := GLNULLMODULE;
+        GLU_LibHandle: GLHMODULE := GLNULLMODULE;
+
+        LastPixelFormat: Integer;
+        ExtensionsRead: Boolean;
+        ImplementationRead: Boolean;
 
 type
-  TRCOptions = set of (opDoubleBuffered, opGDI, opStereo);
+    TRCOptions = set of (opDoubleBuffered, opGDI, opStereo);
 
 
-const
+    const
 {$IF ISLAND AND WINDOWS}
   OPENGL_LIBNAME = 'OpenGL32.dll';
   GLU_LIBNAME = 'GLU32.dll';
@@ -93,12 +93,12 @@ const
 
 
 
-method dglGetProcAddress(ProcName: String; LibHandle: GLHMODULE := GLNULLMODULE; StaticLink : Boolean := false ): FARPROC;
-method dglLoadLibrary(const Name: String): GLHMODULE;
-method dglFreeLibrary(LibHandle: GLHMODULE): Boolean;
-method TrimAndSplitVersionString( Buffer: String; var Max, Min: Integer) : Boolean;
+  method dglGetProcAddress(ProcName: String; LibHandle: GLHMODULE := GLNULLMODULE; StaticLink : Boolean := false ): FARPROC;
+  method dglLoadLibrary(const Name: String): GLHMODULE;
+  method dglFreeLibrary(LibHandle: GLHMODULE): Boolean;
+  method TrimAndSplitVersionString( Buffer: String; var Max, Min: Integer) : Boolean;
 
-method InitOpenGL(LibName: String := ''; GLULibName: String := ''): Boolean;
+  method InitOpenGL(LibName: String := ''; GLULibName: String := ''): Boolean;
 
 {$IF ISLAND and WINDOWS}
 method CreateRenderingContext(DC: HDC; Options: TRCOptions; ColorBits, ZBits, StencilBits, AccumBits, AuxBuffers: Integer; Layer: Integer): HGLRC;
@@ -110,37 +110,37 @@ implementation
 
 method Int_GetExtensionString: String;
 var
-   ExtensionCount : GLuint;
-  i : Integer;
+    ExtensionCount : GLuint;
+    i : Integer;
 begin
-  if GL_VERSION_3_0
-    then
-      begin
+    if GL_VERSION_3_0
+        then
+    begin
         if not Assigned(glGetIntegerv) then glGetIntegerv := TglGetIntegerv( dglGetProcAddress('glGetIntegerv'));
         if not Assigned(glGetStringi)  then glGetStringi  := tglGetStringi(dglGetProcAddress('glGetStringi'));
 
         result := '';
 
         if Assigned(glGetIntegerv) and Assigned(glGetStringi)
-          then
-            begin
-              glGetIntegerv(GL_NUM_EXTENSIONS, PGLint( @extensionCount));
+            then
+        begin
+            glGetIntegerv(GL_NUM_EXTENSIONS, PGLint( @extensionCount));
 
-              For I := 0 to extensionCount - 1 do
+            For I := 0 to extensionCount - 1 do
                 result := result + #32 +  String.FromPAnsiChars(glGetStringi(GL_EXTENSIONS, I));
-            end;
-      end
+        end;
+    end
     else
-      begin
-        if not Assigned(glGetString) then 
+    begin
+        if not Assigned(glGetString) then
             glGetString := tglGetString(dglGetProcAddress('glGetString'));
 
         if Assigned(glGetString)
-          then result := String.FromPAnsiChars(glGetString(GL_EXTENSIONS))
-          else result := '';
-      end;
+            then result := String.FromPAnsiChars(glGetString(GL_EXTENSIONS))
+        else result := '';
+    end;
 
-  if (GL_LibHandle <> GLNULLMODULE) then begin
+    if (GL_LibHandle <> GLNULLMODULE) then begin
     {$IF ISLAND AND WINDOWS}
       // wglGetExtensionsStringEXT
       if not Assigned(wglGetExtensionsStringEXT) then
@@ -153,80 +153,95 @@ begin
       if not Assigned(wglGetExtensionsStringARB) then
         wglGetExtensionsStringARB := TwglGetExtensionsStringARB(dglGetProcAddress('wglGetExtensionsStringARB'));
 
-//      if Assigned(wglGetExtensionsStringARB) then
-//        Result := Result + #32 + String.FromPAnsiChars(wglGetExtensionsStringARB('wglGetCurrentDC'));
+      if Assigned(wglGetExtensionsStringARB) then
+        Result := Result + #32 + String.FromPAnsiChars(wglGetExtensionsStringARB(wglGetCurrentDC));
     {$ENDIF}
-  end;
+    end;
 
-  Result := #32 + Result + #32;
+    Result := #32 + Result + #32;
 end;
 
 method TrimAndSplitVersionString( Buffer: String; var Max, Min: Integer): boolean;
     // Peels out the X.Y form from the given Buffer which must contain a version string like "text Minor.Major.Build text"
     // at least however "Major.Minor".
-  var
+var
     Separator: Integer;
-   
-  begin
-      result := false;
+
+begin
+    result := false;
     try
 //      // There must be at least one dot to separate major and minor version number.
         max := -1;
         Min := -1;
-      Separator :=  Buffer.IndexOf('.');
+        Separator :=  Buffer.IndexOf('.');
 //      // At least one number must be before and one after the dot.
-      if (Separator > 0) and (Separator < Buffer.Length) then
+        if (Separator > 0) and (Separator < Buffer.Length) then
        //  if (Buffer.Chars[Separator-1] in ['0'..'9']) then
      // if (Buffer.Chars[Separator + 1] in ['0'..'9']) then
-          if (Buffer[Separator + 1] in ['0'..'9']) then
-      begin
+            if (Buffer[Separator + 1] in ['0'..'9']) then
+            begin
 //        // OK, it's a valid version string. Now remove unnecessary parts.
-        Dec(Separator);
+                Dec(Separator);
 //        // Find last non-numeric character before version number.
 //        while (Separator > 0) and (Buffer.Chars[Separator-1] in ['0'..'9']) do
-            while (Separator > 0) and (Buffer[Separator-1] in ['0'..'9']) do
-                Dec(Separator);
+                while (Separator > 0) and (Buffer[Separator-1] in ['0'..'9']) do
+                    Dec(Separator);
 //        // Delete leading characters which do not belong to the version string.
-          if Separator > 0 then
-          Buffer := Buffer.Remove(0, Separator);
-          Separator :=  Buffer.IndexOf('.')+1;
+                if Separator > 0 then
+                    Buffer := Buffer.Remove(0, Separator);
+                Separator :=  Buffer.IndexOf('.')+1;
 
 //        // Find first non-numeric character after version number
-        while (Separator < Buffer.Length) and (Buffer[Separator] in ['0'..'9']) do
-          Inc(Separator);
+                while (Separator < Buffer.Length) and (Buffer[Separator] in ['0'..'9']) do
+                    Inc(Separator);
 //        // delete trailing characters not belonging to the version string
-          Buffer := Buffer.Remove(Separator, Buffer.length-Separator);
+                Buffer := Buffer.Remove(Separator, Buffer.length-Separator);
 //        // Now translate the numbers.
 //        Separator := Pos('.', Buffer); // This is necessary because the buffer length might have changed.
-           Separator :=  Buffer.IndexOf('.');
-         
-        result :=  Integer.TryParse( Buffer.Substring( 0, Separator), out Max) and
-                   Integer.tryParse( Buffer.Substring( Separator + 1, 1), out Min);
-        end;
-        
+                Separator :=  Buffer.IndexOf('.');
+
+                result :=  Integer.TryParse( Buffer.Substring( 0, Separator), out Max) and
+                           Integer.tryParse( Buffer.Substring( Separator + 1, 1), out Min);
+            end;
+
     except
-      Min := 0;
-      Max := 0;
+        Min := 0;
+            Max := 0;
     end;
-  end;
+end;
 
 
 method dglGetProcAddress(ProcName: String; LibHandle: GLHMODULE := GLNULLMODULE; StaticLink : Boolean := false ): FARPROC;
 begin
-  if LibHandle = GLNULLMODULE then
-    LibHandle := GL_LibHandle;
+    if LibHandle = GLNULLMODULE then
+        LibHandle := GL_LibHandle;
 
   {$IF ISLAND AND WINDOWS}
  Var Buff := ProcName.ToAnsiChars(true);
     Result := GetProcAddress(HMODULE(LibHandle), LPCSTR(@Buff[0]));
 
-    if result <> nil then 
+    if result <> nil then
         exit;
-   
+
     if wglGetProcAddress <> nil then
       Result := FARPROC(wglGetProcAddress(LPCSTR(@Buff[0])));
   {$ENDIF}
 
+    {$IF ISLAND AND LINUX}
+
+    if not StaticLink then begin
+        if Assigned(glXGetProcAddress)  then
+            Result := glXGetProcAddress(ProcName);
+
+        if result <> nil then
+            exit;
+
+        if Assigned(glXGetProcAddressARB)  then
+            Result := glXGetProcAddressARB(ProcName);
+
+
+    end;
+{$ENDIF}
 end;
 
 
@@ -237,8 +252,9 @@ Var Buff := Name.ToCharArray(true);
     Result :=  GLHMODULE( LoadLibrary(LPCWSTR(@Buff[0])));
   {$ENDIF}
 
-  {$IFDEF DGL_LINUX}
-  Result := dlopen(Name, RTLD_LAZY);
+
+  {$IFDEF ISLAND AND LINUX}
+  Result := dlopen(@Name.ToAnsiChars[0], RTLD_LAZY);
   {$ENDIF}
 
   {$IFDEF DGL_MAC}
@@ -253,45 +269,45 @@ end;
 
 method dglFreeLibrary(LibHandle: GLHMODULE): Boolean;
 begin
-  if LibHandle = GLNULLMODULE then
-    Result := False
-  else
+    if LibHandle = GLNULLMODULE then
+        Result := False
+    else
     {$IFDEF ISLAND AND WINDOWS}
     Result := FreeLibrary(HMODULE(LibHandle));
     {$ENDIF}
 
-    {$IFDEF DGL_LINUX}
+    {$IFDEF ISLAND AND LINUX}
     Result := dlclose(LibHandle) = 0;
     {$ENDIF}
 
     {$IFDEF DGL_MAC}
     {$IFDEF OPENGL_FRAMEWORK}
-	Result := true;
-	{$ELSE}
+  Result := true;
+  {$ELSE}
     Result := FreeLibrary(HMODULE(LibHandle));
     {$ENDIF}
-	{$ENDIF}
+  {$ENDIF}
 end;
 
 method InitOpenGL(LibName: String := ''; GLULibName: String := ''): Boolean;
 begin
-  Result := False;
+    Result := False;
 
   // free opened libraries
-  if GL_LibHandle <> GLNULLMODULE then
-    dglFreeLibrary(GL_LibHandle);
+    if GL_LibHandle <> GLNULLMODULE then
+        dglFreeLibrary(GL_LibHandle);
 
-  if GLU_LibHandle <> GLNULLMODULE then
-    dglFreeLibrary(GLU_LibHandle);
-  if LibName.Length = 0  then LibName := OPENGL_LIBNAME;
+    if GLU_LibHandle <> GLNULLMODULE then
+        dglFreeLibrary(GLU_LibHandle);
+    if LibName.Length = 0  then LibName := OPENGL_LIBNAME;
     if GLULibName.Length = 0  then GLULibName := GLU_LIBNAME;
 
   // load library
-  GL_LibHandle := dglLoadLibrary(LibName);
-  GLU_LibHandle := dglLoadLibrary(GLULibName);
+    GL_LibHandle := dglLoadLibrary(LibName);
+    GLU_LibHandle := dglLoadLibrary(GLULibName);
 
   // load GL functions
-  if (GL_LibHandle <> GLNULLMODULE) then begin
+    if (GL_LibHandle <> GLNULLMODULE) then begin
     {$IFDEF ISLAND AND WINDOWS}
   wglCopyContext := twglCopyContext(dglGetProcAddress('wglCopyContext'));
   wglCreateLayerContext := twglCreateLayerContext(dglGetProcAddress('wglCreateLayerContext'));
@@ -317,64 +333,64 @@ begin
     {$ENDIF}
 
 
-    Result := True;
-  end;
+        Result := True;
+    end;
 
   // load GLU functions
-  if GLU_LibHandle <> GLNULLMODULE then begin
+    if GLU_LibHandle <> GLNULLMODULE then begin
     // GLU ========================================================================
-  gluBeginCurve := tgluBeginCurve(dglGetProcAddress('gluBeginCurve', GLU_LibHandle));
-  gluBeginPolygon := tgluBeginPolygon(dglGetProcAddress('gluBeginPolygon', GLU_LibHandle ));
-  gluBeginSurface := tgluBeginSurface(dglGetProcAddress('gluBeginSurface', GLU_LibHandle));
-  gluBeginTrim := tgluBeginTrim(dglGetProcAddress('gluBeginTrim', GLU_LibHandle ));
-  gluBuild1DMipmaps := tgluBuild1DMipmaps(dglGetProcAddress('gluBuild1DMipmaps', GLU_LibHandle , True));
-  gluBuild2DMipmaps := tgluBuild2DMipmaps(dglGetProcAddress('gluBuild2DMipmaps', GLU_LibHandle , True));
-  gluCylinder := tgluCylinder(dglGetProcAddress('gluCylinder', GLU_LibHandle , True));
-  gluDeleteNurbsRenderer := tgluDeleteNurbsRenderer(dglGetProcAddress('gluDeleteNurbsRenderer', GLU_LibHandle , True));
-  gluDeleteQuadric := tgluDeleteQuadric(dglGetProcAddress('gluDeleteQuadric', GLU_LibHandle , True));
-  gluDeleteTess := tgluDeleteTess(dglGetProcAddress('gluDeleteTess', GLU_LibHandle , True));
-  gluDisk := tgluDisk(dglGetProcAddress('gluDisk', GLU_LibHandle , True));
-  gluEndCurve := tgluEndCurve(dglGetProcAddress('gluEndCurve', GLU_LibHandle , True));
-  gluEndPolygon := tgluEndPolygon(dglGetProcAddress('gluEndPolygon', GLU_LibHandle , True));
-  gluEndSurface := tgluEndSurface(dglGetProcAddress('gluEndSurface', GLU_LibHandle , True));
-  gluEndTrim := tgluEndTrim(dglGetProcAddress('gluEndTrim', GLU_LibHandle , True));
-  gluErrorString := tgluErrorString(dglGetProcAddress('gluErrorString', GLU_LibHandle , True));
-  gluGetNurbsProperty := tgluGetNurbsProperty(dglGetProcAddress('gluGetNurbsProperty', GLU_LibHandle , True));
-  gluGetString := tgluGetString(dglGetProcAddress('gluGetString', GLU_LibHandle , True));
-  gluGetTessProperty := tgluGetTessProperty(dglGetProcAddress('gluGetTessProperty', GLU_LibHandle , True));
-  gluLoadSamplingMatrices := tgluLoadSamplingMatrices(dglGetProcAddress('gluLoadSamplingMatrices', GLU_LibHandle , True));
-  gluLookAt := tgluLookAt(dglGetProcAddress('gluLookAt', GLU_LibHandle , True));
-  gluNewNurbsRenderer := tgluNewNurbsRenderer(dglGetProcAddress('gluNewNurbsRenderer', GLU_LibHandle , True));
-  gluNewQuadric := tgluNewQuadric(dglGetProcAddress('gluNewQuadric', GLU_LibHandle , True));
-  gluNewTess := tgluNewTess(dglGetProcAddress('gluNewTess', GLU_LibHandle , True));
-  gluNextContour := tgluNextContour(dglGetProcAddress('gluNextContour', GLU_LibHandle , True));
-  gluNurbsCallback := tgluNurbsCallback(dglGetProcAddress('gluNurbsCallback', GLU_LibHandle , True));
-  gluNurbsCurve := tgluNurbsCurve(dglGetProcAddress('gluNurbsCurve', GLU_LibHandle , True));
-  gluNurbsProperty := tgluNurbsProperty(dglGetProcAddress('gluNurbsProperty', GLU_LibHandle , True));
-  gluNurbsSurface := tgluNurbsSurface(dglGetProcAddress('gluNurbsSurface', GLU_LibHandle , True));
-  gluOrtho2D := tgluOrtho2D(dglGetProcAddress('gluOrtho2D', GLU_LibHandle , True));
-  gluPartialDisk := tgluPartialDisk(dglGetProcAddress('gluPartialDisk', GLU_LibHandle , True));
-  gluPerspective := tgluPerspective(dglGetProcAddress('gluPerspective', GLU_LibHandle , True));
-  gluPickMatrix := tgluPickMatrix(dglGetProcAddress('gluPickMatrix', GLU_LibHandle , True));
-  gluProject := tgluProject(dglGetProcAddress('gluProject', GLU_LibHandle , True));
-  gluPwlCurve := tgluPwlCurve(dglGetProcAddress('gluPwlCurve', GLU_LibHandle , True));
-  gluQuadricCallback := tgluQuadricCallback(dglGetProcAddress('gluQuadricCallback', GLU_LibHandle , True));
-  gluQuadricDrawStyle := tgluQuadricDrawStyle(dglGetProcAddress('gluQuadricDrawStyle', GLU_LibHandle , True));
-  gluQuadricNormals := tgluQuadricNormals(dglGetProcAddress('gluQuadricNormals', GLU_LibHandle , True));
-  gluQuadricOrientation := tgluQuadricOrientation(dglGetProcAddress('gluQuadricOrientation', GLU_LibHandle , True));
-  gluQuadricTexture := tgluQuadricTexture(dglGetProcAddress('gluQuadricTexture', GLU_LibHandle , True));
-  gluScaleImage := tgluScaleImage(dglGetProcAddress('gluScaleImage', GLU_LibHandle , True));
-  gluSphere := tgluSphere(dglGetProcAddress('gluSphere', GLU_LibHandle , True));
-  gluTessBeginContour := tgluTessBeginContour(dglGetProcAddress('gluTessBeginContour', GLU_LibHandle , True));
-  gluTessBeginPolygon := tgluTessBeginPolygon(dglGetProcAddress('gluTessBeginPolygon', GLU_LibHandle , True));
-  gluTessCallback := tgluTessCallback(dglGetProcAddress('gluTessCallback', GLU_LibHandle , True));
-  gluTessEndContour := tgluTessEndContour(dglGetProcAddress('gluTessEndContour', GLU_LibHandle , True));
-  gluTessEndPolygon := tgluTessEndPolygon(dglGetProcAddress('gluTessEndPolygon', GLU_LibHandle , True));
-  gluTessNormal := tgluTessNormal(dglGetProcAddress('gluTessNormal', GLU_LibHandle , True));
-  gluTessProperty := tgluTessProperty(dglGetProcAddress('gluTessProperty', GLU_LibHandle , True));
-  gluTessVertex := tgluTessVertex(dglGetProcAddress('gluTessVertex', GLU_LibHandle , True));
-  gluUnProject := tgluUnProject(dglGetProcAddress('gluUnProject', GLU_LibHandle , True));
-  end;
+        gluBeginCurve := tgluBeginCurve(dglGetProcAddress('gluBeginCurve', GLU_LibHandle));
+        gluBeginPolygon := tgluBeginPolygon(dglGetProcAddress('gluBeginPolygon', GLU_LibHandle ));
+        gluBeginSurface := tgluBeginSurface(dglGetProcAddress('gluBeginSurface', GLU_LibHandle));
+        gluBeginTrim := tgluBeginTrim(dglGetProcAddress('gluBeginTrim', GLU_LibHandle ));
+        gluBuild1DMipmaps := tgluBuild1DMipmaps(dglGetProcAddress('gluBuild1DMipmaps', GLU_LibHandle , True));
+        gluBuild2DMipmaps := tgluBuild2DMipmaps(dglGetProcAddress('gluBuild2DMipmaps', GLU_LibHandle , True));
+        gluCylinder := tgluCylinder(dglGetProcAddress('gluCylinder', GLU_LibHandle , True));
+        gluDeleteNurbsRenderer := tgluDeleteNurbsRenderer(dglGetProcAddress('gluDeleteNurbsRenderer', GLU_LibHandle , True));
+        gluDeleteQuadric := tgluDeleteQuadric(dglGetProcAddress('gluDeleteQuadric', GLU_LibHandle , True));
+        gluDeleteTess := tgluDeleteTess(dglGetProcAddress('gluDeleteTess', GLU_LibHandle , True));
+        gluDisk := tgluDisk(dglGetProcAddress('gluDisk', GLU_LibHandle , True));
+        gluEndCurve := tgluEndCurve(dglGetProcAddress('gluEndCurve', GLU_LibHandle , True));
+        gluEndPolygon := tgluEndPolygon(dglGetProcAddress('gluEndPolygon', GLU_LibHandle , True));
+        gluEndSurface := tgluEndSurface(dglGetProcAddress('gluEndSurface', GLU_LibHandle , True));
+        gluEndTrim := tgluEndTrim(dglGetProcAddress('gluEndTrim', GLU_LibHandle , True));
+        gluErrorString := tgluErrorString(dglGetProcAddress('gluErrorString', GLU_LibHandle , True));
+        gluGetNurbsProperty := tgluGetNurbsProperty(dglGetProcAddress('gluGetNurbsProperty', GLU_LibHandle , True));
+        gluGetString := tgluGetString(dglGetProcAddress('gluGetString', GLU_LibHandle , True));
+        gluGetTessProperty := tgluGetTessProperty(dglGetProcAddress('gluGetTessProperty', GLU_LibHandle , True));
+        gluLoadSamplingMatrices := tgluLoadSamplingMatrices(dglGetProcAddress('gluLoadSamplingMatrices', GLU_LibHandle , True));
+        gluLookAt := tgluLookAt(dglGetProcAddress('gluLookAt', GLU_LibHandle , True));
+        gluNewNurbsRenderer := tgluNewNurbsRenderer(dglGetProcAddress('gluNewNurbsRenderer', GLU_LibHandle , True));
+        gluNewQuadric := tgluNewQuadric(dglGetProcAddress('gluNewQuadric', GLU_LibHandle , True));
+        gluNewTess := tgluNewTess(dglGetProcAddress('gluNewTess', GLU_LibHandle , True));
+        gluNextContour := tgluNextContour(dglGetProcAddress('gluNextContour', GLU_LibHandle , True));
+        gluNurbsCallback := tgluNurbsCallback(dglGetProcAddress('gluNurbsCallback', GLU_LibHandle , True));
+        gluNurbsCurve := tgluNurbsCurve(dglGetProcAddress('gluNurbsCurve', GLU_LibHandle , True));
+        gluNurbsProperty := tgluNurbsProperty(dglGetProcAddress('gluNurbsProperty', GLU_LibHandle , True));
+        gluNurbsSurface := tgluNurbsSurface(dglGetProcAddress('gluNurbsSurface', GLU_LibHandle , True));
+        gluOrtho2D := tgluOrtho2D(dglGetProcAddress('gluOrtho2D', GLU_LibHandle , True));
+        gluPartialDisk := tgluPartialDisk(dglGetProcAddress('gluPartialDisk', GLU_LibHandle , True));
+        gluPerspective := tgluPerspective(dglGetProcAddress('gluPerspective', GLU_LibHandle , True));
+        gluPickMatrix := tgluPickMatrix(dglGetProcAddress('gluPickMatrix', GLU_LibHandle , True));
+        gluProject := tgluProject(dglGetProcAddress('gluProject', GLU_LibHandle , True));
+        gluPwlCurve := tgluPwlCurve(dglGetProcAddress('gluPwlCurve', GLU_LibHandle , True));
+        gluQuadricCallback := tgluQuadricCallback(dglGetProcAddress('gluQuadricCallback', GLU_LibHandle , True));
+        gluQuadricDrawStyle := tgluQuadricDrawStyle(dglGetProcAddress('gluQuadricDrawStyle', GLU_LibHandle , True));
+        gluQuadricNormals := tgluQuadricNormals(dglGetProcAddress('gluQuadricNormals', GLU_LibHandle , True));
+        gluQuadricOrientation := tgluQuadricOrientation(dglGetProcAddress('gluQuadricOrientation', GLU_LibHandle , True));
+        gluQuadricTexture := tgluQuadricTexture(dglGetProcAddress('gluQuadricTexture', GLU_LibHandle , True));
+        gluScaleImage := tgluScaleImage(dglGetProcAddress('gluScaleImage', GLU_LibHandle , True));
+        gluSphere := tgluSphere(dglGetProcAddress('gluSphere', GLU_LibHandle , True));
+        gluTessBeginContour := tgluTessBeginContour(dglGetProcAddress('gluTessBeginContour', GLU_LibHandle , True));
+        gluTessBeginPolygon := tgluTessBeginPolygon(dglGetProcAddress('gluTessBeginPolygon', GLU_LibHandle , True));
+        gluTessCallback := tgluTessCallback(dglGetProcAddress('gluTessCallback', GLU_LibHandle , True));
+        gluTessEndContour := tgluTessEndContour(dglGetProcAddress('gluTessEndContour', GLU_LibHandle , True));
+        gluTessEndPolygon := tgluTessEndPolygon(dglGetProcAddress('gluTessEndPolygon', GLU_LibHandle , True));
+        gluTessNormal := tgluTessNormal(dglGetProcAddress('gluTessNormal', GLU_LibHandle , True));
+        gluTessProperty := tgluTessProperty(dglGetProcAddress('gluTessProperty', GLU_LibHandle , True));
+        gluTessVertex := tgluTessVertex(dglGetProcAddress('gluTessVertex', GLU_LibHandle , True));
+        gluUnProject := tgluUnProject(dglGetProcAddress('gluUnProject', GLU_LibHandle , True));
+    end;
 end;
 
 {$IFDEF ISLAND AND WINDOWS}
@@ -393,8 +409,8 @@ const
   PFD_MAIN_PLANE = 0;
   PFD_OVERLAY_PLANE = 1;
   PFD_UNDERLAY_PLANE = LongWord(-1);
- 
- 
+
+
 var
   PFDescriptor: PixelFormatDescriptor;
   PixelFormat: Integer;
@@ -472,12 +488,12 @@ begin
 
   wglMakeCurrent(DC, RC);
 
-  
+
   ReadImplementationProperties;
 
   if (loadext) then
     ReadExtensions;
-  
+
 end;
 
 method DeactivateRenderingContext;
