@@ -154,7 +154,7 @@ begin
         wglGetExtensionsStringARB := TwglGetExtensionsStringARB(dglGetProcAddress('wglGetExtensionsStringARB'));
 
       if Assigned(wglGetExtensionsStringARB) then
-        Result := Result + #32 + String.FromPAnsiChars(wglGetExtensionsStringARB(wglGetCurrentDC));
+        Result := Result + #32 + String.FromPAnsiChars(wglGetExtensionsStringARB(wglGetCurrentDC()));
     {$ENDIF}
     end;
 
