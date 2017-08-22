@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProductVersion>3.5</ProductVersion>
@@ -13,7 +13,6 @@
     <AllowUnsafeCode>False</AllowUnsafeCode>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <DefaultUses>RemObjects.Elements.RTL</DefaultUses>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <Optimize>False</Optimize>
@@ -45,21 +44,18 @@
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="gc" />
-    <Reference Include="Island" />
-    <Reference Include="rtl" />
-    <Reference Include="Elements" />
+    <Compile Include="glApp.pas" />
+    <Compile Include="Program.pas"></Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.pas" />
-    <Compile Include="glApp.pas" />
-    <Compile Include="glAssets.pas" />
-    <Compile Include="glBaseApp.pas" />
-    <Compile Include="glShader.pas" />
-    <Compile Include="glVeriticesArray.pas" />
-    <Compile Include="glVertices.pas" />
-    <Compile Include="glWindow.pas" />
+    <Reference Include="Elements" />
+    <Reference Include="gc" />
+    <Reference Include="GLFW" />
+    <Reference Include="Island" />
+    <Reference Include="rtl" />
+    <Reference Include="STB" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
   <Import Project="..\..\OPENGL\OpenGl.projitems" Label="Shared" />
+  <Import Project="..\..\GlHelper\GlHelper.projitems" Label="Shared" />
 </Project>
