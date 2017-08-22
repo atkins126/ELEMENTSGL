@@ -63,7 +63,6 @@ uses
     rtl,
     RemObjects.Elements.system;
 
-
     var
         GL_LibHandle: GLHMODULE := GLNULLMODULE;
         GLU_LibHandle: GLHMODULE := GLNULLMODULE;
@@ -71,6 +70,7 @@ uses
         LastPixelFormat: Integer;
         ExtensionsRead: Boolean;
         ImplementationRead: Boolean;
+ LoadProc : GLfwLoadProc; 
 
 type
     TRCOptions = set of (opDoubleBuffered, opGDI, opStereo);
@@ -90,10 +90,7 @@ type
   {$ENDIF}
 {$ENDIF}
 
-
-
-
-  method dglGetProcAddress(ProcName: String; LibHandle: GLHMODULE := GLNULLMODULE; StaticLink : Boolean := false ): FARPROC;
+  method dglGetProcAddress(ProcName: String; LibHandle: GLHMODULE := GLNULLMODULE; StaticLink : Boolean := false ): ^Void;
   method dglLoadLibrary(const Name: String): GLHMODULE;
   method dglFreeLibrary(LibHandle: GLHMODULE): Boolean;
   method TrimAndSplitVersionString( Buffer: String; var Max, Min: Integer) : Boolean;
@@ -108,58 +105,7 @@ method DestroyRenderingContext(RC: HGLRC);
 {$ENDIF}
 implementation
 
-method Int_GetExtensionString: String;
-var
-    ExtensionCount : GLuint;
-    i : Integer;
-begin
-    if GL_VERSION_3_0
-        then
-    begin
-        if not Assigned(glGetIntegerv) then glGetIntegerv := TglGetIntegerv( dglGetProcAddress('glGetIntegerv'));
-        if not Assigned(glGetStringi)  then glGetStringi  := tglGetStringi(dglGetProcAddress('glGetStringi'));
 
-        result := '';
-
-        if Assigned(glGetIntegerv) and Assigned(glGetStringi)
-            then
-        begin
-            glGetIntegerv(GL_NUM_EXTENSIONS, PGLint( @extensionCount));
-
-            For I := 0 to extensionCount - 1 do
-                result := result + #32 +  String.FromPAnsiChars(glGetStringi(GL_EXTENSIONS, I));
-        end;
-    end
-    else
-    begin
-        if not Assigned(glGetString) then
-            glGetString := tglGetString(dglGetProcAddress('glGetString'));
-
-        if Assigned(glGetString)
-            then result := String.FromPAnsiChars(glGetString(GL_EXTENSIONS))
-        else result := '';
-    end;
-
-    if (GL_LibHandle <> GLNULLMODULE) then begin
-    {$IF ISLAND AND WINDOWS}
-      // wglGetExtensionsStringEXT
-      if not Assigned(wglGetExtensionsStringEXT) then
-        wglGetExtensionsStringEXT := twglGetExtensionsStringEXT(dglGetProcAddress('wglGetExtensionsStringEXT'));
-
-      if Assigned(wglGetExtensionsStringEXT) then
-        Result := Result + #32 + String.FromPAnsiChars(wglGetExtensionsStringEXT());
-
-      // wglGetExtensionsStringARB
-      if not Assigned(wglGetExtensionsStringARB) then
-        wglGetExtensionsStringARB := TwglGetExtensionsStringARB(dglGetProcAddress('wglGetExtensionsStringARB'));
-
-      if Assigned(wglGetExtensionsStringARB) then
-        Result := Result + #32 + String.FromPAnsiChars(wglGetExtensionsStringARB(wglGetCurrentDC()));
-    {$ENDIF}
-    end;
-
-    Result := #32 + Result + #32;
-end;
 
 method TrimAndSplitVersionString( Buffer: String; var Max, Min: Integer): boolean;
     // Peels out the X.Y form from the given Buffer which must contain a version string like "text Minor.Major.Build text"
@@ -211,20 +157,25 @@ begin
 end;
 
 
-method dglGetProcAddress(ProcName: String; LibHandle: GLHMODULE := GLNULLMODULE; StaticLink : Boolean := false ): FARPROC;
+method dglGetProcAddress(ProcName: String; LibHandle: GLHMODULE := GLNULLMODULE; StaticLink : Boolean := false ): ^Void;
 begin
+if Assigned(LoadProc) then
+    begin
+        exit  LoadProc(@ProcName.ToAnsiChars(true)[0]);
+    end;
+
     if LibHandle = GLNULLMODULE then
         LibHandle := GL_LibHandle;
 
   {$IF ISLAND AND WINDOWS}
  Var Buff := ProcName.ToAnsiChars(true);
-    Result := GetProcAddress(HMODULE(LibHandle), LPCSTR(@Buff[0]));
+    Result := Pointer(GetProcAddress(HMODULE(LibHandle), LPCSTR(@Buff[0])));
 
     if result <> nil then
         exit;
 
     if wglGetProcAddress <> nil then
-      Result := FARPROC(wglGetProcAddress(LPCSTR(@Buff[0])));
+      Result := Pointer(wglGetProcAddress(LPCSTR(@Buff[0])));
   {$ENDIF}
 
     {$IF ISLAND AND LINUX}
@@ -481,6 +432,7 @@ begin
   else
     LastPixelFormat := 0;
 end;
+
 method ActivateRenderingContext(DC: HDC; RC: HGLRC; loadext: boolean := true);
 begin
   Assert((DC <> nil), 'DC must not be 0');
@@ -489,10 +441,11 @@ begin
   wglMakeCurrent(DC, RC);
 
 
-  ReadImplementationProperties;
+  Gl.ReadImplementationProperties;
 
   if (loadext) then
-    ReadExtensions;
+    GL.ReadExtensions
+    else  GL.ReadOpenGLCore;
 
 end;
 
