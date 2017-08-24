@@ -6,6 +6,12 @@ Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "FirstExample", "FirstExampl
 EndProject
 Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "OpenGl", "..\OPENGL\OpenGl.elements", "{1D0560D5-C7DA-431C-BAFB-F0DF3C973279}"
 EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "GlHelper", "..\GlHelper\GlHelper.elements", "{5AAB692A-BFB3-4C71-8BCA-F7249FC3A6CA}"
+EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "Texture1", "Texture1\Texture1.elements", "{23BC67B1-2903-4A7A-90AE-23BAB62FC7E4}"
+EndProject
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "Materials", "Materials\Materials.elements", "{1E11248B-171B-4AD1-B341-D99DABF45B12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|i386 = Debug|i386
@@ -16,6 +22,14 @@ Global
 		{7D8652EF-3B5D-45A9-9DD1-77B571F3428A}.Debug|i386.Build.0 = Debug
 		{7D8652EF-3B5D-45A9-9DD1-77B571F3428A}.Release|i386.ActiveCfg = Release
 		{7D8652EF-3B5D-45A9-9DD1-77B571F3428A}.Release|i386.Build.0 = Release
+		{23BC67B1-2903-4A7A-90AE-23BAB62FC7E4}.Debug|i386.ActiveCfg = Debug
+		{23BC67B1-2903-4A7A-90AE-23BAB62FC7E4}.Debug|i386.Build.0 = Debug
+		{23BC67B1-2903-4A7A-90AE-23BAB62FC7E4}.Release|i386.ActiveCfg = Release
+		{23BC67B1-2903-4A7A-90AE-23BAB62FC7E4}.Release|i386.Build.0 = Release
+		{1E11248B-171B-4AD1-B341-D99DABF45B12}.Debug|i386.ActiveCfg = Debug
+		{1E11248B-171B-4AD1-B341-D99DABF45B12}.Debug|i386.Build.0 = Debug
+		{1E11248B-171B-4AD1-B341-D99DABF45B12}.Release|i386.ActiveCfg = Release
+		{1E11248B-171B-4AD1-B341-D99DABF45B12}.Release|i386.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

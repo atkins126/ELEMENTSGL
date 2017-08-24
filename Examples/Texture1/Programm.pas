@@ -1,26 +1,17 @@
-﻿namespace FirstExample;
-uses
-  rtl,
-  GlHelper,
-  GLFW,
-  OpenGl;
-
-
+﻿namespace Texture1;
+uses rtl, Opengl, GlHelper, GLFW;
 type
-
-  Program = class
-  private
-
-  public
-
-    class method Main(args: array of String): Int32;
-    begin
+    Programm = public class
+    private
+    protected
+    public
+        class method run;
+        begin
       // Please change these path to the Basepath of your Installatio
       // eg D:\ElemetsGl\Examples
-         Asset.initialize('D:\Test');
+            Asset.initialize('D:\Test');
 
             if  glfwInit() = 0 then exit;
-
             var Window := glfwCreateWindow(640, 480, "Hello World", nil, nil);
 
 /* Make the window's context current */
@@ -30,7 +21,6 @@ type
             begin
                exit Pointer(glfwGetProcAddress(value));
             end, false);
-
 
             var APP := new GLAPP();
             APP.initialize;
@@ -53,10 +43,17 @@ type
 
             glfwTerminate();
 
-      result := 0;
+        end;
+            //end;
+
+
+        class method Main(args: array of String): Int32;
+        begin
+            run;
+
+            result := 0;
+
+        end;
 
     end;
-
-  end;
-
 end.
