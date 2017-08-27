@@ -7,12 +7,15 @@ uses
   //RemObjects.Elements.System,
   {$ELSEIF TOFFEE}
   Foundation,
-  
+
   {$ENDIF}
   RemObjects.Elements.RTL,
   OpenGL;
 
 type
+ {$IF TOFFEE}
+   PGLChar =  ^GLchar;
+  {$ENDIF}
 
   Shader= public class
     {$REGION 'Internal Declarations'}
@@ -65,9 +68,7 @@ begin
       raise new Exception(String.format('OpenGL Error: {0}', [Error]));
     end
 
-  end
-  else new Exception(String.format('OpenGL Error: {0}', [Error]));
-
+  end;
 end;
 {$ENDIF}
 
@@ -118,7 +119,7 @@ begin
       if (LogLength > 0) then
       begin
         var Log := new  Byte[LogLength];
-         glGetShaderInfoLog(Result, LogLength, @LogLength, PGLchar(@Log[0]));
+         glGetShaderInfoLog(Result, LogLength, @LogLength, PGLChar(@Log[0]));
          Msg := new String(Log, Encoding.UTF8);
         raise new Exception('CreateShader Exception '+Msg);
       end;
@@ -174,7 +175,7 @@ begin
       begin
        var Log := new  Byte[LogLength];
 
-        glGetProgramInfoLog(FProgram, LogLength, @LogLength,  PGLchar(@Log[0]));
+        glGetProgramInfoLog(FProgram, LogLength, @LogLength,  PGLChar(@Log[0]));
         var Msg :=  new String(Log, Encoding.UTF8);
         raise new Exception('CreateProgram Exception '+Msg);
       end;

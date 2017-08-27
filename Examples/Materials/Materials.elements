@@ -57,12 +57,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="glCamera.pas"></Compile>
-    <Compile Include="glApp.pas"></Compile>
-    <Compile Include="glVecHelper.pas"></Compile>
+    <Compile Include="glApp.pas" />
     <Compile Include="Program.pas" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
   <Import Project="..\..\OPENGL\OpenGl.projitems" Label="Shared" />
   <Import Project="..\..\GlHelper\GlHelper.projitems" Label="Shared" />
+  <Import Project="..\..\glMath\glMath.projitems" Label="Shared" />
 </Project>

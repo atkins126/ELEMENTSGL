@@ -10,9 +10,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)glAssets.pas" />
+    <Compile Include="$(MSBuildThisFileDirectory)glCamera.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)glShader.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)glTexture.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)glVertexArrays.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)glTypes.pas" />
+    <Compile Include="$(MSBuildThisFileDirectory)glCgImage.pas" />
+    <Compile Include="$(MSBuildThisFileDirectory)glStbImage.pas" />
   </ItemGroup>
 </Project>

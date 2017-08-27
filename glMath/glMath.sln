@@ -1,0 +1,14 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# RemObjects Water
+Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "glMath", "glMath.elements", "{01FA0912-E6A2-42DF-82C4-BF0CBC4B1983}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

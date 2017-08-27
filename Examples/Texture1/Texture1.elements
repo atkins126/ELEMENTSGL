@@ -4,7 +4,7 @@
     <ProductVersion>3.5</ProductVersion>
     <RootNamespace>Texture1</RootNamespace>
     <ProjectGuid>{23bc67b1-2903-4a7a-90ae-23bab62fc7e4}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AssemblyName>Texture1</AssemblyName>
     <AllowGlobals>False</AllowGlobals>
     <AllowLegacyWith>False</AllowLegacyWith>
@@ -58,8 +58,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Programm.pas"></Compile>
-    <Compile Include="glApp.pas"></Compile>
+    <Compile Include="Programm.pas">
+    </Compile>
+    <Compile Include="glApp.pas">
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
   <Import Project="..\..\OPENGL\OpenGl.projitems" Label="Shared" />

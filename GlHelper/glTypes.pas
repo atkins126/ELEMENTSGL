@@ -14,6 +14,14 @@ interface
  type
   Pointer = ^Void;
 
+  glImageData = public record
+    imgData : ^Void;
+    width : Integer;
+    Height : Integer;
+    Components : Integer;
+  end;
+
+
   glStringHelper = static class
   private
   public
