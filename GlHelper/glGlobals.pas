@@ -3,7 +3,7 @@
 interface
 uses rtl;
 {$IF ISLAND}
-{$DEFINE FIXMATHERROR}  // Use own implementatopn of Pow because error in RTL Island
+{$DEFINE FIXMATHERROR}  // Use own implementation of Pow because error in RTL Island
 {$ENDIF}
 const
   { Default tolerance for comparing small floating-point values. }
@@ -35,15 +35,10 @@ type
 implementation
 
 
-method FixPow(x, y: Double): Double;
-begin
-    exit math.Exp(y * Math.Log(x));
-end;
-
 method Sqrt(const A: Single): Single;
 begin
 {$IF FIXMATHERROR}
-exit fixPow(A,0.5);
+exit math.Exp(0.5 * Math.Log(A));
 {$ELSE}
   Result := Math.Sqrt(A);
 {$ENDIF}

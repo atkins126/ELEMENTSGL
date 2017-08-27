@@ -123,7 +123,7 @@ const
 begin
 
   { Create camera }
-    FCamera := new Camera(640, 480, TVector3.get(0.0, 0.0, 3));
+    FCamera := new Camera(640, 480, TVector3.Vector3(0.0, 0.0, 3));
 
   { Build and compile our shader programs }
     FLightingShader := new Shader('shaders\materials.vs', 'shaders\materials.fs');
@@ -176,7 +176,7 @@ var
 
 begin
 
-    var  LIGHT_POS := TVector3.get(1.2, 1.0, 2.0);
+    var  LIGHT_POS := TVector3.Vector3(1.2, 1.0, 2.0);
   //  FCamera.HandleInput(10);
 
   { Define the viewport dimensions }
@@ -211,7 +211,7 @@ begin
 
   { Create camera transformation }
 
-    Projection.InitPerspectiveForRH(GLMath.Radians(FCamera.Zoom), Width / Height, 0.1, 100.0);
+    Projection.InitPerspectiveFovRH(Radians(FCamera.Zoom), Width / Height, 0.1, 100.0);
 
   { Pass matrices to shader }
 

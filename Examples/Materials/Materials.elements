@@ -63,5 +63,4 @@
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />
   <Import Project="..\..\OPENGL\OpenGl.projitems" Label="Shared" />
   <Import Project="..\..\GlHelper\GlHelper.projitems" Label="Shared" />
-  <Import Project="..\..\glMath\glMath.projitems" Label="Shared" />
 </Project>

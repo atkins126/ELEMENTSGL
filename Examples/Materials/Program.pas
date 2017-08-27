@@ -33,9 +33,10 @@ type
           exit ^Void(glfwGetProcAddress(value));
         end, true);
 
-
+//writeLn('Before APP');
         var APP := new GLAPP();
         APP.initialize;
+ //         writeLn('After APP');
 
         glfwSwapInterval(5);
 

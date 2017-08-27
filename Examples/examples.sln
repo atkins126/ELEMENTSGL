@@ -12,8 +12,6 @@ Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "Texture1", "Texture1\Textur
 EndProject
 Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "Materials", "Materials\Materials.elements", "{1E11248B-171B-4AD1-B341-D99DABF45B12}"
 EndProject
-Project("{656346D9-4656-40DA-A068-22D5425D4639}") = "glMath", "..\glMath\glMath.elements", "{01FA0912-E6A2-42DF-82C4-BF0CBC4B1983}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|i386 = Debug|i386
