@@ -1,4 +1,4 @@
-﻿namespace glMath;
+﻿namespace GlHelper;
 
 interface
 {$GLOBALS ON}
@@ -738,7 +738,7 @@ end;
 
 method TVector2.AngleTo(const ATarget: TVector2): Single;
 begin
-  Result := glMath.ArcTan2(Cross(ATarget), Dot(ATarget));
+  Result := ArcTan2(Cross(ATarget), Dot(ATarget));
 end;
 
 method TVector2.Clamp(const AMinLength, AMaxLength: Single): TVector2;
@@ -778,7 +778,7 @@ end;
 
 method TVector2.GetAngle: Single;
 begin
-  Result := glMath.ArcTan2(Y, X)
+  Result := ArcTan2(Y, X)
 end;
 
 method TVector2.GetComponent(const AIndex: Integer): Single;

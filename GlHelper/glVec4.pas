@@ -1,4 +1,4 @@
-﻿namespace glMath;
+﻿namespace GlHelper;
 
 interface
 

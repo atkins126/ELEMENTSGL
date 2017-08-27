@@ -1,4 +1,4 @@
-﻿namespace glMath;
+﻿namespace GlHelper;
 
 
 interface
@@ -10,7 +10,7 @@ type
   { A quaternion.
 
    }
-  TQuaternion = record
+  TQuaternion = public record
 
   private
     method GetLength: Single;

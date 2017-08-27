@@ -4,8 +4,8 @@
 interface
 
 uses
- rtl,
- glMath;
+ rtl;
+
 
 type
  TRectF = record
@@ -17,7 +17,7 @@ type
 
 
   { Implements ICamera }
-  TCamera = class
+  Camera = public class
   public const
     DEFAULT_YAW = - 90;
     DEFAULT_PITCH = 0;
@@ -50,7 +50,7 @@ type
     FKeyD: Boolean;
 
   protected
-    { ICamera }
+   
     method _GetPosition: TVector3;
     method _SetPosition(const AValue: TVector3);
     method _GetFront: TVector3;
@@ -144,23 +144,26 @@ type
     property Zoom: Single read _GetZoom write _SetZoom;
 
 
+     property ViewMatrix : TMatrix4 read GetViewMatrix;
+
+
   end;
 
 implementation
 
 { TCamera }
 
-constructor TCamera(const AViewWidth, AViewHeight: Integer; const AYaw: Single := DEFAULT_YAW; const APitch: Single := DEFAULT_PITCH);
+constructor Camera(const AViewWidth, AViewHeight: Integer; const AYaw: Single := DEFAULT_YAW; const APitch: Single := DEFAULT_PITCH);
 begin
   constructor(AViewWidth, AViewHeight, TVector3.Vector3(0, 0, 0), TVector3.Vector3(0, 1, 0), AYaw, APitch);
 end;
 
-constructor TCamera(const AViewWidth, AViewHeight: Integer; const APosition: TVector3; const AYaw: Single := DEFAULT_YAW; const APitch: Single := DEFAULT_PITCH);
+constructor Camera(const AViewWidth, AViewHeight: Integer; const APosition: TVector3; const AYaw: Single := DEFAULT_YAW; const APitch: Single := DEFAULT_PITCH);
 begin
   constructor(AViewWidth, AViewHeight, APosition, TVector3.Vector3(0, 1, 0), AYaw, APitch);
 end;
 
-constructor TCamera(const AViewWidth, AViewHeight: Integer; const APosition, AUp: TVector3; const AYaw: Single := DEFAULT_YAW; const APitch: Single := DEFAULT_PITCH);
+constructor Camera(const AViewWidth, AViewHeight: Integer; const APosition, AUp: TVector3; const AYaw: Single := DEFAULT_YAW; const APitch: Single := DEFAULT_PITCH);
 begin
   inherited ();
   FFront := TVector3.Vector3(0, 0, - 1);
@@ -175,12 +178,12 @@ begin
   UpdateCameraVectors;
 end;
 
-method TCamera.GetViewMatrix: TMatrix4;
+method Camera.GetViewMatrix: TMatrix4;
 begin
   Result.InitLookAtRH(FPosition, FPosition + FFront, FUp);
 end;
 
-method TCamera.HandleInput(const ADeltaTimeSec: Single);
+method Camera.HandleInput(const ADeltaTimeSec: Single);
 var
   Velocity: Single;
 begin
@@ -198,7 +201,7 @@ begin
     FPosition := FPosition + (FRight * Velocity);
 end;
 
-method TCamera.ProcessKeyDown(const AKey: Integer);
+method Camera.ProcessKeyDown(const AKey: Integer);
 begin
 //  if (AKey = vkW) or (AKey = vkUp) then
 //    FKeyW := True;
@@ -213,7 +216,7 @@ begin
 //    FKeyD := True;
 end;
 
-method TCamera.ProcessKeyUp(const AKey: Integer);
+method Camera.ProcessKeyUp(const AKey: Integer);
 begin
 //  if (AKey = vkW) or (AKey = vkUp) then
 //    FKeyW := False;
@@ -228,7 +231,7 @@ begin
 //    FKeyD := False;
 end;
 
-method TCamera.ProcessMouseDown(const AX, AY: Single);
+method Camera.ProcessMouseDown(const AX, AY: Single);
 begin
   { Check if mouse/finger is pressed near the edge of the screen.
     If so, simulate a WASD key event. This way, we can move the camera around
@@ -266,7 +269,7 @@ begin
     end;
 end;
 
-method TCamera.ProcessMouseMove(const AX, AY: Single);
+method Camera.ProcessMouseMove(const AX, AY: Single);
 var
   XOffset, YOffset: Single;
 begin
@@ -282,7 +285,7 @@ begin
     end;
 end;
 
-method TCamera.ProcessMouseMovement(const AXOffset, AYOffset: Single; const AConstrainPitch: Boolean);
+method Camera.ProcessMouseMovement(const AXOffset, AYOffset: Single; const AConstrainPitch: Boolean);
 var
   XOff, YOff: Single;
 begin
@@ -299,7 +302,7 @@ begin
   UpdateCameraVectors;
 end;
 
-method TCamera.ProcessMouseUp;
+method Camera.ProcessMouseUp;
 begin
   if (not FLookAround) then
     begin
@@ -313,14 +316,14 @@ begin
   FLookAround := False;
 end;
 
-method TCamera.ProcessMouseWheel(const AWheelDelta: Integer);
+method Camera.ProcessMouseWheel(const AWheelDelta: Integer);
 begin
   FZoom := EnsureRange(FZoom - AWheelDelta, 1, 45);
 end;
 
 
 
-method TCamera.UpdateCameraVectors;
+method Camera.UpdateCameraVectors;
 { Calculates the front vector from the Camera's (updated) Euler Angles }
 var
   lFront: TVector3;
@@ -343,7 +346,7 @@ begin
   FUp := FRight.Cross(FFront).NormalizeFast;
 end;
 
-method TCamera.UpdateScreenEdge(const AViewWidth, AViewHeight: Single);
+method Camera.UpdateScreenEdge(const AViewWidth, AViewHeight: Single);
 const
   EDGE_THRESHOLD = 0.15; // 15%
 var
@@ -360,107 +363,107 @@ begin
   FScreenEdge.Bottom := (1 - EDGE_THRESHOLD) * ViewHeight;
 end;
 
-method TCamera.ViewResized(const AWidth, AHeight: Integer);
+method Camera.ViewResized(const AWidth, AHeight: Integer);
 begin
   UpdateScreenEdge(AWidth, AHeight);
 end;
 
-method TCamera._GetFront: TVector3;
+method Camera._GetFront: TVector3;
 begin
   Result := FFront;
 end;
 
-method TCamera._GetMovementSpeed: Single;
+method Camera._GetMovementSpeed: Single;
 begin
   Result := FMovementSpeed;
 end;
 
-method TCamera._GetPitch: Single;
+method Camera._GetPitch: Single;
 begin
   Result := FPitch;
 end;
 
-method TCamera._GetPosition: TVector3;
+method Camera._GetPosition: TVector3;
 begin
   Result := FPosition;
 end;
 
-method TCamera._GetRight: TVector3;
+method Camera._GetRight: TVector3;
 begin
   Result := FRight;
 end;
 
-method TCamera._GetSensitivity: Single;
+method Camera._GetSensitivity: Single;
 begin
   Result := FSensitivity;
 end;
 
-method TCamera._GetUp: TVector3;
+method Camera._GetUp: TVector3;
 begin
   Result := FUp;
 end;
 
-method TCamera._GetWorldUp: TVector3;
+method Camera._GetWorldUp: TVector3;
 begin
   Result := FWorldUp;
 end;
 
-method TCamera._GetYaw: Single;
+method Camera._GetYaw: Single;
 begin
   Result := FYaw;
 end;
 
-method TCamera._GetZoom: Single;
+method Camera._GetZoom: Single;
 begin
   Result := FZoom;
 end;
 
-method TCamera._SetFront(const AValue: TVector3);
+method Camera._SetFront(const AValue: TVector3);
 begin
   FFront := AValue;
 end;
 
-method TCamera._SetMovementSpeed(const AValue: Single);
+method Camera._SetMovementSpeed(const AValue: Single);
 begin
   FMovementSpeed := AValue;
 end;
 
-method TCamera._SetPitch(const AValue: Single);
+method Camera._SetPitch(const AValue: Single);
 begin
   FPitch := AValue;
 end;
 
-method TCamera._SetPosition(const AValue: TVector3);
+method Camera._SetPosition(const AValue: TVector3);
 begin
   FPosition := AValue;
 end;
 
-method TCamera._SetRight(const AValue: TVector3);
+method Camera._SetRight(const AValue: TVector3);
 begin
   FRight := AValue;
 end;
 
-method TCamera._SetSensitivity(const AValue: Single);
+method Camera._SetSensitivity(const AValue: Single);
 begin
   FSensitivity := AValue;
 end;
 
-method TCamera._SetUp(const AValue: TVector3);
+method Camera._SetUp(const AValue: TVector3);
 begin
   FUp := AValue;
 end;
 
-method TCamera._SetWorldUp(const AValue: TVector3);
+method Camera._SetWorldUp(const AValue: TVector3);
 begin
   FWorldUp := AValue;
 end;
 
-method TCamera._SetYaw(const AValue: Single);
+method Camera._SetYaw(const AValue: Single);
 begin
   FYaw := AValue;
 end;
 
-method TCamera._SetZoom(const AValue: Single);
+method Camera._SetZoom(const AValue: Single);
 begin
   FZoom := AValue;
 end;

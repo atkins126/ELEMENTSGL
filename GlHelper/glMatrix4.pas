@@ -1,4 +1,4 @@
-﻿namespace glMath;
+﻿namespace GlHelper;
 
 
 
@@ -9,8 +9,8 @@ type
     You can access the elements directly using M[0,0]..M[3,3] or m11..m44.
 
     }
-  TMatrix4 = record
-  {$REGION 'Internal Declarations'}
+  TMatrix4 = public record
+
   private
 
     method GetComponent(const ARow, AColumn: Integer): Single; inline;
@@ -19,7 +19,7 @@ type
     method SetRow(const AIndex: Integer; const Value: TVector4);
 
     method GetDeterminant: Single;
-  {$ENDREGION 'Internal Declarations'}
+ 
   public
     { Initializes the matrix to an identity matrix (filled with 0 and value 1
       for the diagonal) }
@@ -384,6 +384,8 @@ type
 
     { The determinant of this matrix. }
     property Determinant: Single read GetDeterminant;
+
+    method getPglMatrix4f : ^Single;
   public
 
       { Row or column vectors, depending on FM_COLUMN_MAJOR define }
@@ -1070,4 +1072,9 @@ begin
   V[AIndex] := Value;
 end;
 
+
+method TMatrix4.getPglMatrix4f: ^Single;
+begin
+ exit @V[0].X;
+end;
 end.

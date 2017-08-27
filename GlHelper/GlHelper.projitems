@@ -11,8 +11,15 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)glAssets.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)glCamera.pas" />
+    <Compile Include="$(MSBuildThisFileDirectory)glGlobals.pas" />
+    <Compile Include="$(MSBuildThisFileDirectory)glMatrix3.pas" />
+    <Compile Include="$(MSBuildThisFileDirectory)glMatrix4.pas" />
+    <Compile Include="$(MSBuildThisFileDirectory)glQuaternation.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)glShader.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)glTexture.pas" />
+    <Compile Include="$(MSBuildThisFileDirectory)glvec2.pas" />
+    <Compile Include="$(MSBuildThisFileDirectory)glVec3.pas" />
+    <Compile Include="$(MSBuildThisFileDirectory)glVec4.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)glVertexArrays.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)glTypes.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)glCgImage.pas" />

@@ -1,5 +1,5 @@
 ﻿
-namespace glMath;
+namespace GlHelper;
 
 interface
 
@@ -12,17 +12,17 @@ type
     directly to the elements M[]).
 
 }
-  TMatrix3 = record
-  {$REGION 'Internal Declarations'}
+  TMatrix3 = public record
+ 
   private
-
+ 
     method GetComponent(const ARow, AColumn: Integer): Single; inline;
     method SetComponent(const ARow, AColumn: Integer; const Value: Single); inline;
     method GetRow(const AIndex: Integer): TVector3;
     method SetRow(const AIndex: Integer; const Value: TVector3);
 
     method GetDeterminant: Single;
-  {$ENDREGION 'Internal Declarations'}
+  
   public
     { Initializes the matrix to an identity matrix (filled with 0 and value 1
       for the diagonal) }
@@ -44,6 +44,13 @@ type
         ARow2: the third row of the matrix. }
     method Init(const ARow0, ARow1, ARow2: TVector3);
 
+{ Initializes the matrix using a Tmatrix4.
+
+      Parameters:
+        ARow0: the Matrix.
+        ARow1: the second row of the matrix.
+        ARow2: the third row of the matrix. }
+    method Init(const AMatrix : TMatrix4);
 
     { Initializes the matrix with explicit values.
 
@@ -233,6 +240,7 @@ type
 
     { The determinant of this matrix. }
     property Determinant: Single read GetDeterminant;
+     method getPglMatrix3f : ^Single;
   public
 
       { Row  vectors}
@@ -479,7 +487,12 @@ begin
   V[2].Init(0, 0, 1);
 end;
 
-
+method TMatrix3.Init(const AMatrix : TMatrix4);
+begin
+ V[0].Init(AMatrix.V[0].X, AMatrix.V[0].Y, AMatrix.V[0].z);
+ V[1].Init(AMatrix.V[1].X, AMatrix.V[1].Y, AMatrix.V[1].z);
+ V[2].Init(AMatrix.V[2].X, AMatrix.V[2].Y, AMatrix.V[2].z);
+end;
 
 method TMatrix3.Init(const A11, A12, A13, A21, A22, A23, A31, A32,
   A33: Single);
@@ -570,6 +583,14 @@ method TMatrix3.SetRow(const AIndex: Integer; const Value: TVector3);
 begin
  // Assert((AIndex >= 0) and (AIndex < 3));
   V[AIndex] := Value;
+end;
+
+
+
+
+method TMatrix3.getPglMatrix3f: ^Single;
+begin
+ exit @V[0].X;
 end;
 
 end.
