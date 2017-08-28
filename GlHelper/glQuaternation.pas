@@ -299,7 +299,7 @@ end;
 
 method TQuaternion.Init(const AMatrix: TMatrix4);
 var
-  Trace, S: double;
+  Trace, S: Double;
 begin
   Trace := AMatrix.m11 + AMatrix.m22 + AMatrix.m33;
   if (Trace > EPSILON) then
@@ -312,7 +312,7 @@ begin
   end
   else if (AMatrix.m11 > AMatrix.m22) and (AMatrix.m11 > AMatrix.m33) then
   begin
-    S := Sqrt(math.Max(EPSILON, 1 + AMatrix.m11 - AMatrix.m22 - AMatrix.m33)) * 2.0;
+    S := Sqrt(Math.Max(EPSILON, 1 + AMatrix.m11 - AMatrix.m22 - AMatrix.m33)) * 2.0;
     X := 0.25 * S;
     Y := (AMatrix.m12 + AMatrix.m21) / S;
     Z := (AMatrix.m31 + AMatrix.m13) / S;

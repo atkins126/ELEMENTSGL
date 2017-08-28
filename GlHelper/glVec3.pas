@@ -533,13 +533,13 @@ type
     public
         X, Y, Z: Single;
 
-        property R : single read X write X;
-        property G : single read Y write Y;
-        property B : single read Z write Z;
+        property R : Single read X write X;
+        property G : Single read Y write Y;
+        property B : Single read Z write Z;
 
-        property S : single read X write X;
-        property T : single read Y write Y;
-        property P : single read Z write Z;
+        property S : Single read X write X;
+        property T : Single read Y write Y;
+        property P : Single read Z write Z;
 
 //    case Byte of
 //      { X, Y and Z components of the vector. Aliases for C[0], C[1] and C[2]. }
@@ -756,7 +756,7 @@ end;
 
 method TVector3.GetComponent(const AIndex: Integer): Single;
 begin
-    Assert((AIndex >= 0) and (AIndex < 3));
+    assert((AIndex >= 0) and (AIndex < 3));
     case AIndex of
         0 : result := X;
         1 : result := Y;
@@ -905,7 +905,7 @@ end;
 
 method TVector3.SetComponent(const AIndex: Integer; const Value: Single);
 begin
-    Assert((AIndex >= 0) and (AIndex < 3));
+    assert((AIndex >= 0) and (AIndex < 3));
     case AIndex of
         0 : X := Value;
         1 : Y := Value;
@@ -916,7 +916,7 @@ end;
 
 method TVector3.SetLength(const AValue: Single);
 begin
-    SetLengthSquared(AValue * AValue);
+    setLengthSquared(AValue * AValue);
 end;
 
 method TVector3.SetLengthSquared(const AValue: Single);

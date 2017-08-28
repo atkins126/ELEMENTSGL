@@ -13,6 +13,7 @@ type
     C[0] and C[1], which are also just aliases for X and Y).
 
     }
+
   TVector2 = public record
   {$REGION 'Internal Declarations'}
   private
@@ -41,13 +42,6 @@ type
         A1: the value to set the first element to.
         A2: the value to set the second element to. }
     method Init(const A1, A2: Single);
-
-    { Converts a TPoint to a TVector2.
-
-      Parameters:
-        APoint: the TPoint to convert. }
-    method Init(const APoint: TPoint);
-
 
 
     { Checks two vectors for equality.
@@ -549,10 +543,6 @@ type
       This is identical to accessing the C-field, but this property can be used
       as a default array property.
 
-      Parameters:
-        AIndex: index of the component to return (0 or 1). Range is checked
-          with an assertion. }
-    property Components[const AIndex: Integer]: Single read GetComponent write SetComponent; default;
 
     { The euclidean length of this vector.
 
@@ -580,6 +570,16 @@ type
     property Angle: Single read GetAngle write SetAngle;
   public
       X,Y : Single;
+      property R : Single read X write X;
+      property G : Single read X write X;
+      property S : Single read X write X;
+      property T : Single read X write X;
+  {  Parameters:
+    AIndex: index of the component to return (0 or 1). Range is checked
+    with an assertion. }
+    property C[const AIndex: Integer]: Single read GetComponent write SetComponent; default;
+
+
 
 //    Union :
 //      { X and Y components of the vector. Aliases for C[0] and C[1]. }
@@ -783,7 +783,7 @@ end;
 
 method TVector2.GetComponent(const AIndex: Integer): Single;
 begin
-  Assert((AIndex >= 0) and (AIndex < 2));
+  assert((AIndex >= 0) and (AIndex < 2));
   if AIndex = 0 then exit X else exit Y;
 end;
 
@@ -816,11 +816,6 @@ begin
   Y := A2;
 end;
 
-method TVector2.Init(const APoint: TPoint);
-begin
-  X := APoint.X;
-  Y := APoint.Y;
-end;
 
 method TVector2.IsCollinear(const AOther: TVector2; const ATolerance: Single): Boolean;
 begin
@@ -912,11 +907,11 @@ end;
 
 method TVector2.Rotate(const ARadians: Single): TVector2;
 var
-  S, C: Single;
+  lS, lC: Single;
 begin
-  SinCos(ARadians, out S, out C);
-  Result.X := (X * C) - (Y * S);
-  Result.Y := (X * S) + (Y * C);
+  SinCos(ARadians, out lS, out lC);
+  Result.X := (X * lC) - (Y * lS);
+  Result.Y := (X * lS) + (Y * lC);
 end;
 
 method TVector2.Rotate90CCW: TVector2;
@@ -965,14 +960,14 @@ end;
 
 method TVector2.SetComponent(const AIndex: Integer; const Value: Single);
 begin
-  Assert((AIndex >= 0) and (AIndex < 2));
+  assert((AIndex >= 0) and (AIndex < 2));
     if AIndex = 0 then X := Value else Y := Value;
 
 end;
 
 method TVector2.SetLength(const AValue: Single);
 begin
-  SetLengthSquared(AValue * AValue);
+  setLengthSquared(AValue * AValue);
 end;
 
 method TVector2.SetLengthSquared(const AValue: Single);

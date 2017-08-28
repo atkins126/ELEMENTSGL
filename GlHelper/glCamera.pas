@@ -9,9 +9,9 @@ uses
 
 type
  TRectF = record
- 
+
  public
- 
+
     Left, Top, Right, Bottom: Single;
  end;
 
@@ -50,7 +50,7 @@ type
     FKeyD: Boolean;
 
   protected
-   
+
     method _GetPosition: TVector3;
     method _SetPosition(const AValue: TVector3);
     method _GetFront: TVector3;
@@ -73,7 +73,7 @@ type
     method _SetZoom(const AValue: Single);
 
     method GetViewMatrix: TMatrix4;
-    method ViewResized(const AWidth, AHeight: Integer);
+
     method ProcessKeyDown(const AKey: Integer);
     method ProcessKeyUp(const AKey: Integer);
     method ProcessMouseDown(const AX, AY: Single);
@@ -99,11 +99,11 @@ type
       AUp: (optional) world up vector. Defaults to (0, 1, 0).
       AYaw: (optional) yaw angle in degrees. Defaults to -90.
       APitch: (optional) pitch angle in degrees. Defaults to 0. }
-    constructor (const AViewWidth, AViewHeight: Integer; const AYaw: Single := DEFAULT_YAW; const APitch: Single := DEFAULT_PITCH); 
-    constructor (const AViewWidth, AViewHeight: Integer; const APosition: TVector3; const AYaw: Single := DEFAULT_YAW; const APitch: Single := DEFAULT_PITCH); 
-    constructor (const AViewWidth, AViewHeight: Integer; const APosition, AUp: TVector3; const AYaw: Single := DEFAULT_YAW; const APitch: Single := DEFAULT_PITCH); 
+    constructor (const AViewWidth, AViewHeight: Integer; const AYaw: Single := DEFAULT_YAW; const APitch: Single := DEFAULT_PITCH);
+    constructor (const AViewWidth, AViewHeight: Integer; const APosition: TVector3; const AYaw: Single := DEFAULT_YAW; const APitch: Single := DEFAULT_PITCH);
+    constructor (const AViewWidth, AViewHeight: Integer; const APosition, AUp: TVector3; const AYaw: Single := DEFAULT_YAW; const APitch: Single := DEFAULT_PITCH);
 
-
+    method ViewResized(const AWidth, AHeight: Integer);
 
     { Position of the camera in the world.
       Defaults to the world origin (0, 0, 0). }

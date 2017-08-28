@@ -19,7 +19,7 @@ type
     method SetRow(const AIndex: Integer; const Value: TVector4);
 
     method GetDeterminant: Single;
- 
+
   public
     { Initializes the matrix to an identity matrix (filled with 0 and value 1
       for the diagonal) }
@@ -372,14 +372,6 @@ type
           an assertion. }
     property Rows[const AIndex: Integer]: TVector4 read GetRow write SetRow;
 
-    { Returns the elements of the matrix (in row-major order).
-      This is identical to accessing the M-field, but this property can be used
-      as a default array property.
-
-      Parameters:
-        ARow: the row index (0-3). Range is checked with an assertion.
-        AColumn: the column index (0-3). Range is checked with an assertion. }
-    property M[const ARow, AColumn: Integer]: Single read GetComponent write SetComponent; default;
 
 
     { The determinant of this matrix. }
@@ -387,16 +379,18 @@ type
 
     method getPglMatrix4f : ^Single;
   public
-
-      { Row or column vectors, depending on FM_COLUMN_MAJOR define }
+  {The Rows of the Matrix}
       V: array [0..3] of TVector4;
+        { Returns the elements of the matrix (in row-major order).
+      This is identical to accessing the M-field, but this property can be used
+      as a default array property.
+
+      Parameters:
+        ARow: the row index (0-3). Range is checked with an assertion.
+        AColumn: the column index (0-3). Range is checked with requires. }
+    property M[const ARow, AColumn: Integer]: Single read GetComponent write SetComponent; default;
 
 
-      { The four row vectors making up the matrix }
-   //   R: array [0..3] of TVector4;
-
-      { The elements of the matrix in row-major order }
-     // M: array [0..3, 0..3] of Single;
 
       property m11 : Single read GetComponent(0,0);
       property m12 : Single read GetComponent(0,1);
@@ -953,15 +947,18 @@ begin
 end;
 
 method TMatrix4.GetComponent(const ARow, AColumn: Integer): Single;
+require
+  (ARow >= 0) and (ARow < 4);
+  (AColumn >= 0) and (AColumn < 4);
+
 begin
-//  Assert((ARow >= 0) and (ARow < 4));
-//  Assert((AColumn >= 0) and (AColumn < 4));
   Result := V[ARow][AColumn];
 end;
 
 method TMatrix4.GetRow(const AIndex: Integer): TVector4;
+require
+  (AIndex >= 0) and (AIndex < 4);
 begin
-  Assert((AIndex >= 0) and (AIndex < 4));
   Result := V[AIndex];
 end;
 
@@ -1020,7 +1017,7 @@ var
 begin
   if (AHorizontalFOV) then
   begin
-    XScale := 1 / math.Tan(0.5 * AFieldOfView);
+    XScale := 1 / Math.Tan(0.5 * AFieldOfView);
     YScale := XScale / AAspectRatio;
   end
   else
@@ -1042,12 +1039,12 @@ var
 begin
   if (AHorizontalFOV) then
   begin
-    XScale := 1 / math.Tan(0.5 * AFieldOfView);
+    XScale := 1 / Math.Tan(0.5 * AFieldOfView);
     YScale := XScale / AAspectRatio;
   end
   else
   begin
-    YScale := 1 / math.Tan(0.5 * AFieldOfView);
+    YScale := 1 / Math.Tan(0.5 * AFieldOfView);
     XScale := YScale / AAspectRatio;
   end;
 
@@ -1058,17 +1055,18 @@ begin
 end;
 
 method TMatrix4.SetComponent(const ARow, AColumn: Integer; const Value: Single);
+require
+  (ARow >= 0) and (ARow < 4);
+  (AColumn >= 0) and (AColumn < 4);
 begin
-//  Assert((ARow >= 0) and (ARow < 4));
-//  Assert((AColumn >= 0) and (AColumn < 4));
- // M[ARow, AColumn] := Value;
     V[ARow][AColumn] := Value;
 end;
 
 
 method TMatrix4.SetRow(const AIndex: Integer; const Value: TVector4);
+require
+  (AIndex >= 0) and (AIndex < 4);
 begin
-  Assert((AIndex >= 0) and (AIndex < 4));
   V[AIndex] := Value;
 end;
 

@@ -562,15 +562,15 @@ type
   public
       X, Y, Z, W: Single;
 
-        property R : single read X write X;
-        property G : single read Y write Y;
-        property B : single read Z write Z;
-        property A : single read W write W;
+        property R : Single read X write X;
+        property G : Single read Y write Y;
+        property B : Single read Z write Z;
+        property A : Single read W write W;
 
-        property S : single read X write X;
-        property T : single read Y write Y;
-        property P : single read Z write Z;
-        property Q : single read W write W;
+        property S : Single read X write X;
+        property T : Single read Y write Y;
+        property P : Single read Z write Z;
+        property Q : Single read W write W;
 
 
 
@@ -795,7 +795,7 @@ end;
 
 method TVector4.GetComponent(const AIndex: Integer): Single;
 begin
-  Assert((AIndex >= 0) and (AIndex < 4));
+  assert((AIndex >= 0) and (AIndex < 4));
      case AIndex of
         0 : result := X;
         1 : result := Y;
@@ -910,7 +910,7 @@ end;
 
 method TVector4.IsParallel(const AOther: TVector4; const ATolerance: Single): Boolean;
 begin
-  Result := (Tvector3.Vector3(Y * AOther.Z - Z * AOther.Y,
+  Result := (TVector3.Vector3(Y * AOther.Z - Z * AOther.Y,
                       Z * AOther.X - X * AOther.Z,
                       X * AOther.Y - Y * AOther.X).LengthSquared <= ATolerance);
 end;
@@ -981,7 +981,7 @@ end;
 
 method TVector4.SetComponent(const AIndex: Integer; const Value: Single);
 begin
-  Assert((AIndex >= 0) and (AIndex < 4));
+  assert((AIndex >= 0) and (AIndex < 4));
      case AIndex of
         0 : X := Value;
         1 : Y := Value;
@@ -993,7 +993,7 @@ end;
 
 method TVector4.SetLength(const AValue: Single);
 begin
-  SetLengthSquared(AValue * AValue);
+  setLengthSquared(AValue * AValue);
 end;
 
 method TVector4.SetLengthSquared(const AValue: Single);

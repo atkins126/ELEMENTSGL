@@ -1,7 +1,10 @@
 ﻿namespace GlHelper;
 {$GLOBALS ON}
 interface
-uses rtl;
+uses
+ rtl,
+ RemObjects.Elements.RTL;
+
 {$IF ISLAND}
 {$DEFINE FIXMATHERROR}  // Use own implementation of Pow because error in RTL Island
 {$ENDIF}
@@ -9,9 +12,6 @@ const
   { Default tolerance for comparing small floating-point values. }
     SINGLE_TOLERANCE = 0.000001;
     EPSILON: Single = 1E-40;
-
-type
-    TPoint = POINT;
 
     method Sqrt(const A: Single): Single;  inline;
     method InverseSqrt(const A: Single): Single; inline;
@@ -107,7 +107,7 @@ end;
 
 method Radians(const ADegrees: Single): Single;
 begin
-    Result := ADegrees * (Math.Pi / 180);
+    Result := ADegrees * (Consts.PI / 180);
 end;
 
 method EnsureRange(const A, AMin, AMax: Single): Single;

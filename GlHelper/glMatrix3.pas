@@ -13,16 +13,16 @@ type
 
 }
   TMatrix3 = public record
- 
+
   private
- 
+
     method GetComponent(const ARow, AColumn: Integer): Single; inline;
     method SetComponent(const ARow, AColumn: Integer; const Value: Single); inline;
     method GetRow(const AIndex: Integer): TVector3;
     method SetRow(const AIndex: Integer; const Value: TVector3);
 
     method GetDeterminant: Single;
-  
+
   public
     { Initializes the matrix to an identity matrix (filled with 0 and value 1
       for the diagonal) }
@@ -489,9 +489,9 @@ end;
 
 method TMatrix3.Init(const AMatrix : TMatrix4);
 begin
- V[0].Init(AMatrix.V[0].X, AMatrix.V[0].Y, AMatrix.V[0].z);
- V[1].Init(AMatrix.V[1].X, AMatrix.V[1].Y, AMatrix.V[1].z);
- V[2].Init(AMatrix.V[2].X, AMatrix.V[2].Y, AMatrix.V[2].z);
+ V[0].Init(AMatrix.V[0].X, AMatrix.V[0].Y, AMatrix.V[0].Z);
+ V[1].Init(AMatrix.V[1].X, AMatrix.V[1].Y, AMatrix.V[1].Z);
+ V[2].Init(AMatrix.V[2].X, AMatrix.V[2].Y, AMatrix.V[2].Z);
 end;
 
 method TMatrix3.Init(const A11, A12, A13, A21, A22, A23, A31, A32,
@@ -551,7 +551,7 @@ end;
 
 method TMatrix3.GetRow(const AIndex: Integer): TVector3;
 begin
-  Assert((AIndex >= 0) and (AIndex < 3));
+  assert((AIndex >= 0) and (AIndex < 3));
   Result := V[AIndex];
 end;
 
