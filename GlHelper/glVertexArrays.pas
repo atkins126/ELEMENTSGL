@@ -70,11 +70,12 @@ type
 
 
 
-  VertexArray = class
+  VertexArray = public class
     {$REGION 'Internal Declarations'}
 
 
   private
+
     class var
       FSupportsVAO: Boolean;
       FInitialized: Boolean;
@@ -115,6 +116,7 @@ type
       AIndices: array of indices to the vertices defining the triangles.
       Must contain a multiple of 3 elements. }
     constructor (const ALayout: VertexLayout; const AVertices : Array of Single;  const AIndices : Array of UInt16);
+    constructor (const ALayout: VertexLayout; const Vcount, Icount : Integer; const AVertices : ^Single;  const AIndices : ^UInt16);
 
     finalizer;
   end;
@@ -293,6 +295,67 @@ begin
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, FIndexBuffer);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, FIndexCount * sizeOf(UInt16), Pointer( @AIndices[0]), GL_STATIC_DRAW);
+
+  if (FSupportsVAO) then
+  begin
+       { We can configure the attributes as part of the VAO }
+    for i := 0 to ALayout.AttribCount - 1 do
+      begin
+      glVertexAttribPointer(ALayout.Attributes[i].Location, ALayout.Attributes[i].Size,
+      GL_FLOAT, GLboolean(ALayout.Attributes[i].Normalized), ALayout.Stride,
+      Pointer(ALayout.Attributes[i].Offset));
+      glEnableVertexAttribArray(ALayout.Attributes[i].Location);
+    end;
+    glErrorCheck;
+
+       { We can unbind the vertex buffer now since it is registered with the VAO.
+         We cannot unbind the index buffer though. }
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+  end
+  else
+  begin
+       { VAO's are not supported. We need to keep track of the attributes
+         manually }
+    FAttributes := new TAttribute[ALayout.AttribCount];
+  //  SetLength(FAttributes, ALayout.FAttributeCount);
+    for i := 0 to ALayout.AttribCount-1 do
+      FAttributes[i]  := ALayout.Attributes[i];
+
+    FStride := ALayout.Stride;
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+  end;
+  glErrorCheck;
+end;
+
+
+
+constructor VertexArray(const ALayout: VertexLayout; const Vcount, Icount: Integer; const AVertices: ^Single; const AIndices: ^UInt16);
+var i : Integer;
+begin
+  inherited ();
+  if (not FInitialized) then
+    init;
+
+  FIndexCount := Icount;
+
+   { Create vertex buffer and index buffer. }
+  glGenBuffers(1, @FVertexBuffer);
+  glGenBuffers(1, @FIndexBuffer);
+
+  if (FSupportsVAO) then
+  begin
+    glGenVertexArrays(1, @FVertexArray);
+    glBindVertexArray(FVertexArray);
+    glErrorCheck;
+  end;
+
+  glBindBuffer(GL_ARRAY_BUFFER, FVertexBuffer);
+  glBufferData(GL_ARRAY_BUFFER, Vcount * sizeOf(Single), Pointer(AVertices), GL_STATIC_DRAW);
+
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, FIndexBuffer);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, FIndexCount * sizeOf(UInt16), Pointer(AIndices), GL_STATIC_DRAW);
 
   if (FSupportsVAO) then
   begin

@@ -260,56 +260,56 @@ type
 
       Returns:
         The negative value of the matrix (with all elements negated). }
-    class operator Minus(const A: TMatrix4): TMatrix4; {$IFDEF FM_INLINE}inline{$ENDIF}
+    class operator Minus(const A: TMatrix4): TMatrix4; inline;
 
     { Adds a scalar value to each element of a matrix. }
-    class operator Add(const A: TMatrix4; const B: Single): TMatrix4; {$IFDEF FM_INLINE}inline{$ENDIF}
+    class operator Add(const A: TMatrix4; const B: Single): TMatrix4; inline;
 
     { Adds a scalar value to each element of a matrix. }
-    class operator Add(const A: Single; const B: TMatrix4): TMatrix4; {$IFDEF FM_INLINE}inline{$ENDIF}
+    class operator Add(const A: Single; const B: TMatrix4): TMatrix4; inline;
 
     { Adds two matrices component-wise. }
-    class operator Add(const A, B: TMatrix4): TMatrix4; {$IFDEF FM_INLINE}inline{$ENDIF}
+    class operator Add(const A, B: TMatrix4): TMatrix4; inline;
 
     { Subtracts a scalar value from each element of a matrix. }
-    class operator Subtract(const A: TMatrix4; const B: Single): TMatrix4; {$IFDEF FM_INLINE}inline{$ENDIF}
+    class operator Subtract(const A: TMatrix4; const B: Single): TMatrix4; inline;
 
     { Subtracts a matrix from a scalar value. }
-    class operator Subtract(const A: Single; const B: TMatrix4): TMatrix4; {$IFDEF FM_INLINE}inline{$ENDIF}
+    class operator Subtract(const A: Single; const B: TMatrix4): TMatrix4; inline;
 
     { Subtracts two matrices component-wise. }
-    class operator Subtract(const A, B: TMatrix4): TMatrix4; {$IFDEF FM_INLINE}inline{$ENDIF}
+    class operator Subtract(const A, B: TMatrix4): TMatrix4; inline;
 
     { Multiplies a matrix with a scalar value. }
-    class operator Multiply(const A: TMatrix4; const B: Single): TMatrix4; {$IFDEF FM_INLINE}inline{$ENDIF}
+    class operator Multiply(const A: TMatrix4; const B: Single): TMatrix4; inline;
 
     { Multiplies a matrix with a scalar value. }
-    class operator Multiply(const A: Single; const B: TMatrix4): TMatrix4; {$IFDEF FM_INLINE}inline{$ENDIF}
+    class operator Multiply(const A: Single; const B: TMatrix4): TMatrix4; inline;
 
     { Performs a matrix * row vector linear algebraic multiplication. }
-    class operator Multiply(const A: TMatrix4; const B: TVector4): TVector4; {$IFDEF FM_INLINE}inline{$ENDIF}
+    class operator Multiply(const A: TMatrix4; const B: TVector4): TVector4; inline;
 
     { Performs a column vector * matrix linear algebraic multiplication. }
-    class operator Multiply(const A: TVector4; const B: TMatrix4): TVector4; {$IFDEF FM_INLINE}inline{$ENDIF}
+    class operator Multiply(const A: TVector4; const B: TMatrix4): TVector4; inline;
 
     { Multiplies two matrices using linear algebraic multiplication. }
-    class operator Multiply(const A, B: TMatrix4): TMatrix4; {$IFDEF FM_INLINE}inline{$ENDIF}
+    class operator Multiply(const A, B: TMatrix4): TMatrix4; inline;
 
     { Divides a matrix by a scalar value. }
-    class operator Divide(const A: TMatrix4; const B: Single): TMatrix4; {$IFDEF FM_INLINE}inline{$ENDIF}
+    class operator Divide(const A: TMatrix4; const B: Single): TMatrix4; inline;
 
     { Divides a scalar value by a matrix. }
-    class operator Divide(const A: Single; const B: TMatrix4): TMatrix4; {$IFDEF FM_INLINE}inline{$ENDIF}
+    class operator Divide(const A: Single; const B: TMatrix4): TMatrix4; inline;
 
     { Divides a matrix by a vector. This is equivalent to multiplying the
       inverse of the matrix with a row vector using linear algebraic
       multiplication. }
-    class operator Divide(const A: TMatrix4; const B: TVector4): TVector4; {$IFDEF FM_INLINE}inline{$ENDIF}
+    class operator Divide(const A: TMatrix4; const B: TVector4): TVector4; inline;
 
     { Divides a vector by a matrix. This is equivalent to multiplying a column
       vector with the inverse of the matrix using linear algebraic
       multiplication. }
-    class operator Divide(const A: TVector4; const B: TMatrix4): TVector4; {$IFDEF FM_INLINE}inline{$ENDIF}
+    class operator Divide(const A: TVector4; const B: TMatrix4): TVector4; inline;
 
     { Divides two matrices. This is equivalent to multiplying the first matrix
       with the inverse of the second matrix using linear algebraic
@@ -327,7 +327,7 @@ type
 
       @bold(Note): For linear algebraic matrix multiplication, use the multiply
       (*) operator instead. }
-    method CompMult(const AOther: TMatrix4): TMatrix4; {$IFDEF FM_INLINE}inline;{$ENDIF}
+    method CompMult(const AOther: TMatrix4): TMatrix4; inline;
 
     { Creates a transposed version of this matrix.
 
@@ -336,7 +336,7 @@ type
 
       @bold(Note): Does not change this matrix. To update this itself, use
       SetTransposed. }
-    method Transpose: TMatrix4; {$IFDEF FM_INLINE}inline;{$ENDIF}
+    method Transpose: TMatrix4; inline;
 
     { Transposes this matrix.
 
@@ -354,7 +354,7 @@ type
 
       @bold(Note): The values in the returned matrix are undefined if this
       matrix is singular or poorly conditioned (nearly singular). }
-    method Inverse: TMatrix4; {$IFDEF FM_INLINE}inline;{$ENDIF}
+    method Inverse: TMatrix4; inline;
 
     { Inverts this matrix.
 

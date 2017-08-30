@@ -24,5 +24,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)glTypes.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)glCgImage.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)glStbImage.pas" />
+    <Compile Include="$(MSBuildThisFileDirectory)glShape.pas" />
   </ItemGroup>
 </Project>
