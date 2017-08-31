@@ -11,7 +11,7 @@ https://github.com/ProHolz/ELEMENTSGL
 
 
  ======================================
- These is a translation form 
+ These is a translation form
 https://bitbucket.org/saschawillems/dglopengl
 Originale Headers:
 
@@ -19,14 +19,14 @@ Originale Headers:
 
        OpenGL 4.5 - Headertranslation
 
-       
+
        Supported environments and targets :
         - (Win32) Delphi 6 and up
         - (Win32, Win64) Delphi XE2
         - (Win32, Win64, Linux, MacOSX) FreePascal (1.9.3 and up)
 
 ==============================================================================
-  
+
 
        Copyright (C) DGL-OpenGL-Portteam
        All Rights Reserved
@@ -58,21 +58,21 @@ Originale Headers:
 namespace OpenGl;
 {$GLOBALS ON}
 
-uses 
+uses
     rtl,
 {$IF ISLAND}
   RemObjects.Elements.System;
  {$ENDIF}
- 
+
 type
     BYTEBOOL = public Boolean;
  {$IF ISLAND}
  Pointer = public ^Void;
  PPointer = public ^Pointer;
 {$ENDIF}
- 
+
  PAnsiChar= public ^Ansichar;
- 
+
  Pcardinal = public ^Cardinal;
  PInteger = public ^Integer;
  {$IF ISLAND}
@@ -80,7 +80,7 @@ type
   Trect = public rtl.RECT;
   THandle = public HANDLE;
   GLHMODULE = public HMODULE;
-  const 
+  const
       GLNULLMODULE : GLHMODULE = NIL;
 const
    PlatformConvention = CallingConvention.Stdcall;
@@ -92,17 +92,14 @@ const
   GLHMODULE = public Pointer;
 
   //PDisplay = public Pointer;
-  const 
+  const
       GLNULLMODULE : GLHMODULE = NIL;
-
-
-
 
 const
     PlatformConvention = CallingConvention.CDecl;
  {$ENDIF}
 {$ENDIF}
- 
+
 
 
 

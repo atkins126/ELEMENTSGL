@@ -19,6 +19,11 @@ type
 
     method init: instancetype; override;
     method windowDidLoad; override;
+
+    [IBAction]
+    method pressFillButton(sender: id);
+
+
   end;
 
 implementation
@@ -53,6 +58,11 @@ begin
     );
     RunLoop.mainRunLoop.addTimer(ftimer) forMode(NSDefaultRunLoopMode);
   end;
+end;
+
+method MainWindowController.pressFillButton(sender: id);
+begin
+  ViewGL.app.ChangeFillmode;
 end;
 
 

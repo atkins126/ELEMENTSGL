@@ -219,6 +219,15 @@ type
       matrix is singular or poorly conditioned (nearly singular). }
     method SetInversed;
 
+        { Returns the rows of the matrix. This is identical to accessing the
+      V-field.
+
+      Parameters:
+        AIndex: index of the row to return (0-2). Range is checked with
+          an assertion. }
+    property Rows[const AIndex: Integer]: TVector3 read GetRow write SetRow;
+    property M[const ARow, AColumn: Integer]: Single read GetComponent write SetComponent; default;
+
 
     { The determinant of this matrix. }
     property Determinant: Single read GetDeterminant;
@@ -227,15 +236,8 @@ type
 
       { Row  vectors}
       V: array [0..2] of TVector3;
-      property M[const ARow, AColumn: Integer]: Single read GetComponent write SetComponent; default;
-       { Returns the rows of the matrix. This is identical to accessing the
-      V-field.
-
-      Parameters:
-        AIndex: index of the row to return (0-2). Range is checked with
-          an assertion. }
-    property Rows[const AIndex: Integer]: TVector3 read GetRow write SetRow;
-
+     
+     
       property m11 : Single read GetComponent(0,0);
       property m12 : Single read GetComponent(0,1);
       property m13 : Single read GetComponent(0,2);
@@ -534,14 +536,11 @@ end;
 
 method TMatrix3.GetComponent(const ARow, AColumn: Integer): Single;
 begin
-//  Assert((ARow >= 0) and (ARow < 3));
-//  Assert((AColumn >= 0) and (AColumn < 3));
   Result := V[ARow][AColumn];
 end;
 
 method TMatrix3.GetRow(const AIndex: Integer): TVector3;
 begin
-  assert((AIndex >= 0) and (AIndex < 3));
   Result := V[AIndex];
 end;
 
@@ -564,14 +563,11 @@ end;
 
 method TMatrix3.SetComponent(const ARow, AColumn: Integer; const Value: Single);
 begin
-//  Assert((ARow >= 0) and (ARow < 3));
-//  Assert((AColumn >= 0) and (AColumn < 3));
   V[ARow][ AColumn] := Value;
 end;
 
 method TMatrix3.SetRow(const AIndex: Integer; const Value: TVector3);
 begin
- // Assert((AIndex >= 0) and (AIndex < 3));
   V[AIndex] := Value;
 end;
 

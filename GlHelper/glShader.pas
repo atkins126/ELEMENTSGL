@@ -96,7 +96,7 @@ begin
 
     Result := glCreateShader(AShaderType);
 
-    assert(Result <> 0);
+  //  assert(Result <> 0);
     glErrorCheck;
 
 

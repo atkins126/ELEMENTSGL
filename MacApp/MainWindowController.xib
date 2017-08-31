@@ -40,16 +40,33 @@
                     <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="POZ-5S-dfz"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="Waw-Sb-u7Z"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="oW0-8F-L0i"/>
+                    <toolbarItem implicitItemIdentifier="ABDF39D9-9241-4E48-9209-9D7DA036E750" label="Fill" paletteLabel="Fill" image="NSStatusAvailable" id="LVd-Q7-i0Q">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="82" height="32"/>
+                        <size key="maxSize" width="82" height="32"/>
+                        <button key="view" verticalHuggingPriority="750" id="PDy-QU-2da">
+                            <rect key="frame" x="0.0" y="14" width="82" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" image="NSStatusAvailable" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="GPp-9n-xOB">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <connections>
+                            <action selector="pressFillButton:" target="-2" id="520-xf-8Xe"/>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="Sfq-mB-xsp"/>
-                    <toolbarItem reference="yhH-uP-yLC"/>
+                    <toolbarItem reference="LVd-Q7-i0Q"/>
                     <toolbarItem reference="oW0-8F-L0i"/>
-                    <toolbarItem reference="POZ-5S-dfz"/>
                 </defaultToolbarItems>
             </toolbar>
             <point key="canvasLocation" x="38" y="93.5"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="xBt-do-dpi"/>
     </objects>
+    <resources>
+        <image name="NSStatusAvailable" width="16" height="16"/>
+    </resources>
 </document>

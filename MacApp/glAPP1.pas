@@ -6,10 +6,6 @@ uses
   GlHelper,
   OpenGL;
 
-type  Appinterface = public interface
-  method update(width, Height : Integer; const ATotalTimeSec : Double := 0.3);
-end;
-
 type
   GLAPP = class(Appinterface)
   private
@@ -20,6 +16,7 @@ type
   public
     method initialize : Boolean;
     method Update(width, Height : Integer; const ATotalTimeSec : Double := 0.3);
+    method ChangeFillmode;
   end;
 
 implementation
@@ -75,6 +72,10 @@ begin
   shader.Use;
   fVertexArray.Render;
 
+end;
+
+method GLAPP.ChangeFillmode;
+begin
 end;
 
 

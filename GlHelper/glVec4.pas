@@ -795,7 +795,7 @@ end;
 
 method TVector4.GetComponent(const AIndex: Integer): Single;
 begin
-  assert((AIndex >= 0) and (AIndex < 4));
+
      case AIndex of
         0 : result := X;
         1 : result := Y;
@@ -981,7 +981,7 @@ end;
 
 method TVector4.SetComponent(const AIndex: Integer; const Value: Single);
 begin
-  assert((AIndex >= 0) and (AIndex < 4));
+
      case AIndex of
         0 : X := Value;
         1 : Y := Value;

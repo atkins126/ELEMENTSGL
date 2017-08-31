@@ -435,8 +435,8 @@ end;
 
 method ActivateRenderingContext(DC: HDC; RC: HGLRC; loadext: boolean := true);
 begin
-  Assert((DC <> nil), 'DC must not be 0');
-  Assert((RC <> nil), 'RC must not be 0');
+//  Assert((DC <> nil), 'DC must not be 0');
+//  Assert((RC <> nil), 'RC must not be 0');
 
   wglMakeCurrent(DC, RC);
 

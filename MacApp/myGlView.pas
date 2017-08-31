@@ -10,7 +10,7 @@ uses
   [IBObject]
 type Gl_View = public class(NSOpenGLView)
 private
-    fApp: Appinterface;
+  fApp: Appinterface;
   fwx  : GLint;
   fwy  : GLint;
   fww :   GLsizei;
@@ -34,7 +34,7 @@ public
 
 
 // Own Methods and Properties
-method Repaint;
+  method Repaint;
 
 
   property app : Appinterface read fApp write fApp;
@@ -46,7 +46,7 @@ implementation
 method Gl_View.drawRect(dirtyRect: NSRect);
 begin
 
- Repaint;
+  Repaint;
 
 end;
 
@@ -93,12 +93,6 @@ begin
   glFlush();
   openGLContext.flushBuffer;
 end;
-
-//method Gl_View.keyUp(&event: not nullable NSEvent);
-//begin
-  //if &event.keyCode = $35 then window.close;
-//end;
-
 
 
 

@@ -756,7 +756,7 @@ end;
 
 method TVector3.GetComponent(const AIndex: Integer): Single;
 begin
-    assert((AIndex >= 0) and (AIndex < 3));
+  
     case AIndex of
         0 : result := X;
         1 : result := Y;
@@ -905,7 +905,7 @@ end;
 
 method TVector3.SetComponent(const AIndex: Integer; const Value: Single);
 begin
-    assert((AIndex >= 0) and (AIndex < 3));
+ 
     case AIndex of
         0 : X := Value;
         1 : Y := Value;

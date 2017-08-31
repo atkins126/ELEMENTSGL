@@ -165,7 +165,7 @@ begin
 
     if (Location >= 0) then
     begin
-        assert(Location <= 255);
+      //  assert(Location <= 255);
         FAttributes[FAttributeCount].Location := Location;
         FAttributes[FAttributeCount].Size := ACount;
         FAttributes[FAttributeCount].Normalized := ord(ANormalized);

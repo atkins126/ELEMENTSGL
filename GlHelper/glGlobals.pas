@@ -113,7 +113,7 @@ end;
 method EnsureRange(const A, AMin, AMax: Single): Single;
 begin
     Result := A;
- // assert(AMin <= AMax);
+ 
     if Result < AMin then
         Result := AMin;
     if Result > AMax then

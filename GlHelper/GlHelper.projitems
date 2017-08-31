@@ -22,8 +22,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)glVec4.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)glVertexArrays.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)glTypes.pas" />
-    <Compile Include="$(MSBuildThisFileDirectory)glCgImage.pas" />
-    <Compile Include="$(MSBuildThisFileDirectory)glStbImage.pas" />
+    <Compile Include="$(MSBuildThisFileDirectory)glImage.Toffee.pas" />
+    <Compile Include="$(MSBuildThisFileDirectory)glImage.Island.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)glShape.pas" />
   </ItemGroup>
 </Project>

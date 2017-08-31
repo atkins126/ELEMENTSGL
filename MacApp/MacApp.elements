@@ -79,7 +79,8 @@
     <AppResource Include="Resources\materials.vs" />
     <AppResource Include="Resources\remobjects1.Shape" />
     <Compile Include="glShapeRead.pas" />
+    <Compile Include="MacAppDelegates.pas" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Toffee.targets" />
-  <Import Project="\Volumes\HD2\Elements\ELEMENTSGL\GlHelper\GlHelper.projitems" Label="Shared" />
+  <Import Project="..\GlHelper\GlHelper.projitems" Label="Shared" />
 </Project>

@@ -783,7 +783,6 @@ end;
 
 method TVector2.GetComponent(const AIndex: Integer): Single;
 begin
-  assert((AIndex >= 0) and (AIndex < 2));
   if AIndex = 0 then exit X else exit Y;
 end;
 
@@ -960,9 +959,7 @@ end;
 
 method TVector2.SetComponent(const AIndex: Integer; const Value: Single);
 begin
-  assert((AIndex >= 0) and (AIndex < 2));
     if AIndex = 0 then X := Value else Y := Value;
-
 end;
 
 method TVector2.SetLength(const AValue: Single);

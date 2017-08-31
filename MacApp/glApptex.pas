@@ -22,6 +22,7 @@ type
   public
     method initialize : Boolean;
     method Update(width, height : Integer; const ATotalTimeSec : Double := 0.3);
+    method ChangeFillmode;
   end;
 
 implementation
@@ -87,6 +88,10 @@ begin
   fVertexArray.Render;
 
 
+end;
+
+method GLAPP2.ChangeFillmode;
+begin
 end;
 
 
