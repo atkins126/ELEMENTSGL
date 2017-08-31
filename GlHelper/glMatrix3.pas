@@ -220,24 +220,6 @@ type
     method SetInversed;
 
 
-    { Returns the rows of the matrix. This is identical to accessing the
-      V-field.
-
-      Parameters:
-        AIndex: index of the row to return (0-2). Range is checked with
-          an assertion. }
-    property Rows[const AIndex: Integer]: TVector3 read GetRow write SetRow;
-
-    { Returns the elements of the matrix (in row-major order).
-      This is identical to accessing the M-field, but this property can be used
-      as a default array property.
-
-      Parameters:
-        ARow: the row index (0-2). Range is checked with an assertion.
-        AColumn: the column index (0-2). Range is checked with an assertion. }
-    property M[const ARow, AColumn: Integer]: Single read GetComponent write SetComponent; default;
-
-
     { The determinant of this matrix. }
     property Determinant: Single read GetDeterminant;
      method getPglMatrix3f : ^Single;
@@ -245,6 +227,14 @@ type
 
       { Row  vectors}
       V: array [0..2] of TVector3;
+      property M[const ARow, AColumn: Integer]: Single read GetComponent write SetComponent; default;
+       { Returns the rows of the matrix. This is identical to accessing the
+      V-field.
+
+      Parameters:
+        AIndex: index of the row to return (0-2). Range is checked with
+          an assertion. }
+    property Rows[const AIndex: Integer]: TVector3 read GetRow write SetRow;
 
       property m11 : Single read GetComponent(0,0);
       property m12 : Single read GetComponent(0,1);

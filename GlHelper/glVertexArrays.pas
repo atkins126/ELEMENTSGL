@@ -78,6 +78,7 @@ type
 
     class var
       FSupportsVAO: Boolean;
+    class var
       FInitialized: Boolean;
 
 
@@ -91,7 +92,7 @@ type
     FRenderStarted: Boolean;
 
   private
-    class method Init;
+     method Initialize;
 
 
   private
@@ -178,10 +179,15 @@ end;
 
 class constructor VertexArray;
 begin
+ {$IF TOFFEE}
+  // FSupportsVAO := true;
+  FInitialized := false;
+
+  {$ENDIF}
 
 end;
 
-class method VertexArray.Init;
+ method VertexArray.Initialize;
 begin
   {$IF TOFFEE}
    FSupportsVAO := true;
@@ -271,62 +277,8 @@ begin
 end;
 
 constructor VertexArray(const ALayout: VertexLayout; const AVertices: array of Single; const AIndices: array of UInt16 );
-var i : Integer;
 begin
-  inherited ();
-  if (not FInitialized) then
-    init;
-
-  FIndexCount := length(AIndices);
-
-   { Create vertex buffer and index buffer. }
-  glGenBuffers(1, @FVertexBuffer);
-  glGenBuffers(1, @FIndexBuffer);
-
-  if (FSupportsVAO) then
-  begin
-    glGenVertexArrays(1, @FVertexArray);
-    glBindVertexArray(FVertexArray);
-    glErrorCheck;
-  end;
-
-  glBindBuffer(GL_ARRAY_BUFFER, FVertexBuffer);
-  glBufferData(GL_ARRAY_BUFFER, length(AVertices) * sizeOf(Single), Pointer( @AVertices[0]), GL_STATIC_DRAW);
-
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, FIndexBuffer);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, FIndexCount * sizeOf(UInt16), Pointer( @AIndices[0]), GL_STATIC_DRAW);
-
-  if (FSupportsVAO) then
-  begin
-       { We can configure the attributes as part of the VAO }
-    for i := 0 to ALayout.AttribCount - 1 do
-      begin
-      glVertexAttribPointer(ALayout.Attributes[i].Location, ALayout.Attributes[i].Size,
-      GL_FLOAT, GLboolean(ALayout.Attributes[i].Normalized), ALayout.Stride,
-      Pointer(ALayout.Attributes[i].Offset));
-      glEnableVertexAttribArray(ALayout.Attributes[i].Location);
-    end;
-    glErrorCheck;
-
-       { We can unbind the vertex buffer now since it is registered with the VAO.
-         We cannot unbind the index buffer though. }
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-  end
-  else
-  begin
-       { VAO's are not supported. We need to keep track of the attributes
-         manually }
-    FAttributes := new TAttribute[ALayout.AttribCount];
-  //  SetLength(FAttributes, ALayout.FAttributeCount);
-    for i := 0 to ALayout.AttribCount-1 do
-      FAttributes[i]  := ALayout.Attributes[i];
-
-    FStride := ALayout.Stride;
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-  end;
-  glErrorCheck;
+  constructor (ALayout, AVertices.length, AIndices.length, @AVertices[0], @AIndices[0]);
 end;
 
 
@@ -336,7 +288,7 @@ var i : Integer;
 begin
   inherited ();
   if (not FInitialized) then
-    init;
+    Initialize;
 
   FIndexCount := Icount;
 
@@ -347,8 +299,12 @@ begin
   if (FSupportsVAO) then
   begin
     glGenVertexArrays(1, @FVertexArray);
+    if FVertexArray > 0 then
+      begin
     glBindVertexArray(FVertexArray);
     glErrorCheck;
+    end
+    else FSupportsVAO := false;
   end;
 
   glBindBuffer(GL_ARRAY_BUFFER, FVertexBuffer);

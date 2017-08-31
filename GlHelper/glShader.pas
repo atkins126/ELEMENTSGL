@@ -47,6 +47,8 @@ type
   {$IF DEBUG AND ISLAND}
   method glErrorCheck;
  {$ELSE}
+
+
     method glErrorCheck; inline; empty;
  {$ENDIF}
 
