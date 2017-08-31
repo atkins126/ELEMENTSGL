@@ -1,7 +1,5 @@
 ﻿namespace GlHelper;
 
-
-
 interface
 
 type
@@ -9,12 +7,13 @@ type
     You can access the elements directly using M[0,0]..M[3,3] or m11..m44.
 
     }
-  TMatrix4 = public record
 
+{$DEFINE USEINLINE}
+ TMatrix4 = public record
   private
 
-    method GetComponent(const ARow, AColumn: Integer): Single; inline;
-    method SetComponent(const ARow, AColumn: Integer; const Value: Single); inline;
+    method GetComponent(const ARow, AColumn: Integer): Single; {$IF USEINLINE} inline; {$ENDIF}
+    method SetComponent(const ARow, AColumn: Integer; const Value: Single); {$IF USEINLINE} inline; {$ENDIF}
     method GetRow(const AIndex: Integer): TVector4;
     method SetRow(const AIndex: Integer; const Value: TVector4);
 
@@ -248,73 +247,73 @@ type
 
       Returns:
         True if the two matrices match each other exactly. }
-    class operator Equal(const A, B: TMatrix4): Boolean; inline;
+    class operator Equal(const A, B: TMatrix4): Boolean; {$IF USEINLINE} inline; {$ENDIF}
 
     { Checks two matrices for inequality.
 
       Returns:
         True if the two matrices are not equal. }
-    class operator NotEqual(const A, B: TMatrix4): Boolean; inline;
+    class operator NotEqual(const A, B: TMatrix4): Boolean; {$IF USEINLINE} inline; {$ENDIF}
 
     { Negates a matrix.
 
       Returns:
         The negative value of the matrix (with all elements negated). }
-    class operator Minus(const A: TMatrix4): TMatrix4; inline;
+    class operator Minus(const A: TMatrix4): TMatrix4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Adds a scalar value to each element of a matrix. }
-    class operator Add(const A: TMatrix4; const B: Single): TMatrix4; inline;
+    class operator Add(const A: TMatrix4; const B: Single): TMatrix4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Adds a scalar value to each element of a matrix. }
-    class operator Add(const A: Single; const B: TMatrix4): TMatrix4; inline;
+    class operator Add(const A: Single; const B: TMatrix4): TMatrix4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Adds two matrices component-wise. }
-    class operator Add(const A, B: TMatrix4): TMatrix4; inline;
+    class operator Add(const A, B: TMatrix4): TMatrix4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Subtracts a scalar value from each element of a matrix. }
-    class operator Subtract(const A: TMatrix4; const B: Single): TMatrix4; inline;
+    class operator Subtract(const A: TMatrix4; const B: Single): TMatrix4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Subtracts a matrix from a scalar value. }
-    class operator Subtract(const A: Single; const B: TMatrix4): TMatrix4; inline;
+    class operator Subtract(const A: Single; const B: TMatrix4): TMatrix4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Subtracts two matrices component-wise. }
-    class operator Subtract(const A, B: TMatrix4): TMatrix4; inline;
+    class operator Subtract(const A, B: TMatrix4): TMatrix4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Multiplies a matrix with a scalar value. }
-    class operator Multiply(const A: TMatrix4; const B: Single): TMatrix4; inline;
+    class operator Multiply(const A: TMatrix4; const B: Single): TMatrix4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Multiplies a matrix with a scalar value. }
-    class operator Multiply(const A: Single; const B: TMatrix4): TMatrix4; inline;
+    class operator Multiply(const A: Single; const B: TMatrix4): TMatrix4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Performs a matrix * row vector linear algebraic multiplication. }
-    class operator Multiply(const A: TMatrix4; const B: TVector4): TVector4; inline;
+    class operator Multiply(const A: TMatrix4; const B: TVector4): TVector4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Performs a column vector * matrix linear algebraic multiplication. }
-    class operator Multiply(const A: TVector4; const B: TMatrix4): TVector4; inline;
+    class operator Multiply(const A: TVector4; const B: TMatrix4): TVector4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Multiplies two matrices using linear algebraic multiplication. }
-    class operator Multiply(const A, B: TMatrix4): TMatrix4; inline;
+    class operator Multiply(const A, B: TMatrix4): TMatrix4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Divides a matrix by a scalar value. }
-    class operator Divide(const A: TMatrix4; const B: Single): TMatrix4; inline;
+    class operator Divide(const A: TMatrix4; const B: Single): TMatrix4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Divides a scalar value by a matrix. }
-    class operator Divide(const A: Single; const B: TMatrix4): TMatrix4; inline;
+    class operator Divide(const A: Single; const B: TMatrix4): TMatrix4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Divides a matrix by a vector. This is equivalent to multiplying the
       inverse of the matrix with a row vector using linear algebraic
       multiplication. }
-    class operator Divide(const A: TMatrix4; const B: TVector4): TVector4; inline;
+    class operator Divide(const A: TMatrix4; const B: TVector4): TVector4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Divides a vector by a matrix. This is equivalent to multiplying a column
       vector with the inverse of the matrix using linear algebraic
       multiplication. }
-    class operator Divide(const A: TVector4; const B: TMatrix4): TVector4; inline;
+    class operator Divide(const A: TVector4; const B: TMatrix4): TVector4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Divides two matrices. This is equivalent to multiplying the first matrix
       with the inverse of the second matrix using linear algebraic
       multiplication. }
-    class operator Divide(const A, B: TMatrix4): TMatrix4; inline;
+    class operator Divide(const A, B: TMatrix4): TMatrix4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Multiplies this matrix with another matrix component-wise.
 
@@ -327,7 +326,7 @@ type
 
       @bold(Note): For linear algebraic matrix multiplication, use the multiply
       (*) operator instead. }
-    method CompMult(const AOther: TMatrix4): TMatrix4; inline;
+    method CompMult(const AOther: TMatrix4): TMatrix4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Creates a transposed version of this matrix.
 
@@ -336,7 +335,7 @@ type
 
       @bold(Note): Does not change this matrix. To update this itself, use
       SetTransposed. }
-    method Transpose: TMatrix4; inline;
+    method Transpose: TMatrix4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Transposes this matrix.
 
@@ -354,7 +353,7 @@ type
 
       @bold(Note): The values in the returned matrix are undefined if this
       matrix is singular or poorly conditioned (nearly singular). }
-    method Inverse: TMatrix4; inline;
+    method Inverse: TMatrix4; {$IF USEINLINE} inline; {$ENDIF}
 
     { Inverts this matrix.
 
@@ -947,17 +946,23 @@ begin
 end;
 
 method TMatrix4.GetComponent(const ARow, AColumn: Integer): Single;
+{$IF USEINLINE}
+{$ELSE}
 require
   (ARow >= 0) and (ARow < 4);
   (AColumn >= 0) and (AColumn < 4);
+{$ENDIF}
 
 begin
   Result := V[ARow][AColumn];
 end;
 
 method TMatrix4.GetRow(const AIndex: Integer): TVector4;
+{$IF USEINLINE}
+{$ELSE}
 require
   (AIndex >= 0) and (AIndex < 4);
+{$ENDIF}
 begin
   Result := V[AIndex];
 end;
@@ -1055,17 +1060,23 @@ begin
 end;
 
 method TMatrix4.SetComponent(const ARow, AColumn: Integer; const Value: Single);
+{$IF USEINLINE}
+{$ELSE}
 require
   (ARow >= 0) and (ARow < 4);
   (AColumn >= 0) and (AColumn < 4);
+{$ENDIF}
 begin
     V[ARow][AColumn] := Value;
 end;
 
 
 method TMatrix4.SetRow(const AIndex: Integer; const Value: TVector4);
+{$IF USEINLINE}
+{$ELSE}
 require
   (AIndex >= 0) and (AIndex < 4);
+{$ENDIF}
 begin
   V[AIndex] := Value;
 end;
