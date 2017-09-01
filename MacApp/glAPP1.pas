@@ -65,8 +65,9 @@ begin
 //  glViewport(0, 0, width, Height);
 
   { Clear the color buffer }
- // glClearColor(0.2, 0.3, 0.3, 1.0);
- // glClear(GL_COLOR_BUFFER_BIT);
+  glClearColor(0.2, 0.3, 0.3, 1.0);
+  glClear(GL_COLOR_BUFFER_BIT);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
   { Draw the triangle }
   shader.Use;

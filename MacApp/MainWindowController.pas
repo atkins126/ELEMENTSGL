@@ -22,7 +22,8 @@ type
 
     [IBAction]
     method pressFillButton(sender: id);
-
+    [IBAction]
+    method pressAppButton(sender: id);
 
   end;
 
@@ -46,9 +47,8 @@ begin
   if ViewGL <> nil then
   begin
     // One of the 3 app should be activ!!!
-    //var app := new GLAPP();
-   // var app := new GLAPP2();
-    var app := new GLAPPMaterial();
+    var app := new GLAPP();
+
     app.initialize;
     ViewGL.app := app;
     ftimer :=  NSTimer.timerWithTimeInterval(1.0 / 60.0) repeats(true) &block(method (aTimer : NSTimer)
@@ -63,6 +63,23 @@ end;
 method MainWindowController.pressFillButton(sender: id);
 begin
   ViewGL.app.ChangeFillmode;
+end;
+
+method MainWindowController.pressAppButton(sender: id);
+begin
+  var tag := NSToolbarItem(sender).tag;
+  var App : Appinterface := nil;
+  case tag of
+    0 : App := new GLAPP();
+    1 : App := new GLAPP2();
+    2 : App := new GLAPPMaterial();
+  end;
+  if App <> nil then
+  begin
+    App.Initialize;
+    ViewGL.app := App;
+  end;
+
 end;
 
 

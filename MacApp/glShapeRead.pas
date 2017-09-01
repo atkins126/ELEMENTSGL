@@ -22,7 +22,7 @@ begin
 end;
 
 method ShapeReader.load(const aFilename: String): Shape;
-//
+{$DEFINE FIXSTREAM} //Disable if DelphiLib Streams are fixed
 begin
   result := nil;
   if aFilename.FileExists then
@@ -33,16 +33,24 @@ begin
     fMem.LoadFromFile(aFilename);
     fMem.Position := 0;
     var Version : Integer;
-    fMem.Seek(fMem.ReadData(var Version), TSeekOrigin.soCurrent);
+    {$IF FIXSTREAM}fMem.Seek({$ENDIF}
+    fMem.ReadData(var Version)
+    {$IF FIXSTREAM}, TSeekOrigin.soCurrent){$ENDIF}
+    ;
 
 
     if Version = 1 then
     begin
-      var i, j : Int32;
+      var i : Int32;
       var Faces : Integer;
 
       // Start Points
-      fMem.Seek(fMem.ReadData(var Faces), TSeekOrigin.soCurrent);
+
+
+ {$IF FIXSTREAM}fMem.Seek({$ENDIF}
+ fMem.ReadData(var Faces)
+    {$IF FIXSTREAM}, TSeekOrigin.soCurrent){$ENDIF}
+      ;
 
       result := new Shape(Faces);
 
@@ -51,46 +59,75 @@ begin
         Var fCountVecs : Int32;
         var temp :  array of TVector3;
 
-        fMem.Seek(fMem.ReadData(var fCountVecs), TSeekOrigin.soCurrent);
+
+  {$IF FIXSTREAM}fMem.Seek({$ENDIF}
+  fMem.ReadData(var fCountVecs)
+    {$IF FIXSTREAM}, TSeekOrigin.soCurrent){$ENDIF}
+        ;
+
+
         temp := new  TVector3[fCountVecs];
 
-        for  j := 0 to fCountVecs-1 do
-          fMem.Seek(fMem.Read(var temp[j], 12),TSeekOrigin.soCurrent);
 
+  {$IF FIXSTREAM}fMem.Seek({$ENDIF}
+  fMem.Read(var temp[0], 12*fCountVecs)
+    {$IF FIXSTREAM}, TSeekOrigin.soCurrent){$ENDIF}
+        ;
         result.addFaceVecs(i, temp);
-
-
       end;
 
       if fMem.Position >= fMem.Size then exit nil;
       // Start Normals
-      fMem.Seek(fMem.ReadData(var Faces), TSeekOrigin.soCurrent);
+
+   {$IF FIXSTREAM}fMem.Seek({$ENDIF}
+   fMem.ReadData(var Faces)
+    {$IF FIXSTREAM}, TSeekOrigin.soCurrent){$ENDIF}
+      ;
       for  i := 0 to Faces-1 do
         begin
         Var fCountVecs : Int32;
         var temp :  array of TVector3;
+   {$IF FIXSTREAM}fMem.Seek({$ENDIF}
+   fMem.ReadData(var fCountVecs)
+    {$IF FIXSTREAM}, TSeekOrigin.soCurrent){$ENDIF}
+        ;
 
-        fMem.Seek(fMem.ReadData(var fCountVecs), TSeekOrigin.soCurrent);
         temp := new TVector3[fCountVecs];
-        for  j := 0 to fCountVecs-1 do
-          fMem.Seek(fMem.Read(var temp[j], 12),TSeekOrigin.soCurrent);
 
 
+   {$IF FIXSTREAM}fMem.Seek({$ENDIF}
+   fMem.Read(var temp[0], 12*fCountVecs)
+    {$IF FIXSTREAM}, TSeekOrigin.soCurrent){$ENDIF}
+        ;
         result.addNormales(i, temp);
       end;
 
    // Start Indexes
-      fMem.Seek(fMem.ReadData(var Faces), TSeekOrigin.soCurrent);
+
+   {$IF FIXSTREAM}fMem.Seek({$ENDIF}
+   fMem.ReadData(var Faces)
+    {$IF FIXSTREAM}, TSeekOrigin.soCurrent){$ENDIF}
+      ;
+
       for  i := 0 to Faces-1 do
         begin
         Var fCountVecs : Int32;
         var temp : Array of Integer;
 
-        fMem.Seek(fMem.ReadData(var fCountVecs), TSeekOrigin.soCurrent);
-        temp := new Integer[fCountVecs];
-        for  j := 0 to fCountVecs-1 do
-          fMem.Seek(fMem.ReadData(var temp[j]),TSeekOrigin.soCurrent);
 
+   {$IF FIXSTREAM}fMem.Seek({$ENDIF}
+   fMem.ReadData(var fCountVecs)
+    {$IF FIXSTREAM}, TSeekOrigin.soCurrent){$ENDIF}
+        ;
+
+
+        temp := new Integer[fCountVecs];
+
+
+   {$IF FIXSTREAM}fMem.Seek({$ENDIF}
+   fMem.Read(var temp[0], 4*fCountVecs)
+    {$IF FIXSTREAM}, TSeekOrigin.soCurrent){$ENDIF}
+        ;
         result.addIndexes(i, temp);
       end;
     end;

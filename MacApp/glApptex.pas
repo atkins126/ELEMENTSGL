@@ -64,8 +64,8 @@ begin
     fVertexArray := new VertexArray(VertexLayout, VERTICES, INDICES);
 
   FTexture1 := new Texture('Tex1.JPG');
-  //FTexture2 := new Texture('coral.jpg');
-  FTexture2 := new Texture('gears.png');
+  FTexture2 := new Texture('coral.jpg');
+  //FTexture2 := new Texture('gears.png');
 
 
   result := true;
@@ -73,7 +73,7 @@ end;
 
 method GLAPP2.Update(width, height : Integer; const ATotalTimeSec : Double := 0.3);
 begin
-
+  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   shader.Use;
 
   { Bind Textures using texture units }

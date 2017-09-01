@@ -218,7 +218,7 @@ var
   Model,  Translate, Scale, Rotate: TMatrix4;
 
 begin
-  if not Finitilalized then initialize;
+  if not Finitilalized then Initialize;
   { Use corresponding shader when setting uniforms/drawing objects }
   FLightingShader.Use;
 
