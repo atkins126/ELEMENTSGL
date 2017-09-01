@@ -16,6 +16,8 @@ type
   public
     [IBOutlet]
     var ViewGL: Gl_View;
+    [IBOutlet]
+    var TimeLabel : NSToolbarItem;
 
     method init: instancetype; override;
     method windowDidLoad; override;
@@ -47,13 +49,17 @@ begin
   if ViewGL <> nil then
   begin
     // One of the 3 app should be activ!!!
+    TimeLabel.label := 'Example 1';
+
     var app := new GLAPP();
 
     app.initialize;
     ViewGL.app := app;
     ftimer :=  NSTimer.timerWithTimeInterval(1.0 / 60.0) repeats(true) &block(method (aTimer : NSTimer)
     begin
+
       ViewGL.Repaint;
+
     end
     );
     RunLoop.mainRunLoop.addTimer(ftimer) forMode(NSDefaultRunLoopMode);
@@ -74,6 +80,9 @@ begin
     1 : App := new GLAPP2();
     2 : App := new GLAPPMaterial();
   end;
+
+  TimeLabel.label := 'Example '+(tag+1).ToString;
+
   if App <> nil then
   begin
     App.Initialize;

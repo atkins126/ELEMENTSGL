@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MainWindowController">
             <connections>
+                <outlet property="TimeLabel" destination="B49-Dp-Jrk" id="SZ8-mA-eU5"/>
                 <outlet property="ViewGL" destination="EpR-iA-KWm" id="ZMF-EM-pbb"/>
                 <outlet property="window" destination="5" id="GLb-s9-i5g"/>
             </connections>
@@ -16,14 +17,14 @@
         <window title="Opengl Examples" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="480" height="395"/>
+            <rect key="contentRect" x="335" y="390" width="674" height="395"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" canDrawConcurrently="YES" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="395"/>
+                <rect key="frame" x="0.0" y="0.0" width="674" height="395"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <openGLView colorSize="5bit_RGB_8bit_Alpha" depthSize="32bit" stencilSize="8bit" antiAliasingType="multisample" samplingRate="6" useAuxiliaryDepthBufferStencil="NO" useDoubleBufferingEnabled="YES" allowOffline="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EpR-iA-KWm" customClass="Gl_View">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="395"/>
+                        <rect key="frame" x="0.0" y="0.0" width="674" height="395"/>
                     </openGLView>
                 </subviews>
                 <constraints>
@@ -56,7 +57,7 @@
                             <action selector="pressFillButton:" target="-2" id="520-xf-8Xe"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="E97B3FE2-BA23-48C6-94F1-C1F38A3D9C92" label="Example 1" paletteLabel="Example 1" image="NSApplicationIcon" id="gIW-Az-UWp">
+                    <toolbarItem implicitItemIdentifier="E97B3FE2-BA23-48C6-94F1-C1F38A3D9C92" label="Example 1" paletteLabel="Example 1" toolTip="Shows a Color Triangle" image="NSApplicationIcon" id="gIW-Az-UWp">
                         <connections>
                             <action selector="pressAppButton:" target="-2" id="que-tj-DWG"/>
                         </connections>
@@ -71,17 +72,32 @@
                             <action selector="pressAppButton:" target="-2" id="NLU-T3-iNZ"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="B20549DE-71B5-4871-934F-DBF173AA0D84" label="dd" paletteLabel="Timelabel" tag="-1" id="B49-Dp-Jrk">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="38" height="17"/>
+                        <size key="maxSize" width="400" height="17"/>
+                        <textField key="view" horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="-1" allowsCharacterPickerTouchBarItem="NO" id="BOJ-Ez-qdK">
+                            <rect key="frame" x="10" y="14" width="38" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="wpF-HT-xJx">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="gIW-Az-UWp"/>
                     <toolbarItem reference="cLD-md-mIt"/>
                     <toolbarItem reference="sFH-as-3pN"/>
                     <toolbarItem reference="Waw-Sb-u7Z"/>
+                    <toolbarItem reference="B49-Dp-Jrk"/>
                     <toolbarItem reference="oW0-8F-L0i"/>
                     <toolbarItem reference="LVd-Q7-i0Q"/>
                 </defaultToolbarItems>
             </toolbar>
-            <point key="canvasLocation" x="38" y="93.5"/>
+            <point key="canvasLocation" x="135" y="93.5"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="xBt-do-dpi"/>
     </objects>

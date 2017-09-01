@@ -5,7 +5,8 @@ uses
   AppKit,
   OpenGL,
   GlHelper,
-  Foundation;
+  Foundation,
+  RemObjects.Elements.RTL;
 
   [IBObject]
 type Gl_View = public class(NSOpenGLView)
@@ -18,6 +19,9 @@ private
 
 
   ftime : Double := 0.1;
+
+  class method  getTicks(): UInt64;
+
 public
 
 // Overrides from NSVIEW
@@ -78,8 +82,7 @@ end;
 
 method Gl_View.Repaint;
 begin
- // glLoadIdentity;
-//  glViewport(fwx, fwy, fww, fwh); // Map OpenGL projection plane to NSWindow
+
 { Clear the color and depth buffer }
   glClearColor(0.3, 0.3, 0.3, 1.0);
   glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT);
@@ -87,13 +90,21 @@ begin
   glEnable(GL_DEPTH_TEST);
   if fApp <> nil then fApp.update(fww, fwh, ftime);
   ftime := ftime + 0.01;
-  if ftime > 4 then ftime := 0.1;
-
+  if ftime > 15 then ftime := 0.1;
 
   glFlush();
   openGLContext.flushBuffer;
+
+
 end;
 
+class method  Gl_View.getTicks(): UInt64;
+begin
+  var t : __struct_timeval;
+  gettimeofday(var t, nil);
+  exit UInt64(t.tv_sec * 1000) + UInt64(t.tv_usec / 1000)
+
+end;
 
 
 end.
