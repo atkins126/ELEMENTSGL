@@ -53,7 +53,7 @@ const
 
   BOX_VERTICES: array  of Single = [
       // Positions      // Normals
-      -0.5, -0.5, -0.5,  0.0,  0.0, -1.0,
+  -0.5, -0.5, -0.5,  0.0,  0.0, -1.0,
        0.5, -0.5, -0.5,  0.0,  0.0, -1.0,
        0.5,  0.5, -0.5,  0.0,  0.0, -1.0,
       -0.5,  0.5, -0.5,  0.0,  0.0, -1.0,
@@ -85,13 +85,13 @@ const
 
 
   { The indices define 2 triangles per cube face, 6 faces total }
-  INDICES: array  of UInt16 = [
-     0,  1,  2,   2,  3,  0,
-     4,  5,  6,   6,  7,  4,
-     8,  9, 10,  10, 11,  8,
-    12, 13, 14,  14, 15, 12,
-    16, 17, 18,  18, 19, 16,
-    20, 21, 22,  22, 23, 20];
+      INDICES: array  of UInt16 = [
+      0,  1,  2,   2,  3,  0,
+         4,  5,  6,   6,  7,  4,
+         8,  9, 10,  10, 11,  8,
+        12, 13, 14,  14, 15, 12,
+        16, 17, 18,  18, 19, 16,
+        20, 21, 22,  22, 23, 20];
 begin
   Finitilalized := true;
 
@@ -132,7 +132,7 @@ begin
   .Add('position', 3)
   .Add('normal', 3);
 
-    FBox := new VertexArray(fVertexLayout, BOX_VERTICES, INDICES);
+  FBox := new VertexArray(fVertexLayout, BOX_VERTICES, INDICES);
 
 end;
 
@@ -185,20 +185,19 @@ begin
 
   glShadeModel(GL_SMOOTH);
  // glPolygonMode(GL_FRONT, GL_LINE); // GL_LINE  // GL_POINT //GL_FILL
- if FFilled then
-  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) // GL_LINE  // GL_POINT //GL_FILL
+  if FFilled then
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) // GL_LINE  // GL_POINT //GL_FILL
   else
-   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 end;
 
 
 method GLAPPMaterial.UpdateViewAndProjection(const width, Height : Single);
 var Projection, View : TMatrix4;
 begin
-  {$DEFINE ORTHO}
-  {$IF ORTHO}
-  const V : Single = 2.0;
   var rot : Single := 345;
+  const V : Single = 2.5;
+
 
   var lAspect : Single :=  (Height / width);
 {ORTHOGNAL VIEW}
@@ -206,15 +205,7 @@ begin
 
   rot := FmodelRotation;
   View.InitRotationYawPitchRoll(Radians(-rot), Radians(rot), Radians(-rot));
- {$ELSE}
- {Perspective}
 
-  var camera := new Camera(Integer(width), Integer(Height),TVector3.Vector3(-0.5, -1, 4), TVector3.Vector3(0,1,0));
-
-  View := camera.ViewMatrix;
-  camera.Zoom := 70;
-  Projection.InitPerspectiveFovRH(Radians(camera.Zoom), width / Height, 0.1, 100.0);
-  {$ENDIF}
 
  { Pass matrices to shader }
   glUniformMatrix4fv(FUniformContainerView, 1, GL_FALSE,  View.getPglMatrix4f);
@@ -224,7 +215,7 @@ end;
 method GLAPPMaterial.Update(width, Height : Integer; const ATotalTimeSec : Double := 0.3);
 
 var
-  Model,  Translate, Scale: TMatrix4;
+  Model,  Translate, Scale, Rotate: TMatrix4;
 
 begin
   if not Finitilalized then initialize;
@@ -234,41 +225,67 @@ begin
   {Set the defaults and clear the Buffer}
   UpdateDrawSettings;
   {Prepare the Ligthing}
+
+  FLightColor.R := sin(ATotalTimeSec * 2.0);
+  FLightColor.G := sin(ATotalTimeSec * 0.7);
+  FLightColor.B := sin(ATotalTimeSec * 1.3);
+
   UpdateLight(FLightColor);
 
   UpdateViewAndProjection(width, Height);
 
 
   { Draw the container 1. Time }
-  Model.InitRotationYawPitchRoll(Radians(-FmodelRotation), Radians(0), Radians(0));
+  var face : Integer;
+  // Loop over all 6 Sides
+  for face := 0 to 5 do
+    begin
+      // Rotation of Logo
+    Model.InitRotationYawPitchRoll(Radians(-FmodelRotation), Radians(0), Radians(0));
  // Model.Init;
-  Translate.InitTranslation(-0.40,0,1.10);
-  Model :=  Model * Translate ;
 
-  glUniformMatrix4fv(FUniformContainerModel, 1, GL_FALSE, Model.getPglMatrix4f);
+    Rotate.Init;
+    // Prepare Roation for Side
+    case face of
+      0 :;
+      1 :  Rotate.InitRotationY(Radians(90));
+      2 :  Rotate.InitRotationY(Radians(180));
+      3 :  Rotate.InitRotationY(Radians(270));
+      4 :  Rotate.InitRotationX(Radians(90));
+      5 :  Rotate.InitRotationX(Radians(270));
+    end;
 
-  for lVoa in FRemObjectsVAO do  lVoa.Render;
+     // Move left and up
+    Translate.InitTranslation(-0.40,0,1.10);
+   // Calculate the finish ModelMatrix
+    Model :=   Model * Translate * Rotate ;
+
+    glUniformMatrix4fv(FUniformContainerModel, 1, GL_FALSE, Model.getPglMatrix4f);
+
+    for lVoa in FRemObjectsVAO do  lVoa.Render;
+
 
 
  { Draw the container 2. Time }
   Model.InitRotationYawPitchRoll(Radians(FmodelRotation), Radians(0), Radians(0));
-  //var rx : TMatrix4;
+    // Move Right and up
   Translate.InitTranslation(0.4,0,1.10);
-
+ // Sclae the Logo a little bit in x and y direction
   Scale.InitScaling(0.8, 0.8, 1.0);
-  Model := Scale * Model * Translate;
+   // Calculate the finish ModelMatrix
+  Model := Scale * Model * Translate * Rotate;
 
   glUniformMatrix4fv(FUniformContainerModel, 1, GL_FALSE, Model.getPglMatrix4f);
 
-    for lVoa in FRemObjectsVAO do  lVoa.Render;
-
+  for lVoa in FRemObjectsVAO do  lVoa.Render;
+  end;
 
 {Draw the Box}
   Model.InitScaling(2);
   glUniformMatrix4fv(FUniformContainerModel, 1, GL_FALSE, Model.getPglMatrix4f);
 
  // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // GL_LINE  // GL_POINT //GL_FILL
-  var boxcol := TVector3.Vector3(0,0.8,0.2);
+  var boxcol := TVector3.Vector3(0.7,0.7,0.5);
   UpdateLight(boxcol);
 
   FBox.Render;
@@ -277,7 +294,7 @@ begin
 {Change the Rotation in every step}
   if FmodelRotation >= 359 then
     FmodelRotation := 0 else
-  FmodelRotation := FmodelRotation + 1.0;
+    FmodelRotation := FmodelRotation + 1.0;
 
 end;
 
