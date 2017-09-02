@@ -56,27 +56,26 @@ Originale Headers:
 }
 
 namespace OpenGl;
-{$GLOBALS ON}
-
+ {$IF ISLAND}
+ {$GLOBALS ON}
 uses
-    rtl,
-{$IF ISLAND}
-  RemObjects.Elements.System;
- {$ENDIF}
+rtl,
+ RemObjects.Elements.System;
+
 
 type
     BYTEBOOL = public Boolean;
- {$IF ISLAND}
+
  Pointer = public ^Void;
  PPointer = public ^Pointer;
-{$ENDIF}
 
- PAnsiChar= public ^Ansichar;
+
+ PAnsiChar= public ^AnsiChar;
 
  Pcardinal = public ^Cardinal;
  PInteger = public ^Integer;
- {$IF ISLAND}
-  {$IF WINDOWS}
+
+ {$IF WINDOWS}
   Trect = public rtl.RECT;
   THandle = public HANDLE;
   GLHMODULE = public HMODULE;
@@ -97,9 +96,9 @@ const
 
 const
     PlatformConvention = CallingConvention.CDecl;
- {$ENDIF}
-{$ENDIF}
 
+{$ENDIF}
+{$ENDIF} // ISLAND
 
 
 

@@ -56,12 +56,13 @@ Originale Headers:
 }
 
 namespace OpenGl;
+{$IF ISLAND}
 {$GLOBALS ON}
 
 interface
 uses
     rtl,
-    RemObjects.Elements.system;
+    RemObjects.Elements.System;
 
     var
         GL_LibHandle: GLHMODULE := GLNULLMODULE;
@@ -70,24 +71,21 @@ uses
         LastPixelFormat: Integer;
         ExtensionsRead: Boolean;
         ImplementationRead: Boolean;
- LoadProc : GLfwLoadProc; 
+ LoadProc : GLfwLoadProc;
 
 type
     TRCOptions = set of (opDoubleBuffered, opGDI, opStereo);
 
 
     const
-{$IF ISLAND AND WINDOWS}
+{$IF  WINDOWS}
   OPENGL_LIBNAME = 'OpenGL32.dll';
   GLU_LIBNAME = 'GLU32.dll';
-{$ELSE}
-  {$IFDEF darwin}
-    OPENGL_LIBNAME = 'libGL.dylib';
-    GLU_LIBNAME = 'libGLU.dylib';
-  {$ELSE}
+{$ELSEIF LINUX}
+
     OPENGL_LIBNAME = 'libGL.so.1';
     GLU_LIBNAME = 'libGLU.so.1';
-  {$ENDIF}
+
 {$ENDIF}
 
   method dglGetProcAddress(ProcName: String; LibHandle: GLHMODULE := GLNULLMODULE; StaticLink : Boolean := false ): ^Void;
@@ -97,7 +95,7 @@ type
 
   method InitOpenGL(LibName: String := ''; GLULibName: String := ''): Boolean;
 
-{$IF ISLAND and WINDOWS}
+{$IF WINDOWS}
 method CreateRenderingContext(DC: HDC; Options: TRCOptions; ColorBits, ZBits, StencilBits, AccumBits, AuxBuffers: Integer; Layer: Integer): HGLRC;
 method ActivateRenderingContext(DC: HDC; RC: HGLRC; loadext: boolean := true);
 method DeactivateRenderingContext;
@@ -167,7 +165,7 @@ if Assigned(LoadProc) then
     if LibHandle = GLNULLMODULE then
         LibHandle := GL_LibHandle;
 
-  {$IF ISLAND AND WINDOWS}
+  {$IF WINDOWS}
  Var Buff := ProcName.ToAnsiChars(true);
     Result := Pointer(GetProcAddress(HMODULE(LibHandle), LPCSTR(@Buff[0])));
 
@@ -178,7 +176,7 @@ if Assigned(LoadProc) then
       Result := Pointer(wglGetProcAddress(LPCSTR(@Buff[0])));
   {$ENDIF}
 
-    {$IF ISLAND AND LINUX}
+    {$IF  LINUX}
 
     if not StaticLink then begin
         if Assigned(glXGetProcAddress)  then
@@ -198,23 +196,17 @@ end;
 
 method dglLoadLibrary(const Name: String): GLHMODULE;
 begin
-  {$IFDEF ISLAND AND WINDOWS}
+  {$IF WINDOWS}
 Var Buff := Name.ToCharArray(true);
     Result :=  GLHMODULE( LoadLibrary(LPCWSTR(@Buff[0])));
   {$ENDIF}
 
 
-  {$IFDEF ISLAND AND LINUX}
+  {$IF  LINUX}
   Result := dlopen(@Name.ToAnsiChars[0], RTLD_LAZY);
   {$ENDIF}
 
-  {$IFDEF DGL_MAC}
-  {$IFDEF OPENGL_FRAMEWORK}
-  Result := RTLD_DEFAULT;
-  {$ELSE}
-  Result := Pointer(LoadLibrary(Name));
-  {$ENDIF}
-  {$ENDIF}
+
 end;
 
 
@@ -223,21 +215,14 @@ begin
     if LibHandle = GLNULLMODULE then
         Result := False
     else
-    {$IFDEF ISLAND AND WINDOWS}
+    {$IF  WINDOWS}
     Result := FreeLibrary(HMODULE(LibHandle));
     {$ENDIF}
 
-    {$IFDEF ISLAND AND LINUX}
+    {$IF  LINUX}
     Result := dlclose(LibHandle) = 0;
     {$ENDIF}
 
-    {$IFDEF DGL_MAC}
-    {$IFDEF OPENGL_FRAMEWORK}
-  Result := true;
-  {$ELSE}
-    Result := FreeLibrary(HMODULE(LibHandle));
-    {$ENDIF}
-  {$ENDIF}
 end;
 
 method InitOpenGL(LibName: String := ''; GLULibName: String := ''): Boolean;
@@ -259,7 +244,7 @@ begin
 
   // load GL functions
     if (GL_LibHandle <> GLNULLMODULE) then begin
-    {$IFDEF ISLAND AND WINDOWS}
+    {$IF  WINDOWS}
   wglCopyContext := twglCopyContext(dglGetProcAddress('wglCopyContext'));
   wglCreateLayerContext := twglCreateLayerContext(dglGetProcAddress('wglCreateLayerContext'));
   wglCreateContext := twglCreateContext(dglGetProcAddress('wglCreateContext'));
@@ -344,7 +329,7 @@ begin
     end;
 end;
 
-{$IFDEF ISLAND AND WINDOWS}
+{$IF WINDOWS}
 method CreateRenderingContext(DC: HDC; Options: TRCOptions; ColorBits, ZBits, StencilBits, AccumBits, AuxBuffers: Integer; Layer: Integer): HGLRC;
 const
   OBJ_MEMDC = 10;
@@ -458,5 +443,6 @@ method DestroyRenderingContext(RC: HGLRC);
 begin
   wglDeleteContext(RC);
 end;
+{$ENDIF}
 {$ENDIF}
 end.

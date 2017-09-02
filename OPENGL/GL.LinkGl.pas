@@ -57,8 +57,9 @@ Originale Headers:
 
 
 namespace OpenGL;
-{$GLOBALS ON}
 
+{$IF ISLAND}
+{$GLOBALS ON}
 interface
 uses
     RemObjects.Elements.System,
@@ -72,9 +73,9 @@ type
 
     GL = static Class
     public
-    
+
        class method InitGL(const aLoadProc : GLfwLoadProc; const LoadExtensions : Boolean := false);
-    
+
         class method ReadExtensions;
         class method ReadImplementationProperties;
         class method ReadCoreVersion : boolean;
@@ -85,7 +86,7 @@ type
         class method GetImportAddress(ProcName: String): ^Void;
 
         class method Int_GetExtensionString: String;
-        
+
         class method Read_GL_3DFX_tbuffer;
         class method Read_GL_APPLE_element_array;
         class method Read_GL_APPLE_fence;
@@ -332,12 +333,12 @@ class method GL.GetImportAddress(ProcName: String): ^Void;
 begin
     result := nil;
     try
-        if Assigned(LoadProc) then 
+        if Assigned(LoadProc) then
             exit  LoadProc(@ProcName.ToAnsiChars(true)[0]);
     except
         on e : Exception do writeLn('GetImportAddress '+Procname+' ->'+e.message);
     end;
-    
+
 end;
 
 class method GL.Int_CheckExtension(AllExtensions, CheckExtension: String): Boolean;
@@ -3829,7 +3830,7 @@ begin
     Read_GL_ARB_ES3_2_compatibility;
     Read_GL_ARB_parallel_shader_compile;
 
-{$IF ISLAND AND WINDOWS}
+{$IF WINDOWS}
  ReadWGLExtensions;
 
 {$ENDIF}
@@ -4511,7 +4512,7 @@ begin
         GL_WIN_phong_shading := Int_CheckExtension(Buffer, 'GL_WIN_phong_shading');
         GL_WIN_specular_fog := Int_CheckExtension(Buffer, 'GL_WIN_specular_fog');
 
-  {$IFDEF ISLAND AND WINDOWS}
+  {$IFDEF WINDOWS}
   // WGL
   WGL_3DFX_multisample := Int_CheckExtension(Buffer, 'WGL_3DFX_multisample');
         WGL_ARB_buffer_region := Int_CheckExtension(Buffer, 'WGL_ARB_buffer_region');
@@ -4620,7 +4621,7 @@ begin
     end;
 
     if (GL_LibHandle <> GLNULLMODULE) then begin
-    {$IF ISLAND AND WINDOWS}
+    {$IF WINDOWS}
       // wglGetExtensionsStringEXT
       if not Assigned(wglGetExtensionsStringEXT) then
           wglGetExtensionsStringEXT := twglGetExtensionsStringEXT(GetImportAddress('wglGetExtensionsStringEXT'));
@@ -4650,8 +4651,8 @@ end;
 method RaiseLastOSError;
 begin
 
-  {$IF ISLAND AND WINDOWS} // If Delphi 6 or later
-   // SysUtils.RaiseLastWin32Error;
+  {$IF WINDOWS} // If on Windows
+
  var error := GetLastError;
     if Error <> 0 then
         raise new Exception('OS Error '+Error.ToString);
@@ -4659,6 +4660,6 @@ begin
    //Raise new exception('OS Error');
 {$ENDIF}
 end;
-
+{$ENDIF} // ISLAND
 
 end.

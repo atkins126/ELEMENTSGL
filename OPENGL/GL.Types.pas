@@ -11,7 +11,7 @@ https://github.com/ProHolz/ELEMENTSGL
 
 
  ======================================
- These is a translation form 
+ These is a translation form
 https://bitbucket.org/saschawillems/dglopengl
 Originale Headers:
 
@@ -19,14 +19,14 @@ Originale Headers:
 
        OpenGL 4.5 - Headertranslation
 
-       
+
        Supported environments and targets :
         - (Win32) Delphi 6 and up
         - (Win32, Win64) Delphi XE2
         - (Win32, Win64, Linux, MacOSX) FreePascal (1.9.3 and up)
 
 ==============================================================================
-  
+
 
        Copyright (C) DGL-OpenGL-Portteam
        All Rights Reserved
@@ -56,16 +56,17 @@ Originale Headers:
 }
 
 namespace OpenGl;
+{$IF ISLAND}
 {$GLOBALS ON}
 
-uses    
+uses
   rtl;
- 
+
 type
   GLenum = public Cardinal;
   GLboolean = public BYTEBOOL;
   GLbitfield = public Cardinal;
-  GLbyte = public Shortint;
+  GLbyte = public ShortInt;
   GLshort = public SmallInt;
   GLint = public Integer;
   GLsizei = public Integer;
@@ -117,7 +118,7 @@ type
   PGLuint64 = public ^GLuint64;
 
   // GL_NV_half_float
-  GLhalfNV = public WORD;
+  GLhalfNV = public Word;
   TGLhalfNV = public GLhalfNV;
   PGLhalfNV = public ^GLhalfNV;
 
@@ -140,7 +141,7 @@ type
   // GL_VERSION_2_0
   GLHandle = public Integer;
   PGLchar = public PAnsiChar;
-  PPGLchar = public ^PGLChar;
+  PPGLchar = public ^PGLchar;
 
   // GL_EXT_timer_query
   GLint64EXT = public Int64;
@@ -186,7 +187,7 @@ type
   p_cl_context = public ^_cl_context;
   p_cl_event = public ^_cl_event;
 
- 
+
   // GL_NV_vdpau_interop
   GLvdpauSurfaceNV = public GLintptr;
   PGLvdpauSurfaceNV = public ^GLvdpauSurfaceNV;
@@ -244,7 +245,7 @@ type
 
   PGPU_DEVICE = public ^GPU_DEVICE;
   GPU_DEVICE = public record
-    cb: DWORD;
+    cb: DWORD; 
     DeviceName: array [0..31] of AnsiChar;
     DeviceString: array [0..127] of AnsiChar;
     &Flags: DWORD;
@@ -273,5 +274,6 @@ type
   PGLUTesselatorObj = public PGLUTesselator;
   PGLUTriangulatorObj = public PGLUTesselator;
 
+{$ENDIF}
 
 end.

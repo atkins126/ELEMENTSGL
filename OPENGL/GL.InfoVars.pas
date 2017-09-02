@@ -1,4 +1,4 @@
-{
+﻿{
  OpenGL 4.5 - Headertranslation
 
 used for Remobjects Elements Island Plattforms
@@ -11,7 +11,7 @@ https://github.com/ProHolz/ELEMENTSGL
 
 
  ======================================
- These is a translation form 
+ These is a translation form
 https://bitbucket.org/saschawillems/dglopengl
 Originale Headers:
 
@@ -19,14 +19,14 @@ Originale Headers:
 
        OpenGL 4.5 - Headertranslation
 
-       
+
        Supported environments and targets :
         - (Win32) Delphi 6 and up
         - (Win32, Win64) Delphi XE2
         - (Win32, Win64, Linux, MacOSX) FreePascal (1.9.3 and up)
 
 ==============================================================================
-  
+
 
        Copyright (C) DGL-OpenGL-Portteam
        All Rights Reserved
@@ -57,7 +57,7 @@ Originale Headers:
 
 namespace OpenGl;
 {$GLOBALS ON}
-
+{$IF ISLAND}
 var
   GL_VERSION_1_0,
   GL_VERSION_1_1,
@@ -638,7 +638,6 @@ var
   GLX_EXT_create_context_es2_profile : Boolean;
 
 
-
+{$ENDIF}
 
 end.
-

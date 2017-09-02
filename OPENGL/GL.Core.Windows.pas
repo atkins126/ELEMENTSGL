@@ -56,9 +56,10 @@ Originale Headers:
 }
 
 namespace OpenGl;
-{$GLOBALS ON}
+
 interface
 {$IF ISLAND AND WINDOWS}
+{$GLOBALS ON}
 uses rtl;
 
   // window support functions

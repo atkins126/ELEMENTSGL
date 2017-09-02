@@ -57,7 +57,7 @@ Originale Headers:
 
 namespace OpenGl;
 {$GLOBALS ON}
-
+{$IF ISLAND}
 type
 {$REGION 'GL '}
   // GLUQuadricCallback
@@ -90,7 +90,7 @@ type
   TGLUTessCombineDataProc = public method(Coords: TGLArrayd3; VertexData: TGLArrayp4; Weight: TGLArrayf4; OutData: PPointer; UserData: Pointer);
   // GLUNurbsCallback
  [CallingConvention(PlatformConvention)]
-  TGLUNurbsErrorProc = public method(ErrorCode: GLEnum);
+  TGLUNurbsErrorProc = public method(ErrorCode: GLenum);
 
 
 type
@@ -105,7 +105,7 @@ type
   TglDebugProcAMD = public method(id: GLuint; category: GLenum; severity: GLenum; length: GLsizei; const message_: PGLchar; userParam: PGLvoid); // stdcall;
   // GL_KHR_debug (4.3)
  [CallingConvention(PlatformConvention)]
-  TglDebugProc = public method(source : GLEnum; type_ : GLEnum; id : GLUInt; severity : GLUInt; length : GLsizei; const message_ : PGLCHar; userParam : PGLvoid); // stdcall;
+  TglDebugProc = public method(source : GLenum; type_ : GLenum; id : GLuint; severity : GLuint; length : GLsizei; const message_ : PGLchar; userParam : PGLvoid); // stdcall;
 
 
 
@@ -303,7 +303,7 @@ type
  [CallingConvention(PlatformConvention)]
   TglDeleteQueries = public method(n: GLsizei; const ids: PGLuint);
  [CallingConvention(PlatformConvention)]
-  TglIsQuery = public method(id: GLuint): boolean;
+  TglIsQuery = public method(id: GLuint): Boolean;
  [CallingConvention(PlatformConvention)]
   TglBeginQuery = public method(target: GLenum; id: GLuint);
  [CallingConvention(PlatformConvention)]
@@ -351,49 +351,49 @@ type
  [CallingConvention(PlatformConvention)]
   TglStencilMaskSeparate = public method(face: GLenum; mask: GLuint);
  [CallingConvention(PlatformConvention)]
-  TglAttachShader = public method(programObj, shaderObj: GLhandle);
+  TglAttachShader = public method(programObj, shaderObj: GLHandle);
  [CallingConvention(PlatformConvention)]
-  TglBindAttribLocation = public method(programObj: GLhandle; index_: GLuint; name: PGLChar);
+  TglBindAttribLocation = public method(programObj: GLHandle; index_: GLuint; name: PGLchar);
  [CallingConvention(PlatformConvention)]
-  TglCompileShader = public method(shaderObj: GLhandle);
+  TglCompileShader = public method(shaderObj: GLHandle);
  [CallingConvention(PlatformConvention)]
-  TglCreateProgram = public method: GLhandle;
+  TglCreateProgram = public method: GLHandle;
  [CallingConvention(PlatformConvention)]
-  TglCreateShader = public method(shaderType: GLenum): GLhandle;
+  TglCreateShader = public method(shaderType: GLenum): GLHandle;
  [CallingConvention(PlatformConvention)]
-  TglDeleteProgram = public method(programObj: GLhandle);
+  TglDeleteProgram = public method(programObj: GLHandle);
  [CallingConvention(PlatformConvention)]
-  TglDeleteShader = public method(shaderObj: GLhandle);
+  TglDeleteShader = public method(shaderObj: GLHandle);
  [CallingConvention(PlatformConvention)]
-  TglDetachShader = public method(programObj, shaderObj: GLhandle);
+  TglDetachShader = public method(programObj, shaderObj: GLHandle);
  [CallingConvention(PlatformConvention)]
   TglDisableVertexAttribArray = public method(index_: GLuint);
  [CallingConvention(PlatformConvention)]
   TglEnableVertexAttribArray = public method(index_: GLuint);
  [CallingConvention(PlatformConvention)]
-  TglGetActiveAttrib = public method(programObj: GLhandle; index_: GLuint; maxlength: GLsizei; var length: GLint; var size: GLint; var _type: GLenum; name: PGLChar);
+  TglGetActiveAttrib = public method(programObj: GLHandle; index_: GLuint; maxlength: GLsizei; var length: GLint; var size: GLint; var _type: GLenum; name: PGLchar);
  [CallingConvention(PlatformConvention)]
-  TglGetActiveUniform = public method(programObj: GLhandle; index_: GLuint; maxLength: GLsizei; var length: GLsizei; var size: GLint; var _type: GLenum; name: PGLChar);
+  TglGetActiveUniform = public method(programObj: GLHandle; index_: GLuint; maxLength: GLsizei; var length: GLsizei; var size: GLint; var _type: GLenum; name: PGLchar);
  [CallingConvention(PlatformConvention)]
-  TglGetAttachedShaders = public method(programObj: GLhandle; MaxCount: GLsizei; var Count: GLint; shaders: PGLuint);
+  TglGetAttachedShaders = public method(programObj: GLHandle; MaxCount: GLsizei; var Count: GLint; shaders: PGLuint);
  [CallingConvention(PlatformConvention)]
-  TglGetAttribLocation = public method(programObj: GLhandle; char: PGLChar): glint;
+  TglGetAttribLocation = public method(programObj: GLHandle; char: PGLchar): GLint;
  [CallingConvention(PlatformConvention)]
-  TglGetProgramiv = public method(programObj: GLhandle; pname: GLenum; params_: PGLInt);
+  TglGetProgramiv = public method(programObj: GLHandle; pname: GLenum; params_: PGLint);
  [CallingConvention(PlatformConvention)]
-  TglGetProgramInfoLog = public method(programObj: GLHandle; maxLength: glsizei; length: PGLSizei; infoLog: PGLChar);
+  TglGetProgramInfoLog = public method(programObj: GLHandle; maxLength: GLsizei; length: PGLsizei; infoLog: PGLchar);
  [CallingConvention(PlatformConvention)]
-  TglGetShaderiv = public method(shaderObj: GLhandle; pname: GLenum; params_: PGLInt);
+  TglGetShaderiv = public method(shaderObj: GLHandle; pname: GLenum; params_: PGLint);
  [CallingConvention(PlatformConvention)]
-  TglGetShaderInfoLog = public method(shaderObj: GLHandle; maxLength: glsizei; length: PGLSizei; infoLog: PGLChar);
+  TglGetShaderInfoLog = public method(shaderObj: GLHandle; maxLength: GLsizei; length: PGLsizei; infoLog: PGLchar);
  [CallingConvention(PlatformConvention)]
-  TglGetShaderSource = public method(shaderObj: GLhandle; maxlength: GLsizei; var length: GLsizei; source: PGLChar);
+  TglGetShaderSource = public method(shaderObj: GLHandle; maxlength: GLsizei; var length: GLsizei; source: PGLchar);
  [CallingConvention(PlatformConvention)]
-  TglGetUniformLocation = public method(programObj: GLhandle; const char: PGLChar): glint;
+  TglGetUniformLocation = public method(programObj: GLHandle; const char: PGLchar): GLint;
  [CallingConvention(PlatformConvention)]
-  TglGetUniformfv = public method(programObj: GLhandle; location: GLint; params_: PGLfloat);
+  TglGetUniformfv = public method(programObj: GLHandle; location: GLint; params_: PGLfloat);
  [CallingConvention(PlatformConvention)]
-  TglGetUniformiv = public method(programObj: GLhandle; location: GLint; params_: PGLInt);
+  TglGetUniformiv = public method(programObj: GLHandle; location: GLint; params_: PGLint);
  [CallingConvention(PlatformConvention)]
   TglGetVertexAttribfv = public method(index_: GLuint; pname: GLenum; params_: PGLfloat);
  [CallingConvention(PlatformConvention)]
@@ -401,15 +401,15 @@ type
  [CallingConvention(PlatformConvention)]
   TglGetVertexAttribPointerv = public method(index_: GLuint; pname: GLenum; _pointer: PGLvoid);
  [CallingConvention(PlatformConvention)]
-  TglIsProgram = public method(programObj: GLhandle) : GLboolean;
+  TglIsProgram = public method(programObj: GLHandle) : GLboolean;
  [CallingConvention(PlatformConvention)]
-  TglIsShader = public method(shaderObj: GLhandle) : GLboolean;
+  TglIsShader = public method(shaderObj: GLHandle) : GLboolean;
  [CallingConvention(PlatformConvention)]
   TglLinkProgram = public method(programObj: GLHandle);
  [CallingConvention(PlatformConvention)]
-  TglShaderSource = public method(shaderObj: GLHandle; count: glsizei; const _string: PPGLChar; lengths: pglint);
+  TglShaderSource = public method(shaderObj: GLHandle; count: GLsizei; const _string: PPGLchar; lengths: PGLint);
  [CallingConvention(PlatformConvention)]
-  TglUseProgram = public method(programObj: GLhandle);
+  TglUseProgram = public method(programObj: GLHandle);
  [CallingConvention(PlatformConvention)]
   TglUniform1f = public method(location: GLint; v0: GLfloat);
  [CallingConvention(PlatformConvention)]
@@ -449,7 +449,7 @@ type
  [CallingConvention(PlatformConvention)]
   TglUniformMatrix4fv = public method(location: GLint; count: GLsizei; transpose: GLboolean; value: PGLfloat);
  [CallingConvention(PlatformConvention)]
-  TglValidateProgram = public method(programObj: GLhandle);
+  TglValidateProgram = public method(programObj: GLHandle);
  [CallingConvention(PlatformConvention)]
   TglVertexAttrib1d = public method(index_: GLuint; x: GLdouble);
  [CallingConvention(PlatformConvention)]
@@ -624,9 +624,9 @@ type
  [CallingConvention(PlatformConvention)]
   TglGetUniformuiv = public method(program_: GLuint; location: GLint; params_: PGLuint);
  [CallingConvention(PlatformConvention)]
-  TglBindFragDataLocation = public method(program_: GLuint; color: GLuint; const name: PGLChar);
+  TglBindFragDataLocation = public method(program_: GLuint; color: GLuint; const name: PGLchar);
  [CallingConvention(PlatformConvention)]
-  TglGetFragDataLocation = public method(program_: GLuint; const name: PGLChar): GLint;
+  TglGetFragDataLocation = public method(program_: GLuint; const name: PGLchar): GLint;
  [CallingConvention(PlatformConvention)]
   TglUniform1ui = public method(location: GLint; v0: GLuint);
  [CallingConvention(PlatformConvention)]
@@ -1160,91 +1160,91 @@ type
 
   // GL_ARB_vertex_shader
  [CallingConvention(PlatformConvention)]
-  TglGetActiveAttribARB = public method(programobj: GLhandleARB; index_: GLuint; maxLength: GLsizei; var length: GLsizei; var size: GLint; var _type: GLenum; name: PGLcharARB);
+  TglGetActiveAttribARB = public method(programobj: GLHandleARB; index_: GLuint; maxLength: GLsizei; var length: GLsizei; var size: GLint; var _type: GLenum; name: PGLcharARB);
  [CallingConvention(PlatformConvention)]
-  TglGetAttribLocationARB = public method(programObj: GLhandleARB; const char: PGLcharARB): glint;
+  TglGetAttribLocationARB = public method(programObj: GLHandleARB; const char: PGLcharARB): GLint;
  [CallingConvention(PlatformConvention)]
-  TglBindAttribLocationARB = public method(programObj: GLhandleARB; index_: GLuint; const name: PGLcharARB);
+  TglBindAttribLocationARB = public method(programObj: GLHandleARB; index_: GLuint; const name: PGLcharARB);
 
   // GL_ARB_shader_objects
  [CallingConvention(PlatformConvention)]
   TglDeleteObjectARB = public method(Obj: GLHandleARB);
  [CallingConvention(PlatformConvention)]
-  TglGetHandleARB = public method(pname: GlEnum): GLHandleARB;
+  TglGetHandleARB = public method(pname: GLenum): GLHandleARB;
  [CallingConvention(PlatformConvention)]
   TglDetachObjectARB = public method(container, attached: GLHandleARB);
  [CallingConvention(PlatformConvention)]
-  TglCreateShaderObjectARB = public method(shaderType: glenum): GLHandleARB;
+  TglCreateShaderObjectARB = public method(shaderType: GLenum): GLHandleARB;
  [CallingConvention(PlatformConvention)]
-  TglShaderSourceARB = public method(shaderObj: GLHandleARB; count: glsizei; const _string: PPGLCharARB; lengths: pglint);
+  TglShaderSourceARB = public method(shaderObj: GLHandleARB; count: GLsizei; const _string: PPGLcharARB; lengths: PGLint);
  [CallingConvention(PlatformConvention)]
   TglCompileShaderARB = public method(shaderObj: GLHandleARB);
  [CallingConvention(PlatformConvention)]
   TglCreateProgramObjectARB = public method: GLHandleARB;
  [CallingConvention(PlatformConvention)]
-  TglAttachObjectARB = public method(programObj, shaderObj: GLhandleARB);
+  TglAttachObjectARB = public method(programObj, shaderObj: GLHandleARB);
  [CallingConvention(PlatformConvention)]
   TglLinkProgramARB = public method(programObj: GLHandleARB);
  [CallingConvention(PlatformConvention)]
   TglUseProgramObjectARB = public method(programObj: GLHandleARB);
  [CallingConvention(PlatformConvention)]
-  TglValidateProgramARB = public method(programObj: GLhandleARB);
+  TglValidateProgramARB = public method(programObj: GLHandleARB);
  [CallingConvention(PlatformConvention)]
-  TglUniform1fARB = public method(location: glint; v0: glfloat);
+  TglUniform1fARB = public method(location: GLint; v0: GLfloat);
  [CallingConvention(PlatformConvention)]
-  TglUniform2fARB = public method(location: glint; v0, v1: glfloat);
+  TglUniform2fARB = public method(location: GLint; v0, v1: GLfloat);
  [CallingConvention(PlatformConvention)]
-  TglUniform3fARB = public method(location: glint; v0, v1, v2: glfloat);
+  TglUniform3fARB = public method(location: GLint; v0, v1, v2: GLfloat);
  [CallingConvention(PlatformConvention)]
-  TglUniform4fARB = public method(location: glint; v0, v1, v2, v3: glfloat);
+  TglUniform4fARB = public method(location: GLint; v0, v1, v2, v3: GLfloat);
  [CallingConvention(PlatformConvention)]
-  TglUniform1iARB = public method(location: glint; v0: glint);
+  TglUniform1iARB = public method(location: GLint; v0: GLint);
  [CallingConvention(PlatformConvention)]
-  TglUniform2iARB = public method(location: glint; v0, v1: glint);
+  TglUniform2iARB = public method(location: GLint; v0, v1: GLint);
  [CallingConvention(PlatformConvention)]
-  TglUniform3iARB = public method(location: glint; v0, v1, v2: glint);
+  TglUniform3iARB = public method(location: GLint; v0, v1, v2: GLint);
  [CallingConvention(PlatformConvention)]
-  TglUniform4iARB = public method(location: glint; v0, v1, v2, v3: glint);
+  TglUniform4iARB = public method(location: GLint; v0, v1, v2, v3: GLint);
  [CallingConvention(PlatformConvention)]
-  TglUniform1fvARB = public method(location: glint; count: GLsizei; value: pglfloat);
+  TglUniform1fvARB = public method(location: GLint; count: GLsizei; value: PGLfloat);
  [CallingConvention(PlatformConvention)]
-  TglUniform2fvARB = public method(location: glint; count: GLsizei; value: pglfloat);
+  TglUniform2fvARB = public method(location: GLint; count: GLsizei; value: PGLfloat);
  [CallingConvention(PlatformConvention)]
-  TglUniform3fvARB = public method(location: glint; count: GLsizei; value: pglfloat);
+  TglUniform3fvARB = public method(location: GLint; count: GLsizei; value: PGLfloat);
  [CallingConvention(PlatformConvention)]
-  TglUniform4fvARB = public method(location: glint; count: GLsizei; value: pglfloat);
+  TglUniform4fvARB = public method(location: GLint; count: GLsizei; value: PGLfloat);
  [CallingConvention(PlatformConvention)]
-  TglUniform1ivARB = public method(location: glint; count: GLsizei; value: pglint);
+  TglUniform1ivARB = public method(location: GLint; count: GLsizei; value: PGLint);
  [CallingConvention(PlatformConvention)]
-  TglUniform2ivARB = public method(location: glint; count: GLsizei; value: pglint);
+  TglUniform2ivARB = public method(location: GLint; count: GLsizei; value: PGLint);
  [CallingConvention(PlatformConvention)]
-  TglUniform3ivARB = public method(location: glint; count: GLsizei; value: pglint);
+  TglUniform3ivARB = public method(location: GLint; count: GLsizei; value: PGLint);
  [CallingConvention(PlatformConvention)]
-  TglUniform4ivARB = public method(location: glint; count: GLsizei; value: pglint);
+  TglUniform4ivARB = public method(location: GLint; count: GLsizei; value: PGLint);
  [CallingConvention(PlatformConvention)]
-  TglUniformMatrix2fvARB = public method(location: glint; count: glsizei; transpose: glboolean; value: pglfloat);
+  TglUniformMatrix2fvARB = public method(location: GLint; count: GLsizei; transpose: GLboolean; value: PGLfloat);
  [CallingConvention(PlatformConvention)]
-  TglUniformMatrix3fvARB = public method(location: glint; count: glsizei; transpose: glboolean; value: pglfloat);
+  TglUniformMatrix3fvARB = public method(location: GLint; count: GLsizei; transpose: GLboolean; value: PGLfloat);
  [CallingConvention(PlatformConvention)]
-  TglUniformMatrix4fvARB = public method(location: glint; count: glsizei; transpose: glboolean; value: pglfloat);
+  TglUniformMatrix4fvARB = public method(location: GLint; count: GLsizei; transpose: GLboolean; value: PGLfloat);
  [CallingConvention(PlatformConvention)]
-  TglGetObjectParameterfvARB = public method(Obj: GLHandleARB; pname: GLEnum; params_: PGLFloat);
+  TglGetObjectParameterfvARB = public method(Obj: GLHandleARB; pname: GLenum; params_: PGLfloat);
  [CallingConvention(PlatformConvention)]
-  TglGetObjectParameterivARB = public method(Obj: GLHandleARB; pname: GLEnum; params_: PGLInt);
+  TglGetObjectParameterivARB = public method(Obj: GLHandleARB; pname: GLenum; params_: PGLint);
  [CallingConvention(PlatformConvention)]
-  TglGetInfoLogARB = public method(shaderObj: GLHandleARB; maxLength: glsizei; var length: glint; infoLog: PGLcharARB);
+  TglGetInfoLogARB = public method(shaderObj: GLHandleARB; maxLength: GLsizei; var length: GLint; infoLog: PGLcharARB);
  [CallingConvention(PlatformConvention)]
-  TglGetAttachedObjectsARB = public method(programobj: GLhandleARB; maxCount: GLsizei; var count: GLsizei; objects: PGLhandleARB);
+  TglGetAttachedObjectsARB = public method(programobj: GLHandleARB; maxCount: GLsizei; var count: GLsizei; objects: PGLHandleARB);
  [CallingConvention(PlatformConvention)]
-  TglGetUniformLocationARB = public method(programObj: GLhandleARB; const char: PGLcharARB): glint;
+  TglGetUniformLocationARB = public method(programObj: GLHandleARB; const char: PGLcharARB): GLint;
  [CallingConvention(PlatformConvention)]
-  TglGetActiveUniformARB = public method(programobj: GLhandleARB; index_: GLuint; maxLength: GLsizei; var length: GLsizei; var size: GLint; var _type: GLenum; name: PGLcharARB);
+  TglGetActiveUniformARB = public method(programobj: GLHandleARB; index_: GLuint; maxLength: GLsizei; var length: GLsizei; var size: GLint; var _type: GLenum; name: PGLcharARB);
  [CallingConvention(PlatformConvention)]
-  TglGetUniformfvARB = public method(programObj: GLhandleARB; location: GLint; params_: PGLfloat);
+  TglGetUniformfvARB = public method(programObj: GLHandleARB; location: GLint; params_: PGLfloat);
  [CallingConvention(PlatformConvention)]
-  TglGetUniformivARB = public method(programObj: GLhandleARB; location: GLint; params_: PGLInt);
+  TglGetUniformivARB = public method(programObj: GLHandleARB; location: GLint; params_: PGLint);
  [CallingConvention(PlatformConvention)]
-  TglGetShaderSourceARB = public method(shader: GLhandleARB; maxLength: GLsizei; var length: GLsizei; source: PGLcharARB);
+  TglGetShaderSourceARB = public method(shader: GLHandleARB; maxLength: GLsizei; var length: GLsizei; source: PGLcharARB);
 
   // GL_ARB_Occlusion_Query
  [CallingConvention(PlatformConvention)]
@@ -1252,7 +1252,7 @@ type
  [CallingConvention(PlatformConvention)]
   TglDeleteQueriesARB = public method(n: GLsizei; const ids: PGLuint);
  [CallingConvention(PlatformConvention)]
-  TglIsQueryARB = public method(id: GLuint): boolean;
+  TglIsQueryARB = public method(id: GLuint): Boolean;
  [CallingConvention(PlatformConvention)]
   TglBeginQueryARB = public method(target: GLenum; id: GLuint);
  [CallingConvention(PlatformConvention)]
@@ -1926,17 +1926,17 @@ type
 
   // GL_ARB_base_instance
  [CallingConvention(PlatformConvention)]
-  TglDrawArraysInstancedBaseInstance = public method(mode : GLenum; first : GLint; count :GLsizei; primcount : GLsizei; baseinstance : GLUint);
+  TglDrawArraysInstancedBaseInstance = public method(mode : GLenum; first : GLint; count :GLsizei; primcount : GLsizei; baseinstance : GLuint);
  [CallingConvention(PlatformConvention)]
-  TglDrawElementsInstancedBaseInstance = public method(mode : GLEnum; count : GLsizei; _type : GLenum; const indices : PGLVoid; primcount : GLsizei; baseinstance : GLUInt);
+  TglDrawElementsInstancedBaseInstance = public method(mode : GLenum; count : GLsizei; _type : GLenum; const indices : PGLvoid; primcount : GLsizei; baseinstance : GLuint);
  [CallingConvention(PlatformConvention)]
-  TglDrawElementsInstancedBaseVertexBaseInstance = public method(mode : GLEnum; count : GLsizei; _type : GLenum; const indices : PGLVoid; primcount :GLsizei; basevertex : GLint; baseinstance : GLuint);
+  TglDrawElementsInstancedBaseVertexBaseInstance = public method(mode : GLenum; count : GLsizei; _type : GLenum; const indices : PGLvoid; primcount :GLsizei; basevertex : GLint; baseinstance : GLuint);
 
   // GL_ARB_transform_feedback_instanced
  [CallingConvention(PlatformConvention)]
   TglDrawTransformFeedbackInstanced = public method(mode : GLenum; id : GLuint; primcount : GLsizei);
  [CallingConvention(PlatformConvention)]
-  TglDrawTransformFeedbackStreamInstanced = public method(mode : GLenum; id : GLUInt; stream : GLUint; primcount : GLsizei);
+  TglDrawTransformFeedbackStreamInstanced = public method(mode : GLenum; id : GLuint; stream : GLuint; primcount : GLsizei);
 
   // GL_ARB_internalformat_query
  [CallingConvention(PlatformConvention)]
@@ -1971,33 +1971,33 @@ type
 
   // GL_KHR_debug
  [CallingConvention(PlatformConvention)]
-  TglDebugMessageControl = public method(source : GLenum; type_ : GLenum; severity : TGLenum; count : GLsizei; const ids : PGLUInt; enabled : GLboolean);
+  TglDebugMessageControl = public method(source : GLenum; type_ : GLenum; severity : TGLenum; count : GLsizei; const ids : PGLuint; enabled : GLboolean);
  [CallingConvention(PlatformConvention)]
   TglDebugMessageInsert = public method(source : GLenum;  type_ : GLenum; id : GLuint; sverity : GLenum; length : GLsizei; const buf : PGLchar);
  [CallingConvention(PlatformConvention)]
-  TglDebugMessageCallback = public method(callback : TGLDEBUGPROC; const userParam : Pointer);
+  TglDebugMessageCallback = public method(callback : TglDebugProc; const userParam : Pointer);
  [CallingConvention(PlatformConvention)]
-  TglGetDebugMessageLog = public method(count : GLuint; bufsize : GLsizei; sources : PGLenum; types : PGLenum; ids : PGLuint; sverities : PGLenum; lengths : PGLSizei; messagelog : PGLchar) : GLUInt;
+  TglGetDebugMessageLog = public method(count : GLuint; bufsize : GLsizei; sources : PGLenum; types : PGLenum; ids : PGLuint; sverities : PGLenum; lengths : PGLsizei; messagelog : PGLchar) : GLuint;
  [CallingConvention(PlatformConvention)]
   TglPushDebugGroup = public method(source : GLenum; id : GLuint; length : GLsizei; const message_ : PGLchar);
  [CallingConvention(PlatformConvention)]
   TglPopDebugGroup = public method  ;
  [CallingConvention(PlatformConvention)]
-  TglObjectLabel = public method(identifier : GLenum; name : GLuint; length : GLsizei; const label_ : PGLCHar);
+  TglObjectLabel = public method(identifier : GLenum; name : GLuint; length : GLsizei; const label_ : PGLchar);
  [CallingConvention(PlatformConvention)]
-  TglGetObjectLabel = public method(identifier : GLenum; name : GLuint; bufsize : GLsizei; length : PGLsizei; label_ : PGLCHar);
+  TglGetObjectLabel = public method(identifier : GLenum; name : GLuint; bufsize : GLsizei; length : PGLsizei; label_ : PGLchar);
  [CallingConvention(PlatformConvention)]
-  TglObjectPtrLabel = public method(const ptr : Pointer; length : GLsizei; const label_ : PGLCHar);
+  TglObjectPtrLabel = public method(const ptr : Pointer; length : GLsizei; const label_ : PGLchar);
  [CallingConvention(PlatformConvention)]
-  TglGetObjectPtrLabel = public method(const ptr : Pointer; bufSize : GLsizei; length : PGLsizei; label_ : PGLCHar);
+  TglGetObjectPtrLabel = public method(const ptr : Pointer; bufSize : GLsizei; length : PGLsizei; label_ : PGLchar);
 
   // GL_ARB_clear_buffer_object
  [CallingConvention(PlatformConvention)]
-  TglClearBufferData = public method(target : GLenum; internalformat : GLenum; format : GLEnum; type_ : GLEnum; const data : Pointer);
+  TglClearBufferData = public method(target : GLenum; internalformat : GLenum; format : GLenum; type_ : GLenum; const data : Pointer);
  [CallingConvention(PlatformConvention)]
   TglClearBufferSubData = public method(target : GLenum; internalformat : GLenum; offset : GLintptr; size : GLsizeiptr; format : GLenum; type_ : GLenum; const data : Pointer);
  [CallingConvention(PlatformConvention)]
-  TglClearNamedBufferDataEXT = public method(buffer : GLuint; internalformat : GLenum; format : GLEnum; type_ : GLEnum; const data : Pointer);
+  TglClearNamedBufferDataEXT = public method(buffer : GLuint; internalformat : GLenum; format : GLenum; type_ : GLenum; const data : Pointer);
  [CallingConvention(PlatformConvention)]
   TglClearNamedBufferSubDataEXT = public method(buffer : GLuint; internalformat : GLenum; format : GLenum; type_ : GLenum; offset : GLsizeiptr; size : GLsizeiptr; const data : Pointer);
 
@@ -2009,7 +2009,7 @@ type
 
   // GL_ARB_copy_image
  [CallingConvention(PlatformConvention)]
-  TglCopyImageSubData = public method(srcName : GLUInt; srcTarget : GLenum; srcLevel : GLint; srcX : GLint; srcY : GLint; srcZ : GLint; dstName : GLUInt; dstTarget : GLEnum; dstLevel : GLInt; dstX : GLInt; dstY : GLint; dstZ : GLint; srcWidth : GLsizei; srcHeight : GLsizei; srcDepth : GLsizei);
+  TglCopyImageSubData = public method(srcName : GLuint; srcTarget : GLenum; srcLevel : GLint; srcX : GLint; srcY : GLint; srcZ : GLint; dstName : GLuint; dstTarget : GLenum; dstLevel : GLint; dstX : GLint; dstY : GLint; dstZ : GLint; srcWidth : GLsizei; srcHeight : GLsizei; srcDepth : GLsizei);
 
   // GL_ARB_debug_group
   // ARB_debug_group reuses entry points from KHR_debug
@@ -2035,9 +2035,9 @@ type
  [CallingConvention(PlatformConvention)]
   TglGetFramebufferParameteriv = public method(target : GLenum; pname : GLenum; params_ : PGLint);
  [CallingConvention(PlatformConvention)]
-  TglNamedFramebufferParameteriEXT = public method(framebuffer : GLUInt; pname : GLenum; param_ : GLint);
+  TglNamedFramebufferParameteriEXT = public method(framebuffer : GLuint; pname : GLenum; param_ : GLint);
  [CallingConvention(PlatformConvention)]
-  TglGetNamedFramebufferParameterivEXT = public method(framebuffer : GLUInt; pname : GLenum; param_ : GLint);
+  TglGetNamedFramebufferParameterivEXT = public method(framebuffer : GLuint; pname : GLenum; param_ : GLint);
 
   // GL_ARB_internalformat_query2
  [CallingConvention(PlatformConvention)]
@@ -2065,17 +2065,17 @@ type
 
   // GL_ARB_program_interface_query
  [CallingConvention(PlatformConvention)]
-  TglGetProgramInterfaceiv = public method(program_ : GLUInt;programInterface : GLenum; pname : GLenum; params_ : PGLint);
+  TglGetProgramInterfaceiv = public method(program_ : GLuint;programInterface : GLenum; pname : GLenum; params_ : PGLint);
  [CallingConvention(PlatformConvention)]
-  TglGetProgramResourceIndex = public method(program_ : GLUInt;programInterface : GLenum; const name : PGLchar) : GLUInt;
+  TglGetProgramResourceIndex = public method(program_ : GLuint;programInterface : GLenum; const name : PGLchar) : GLuint;
  [CallingConvention(PlatformConvention)]
-  TglGetProgramResourceName = public method(program_ : GLUInt;programInterface : GLenum; index_ : GLuint; bufSize : GLsizei; length : PGLsizei; name : PGLchar);
+  TglGetProgramResourceName = public method(program_ : GLuint;programInterface : GLenum; index_ : GLuint; bufSize : GLsizei; length : PGLsizei; name : PGLchar);
  [CallingConvention(PlatformConvention)]
-  TglGetProgramResourceiv = public method(program_ : GLUInt;programInterface : GLenum; index_ : GLuint; propCount : GLsizei; const props : PGLenum; bufSize : GLsizei; length : PGLsizei; params_ : PGLint);
+  TglGetProgramResourceiv = public method(program_ : GLuint;programInterface : GLenum; index_ : GLuint; propCount : GLsizei; const props : PGLenum; bufSize : GLsizei; length : PGLsizei; params_ : PGLint);
  [CallingConvention(PlatformConvention)]
-  TglGetProgramResourceLocation = public method(program_ : GLUInt;programInterface : GLenum; const name : PGLchar) : GLInt;
+  TglGetProgramResourceLocation = public method(program_ : GLuint;programInterface : GLenum; const name : PGLchar) : GLint;
  [CallingConvention(PlatformConvention)]
-  TglGetProgramResourceLocationIndex = public method(program_ : GLUInt;programInterface : GLenum; const name : PGLchar) : GLInt;
+  TglGetProgramResourceLocationIndex = public method(program_ : GLuint;programInterface : GLenum; const name : PGLchar) : GLint;
 
   // GL_ARB_robust_buffer_access_behavior
 
@@ -2114,7 +2114,7 @@ type
  [CallingConvention(PlatformConvention)]
   TglClearTexSubImage = public method(texture : GLuint; level : GLint; xoffset : GLint; yoffset : GLint; zoffset : GLint; width : GLsizei; height : GLsizei; depth : GLsizei; format : GLenum; _type : GLenum; const Data : Pointer);
  [CallingConvention(PlatformConvention)]
-  TglBindBuffersBase = public method(target : GLenum; first : GLuint; count : GLsizei; const buffers : PGLUint);
+  TglBindBuffersBase = public method(target : GLenum; first : GLuint; count : GLsizei; const buffers : PGLuint);
  [CallingConvention(PlatformConvention)]
   TglBindBuffersRange = public method(target : GLenum; first : GLuint; count : GLsizei; const buffers : PGLuint; const offsets : GLintptr; const sizes : GLsizeiptr);
  [CallingConvention(PlatformConvention)]
@@ -2126,7 +2126,7 @@ type
  [CallingConvention(PlatformConvention)]
   TglBindVertexBuffers = public method(first : GLuint; count : GLsizei; const buffers : GLuint; const offsets : GLintptr; const strides : PGLsizei);
  [CallingConvention(PlatformConvention)]
-  TglTexPageCommitmentARB = public method(target : glenum; level : glint; xoffset : glint; yoffset : glint; zoffset : glint; width : glsizei; height : glsizei; depth : glsizei; resident : glboolean);
+  TglTexPageCommitmentARB = public method(target : GLenum; level : GLint; xoffset : GLint; yoffset : GLint; zoffset : GLint; width : GLsizei; height : GLsizei; depth : GLsizei; resident : GLboolean);
 
   // GL 4.5
  [CallingConvention(PlatformConvention)]
@@ -2146,17 +2146,17 @@ type
  [CallingConvention(PlatformConvention)]
   TglCreateBuffers = public method(n : GLsizei; buffers : PGLuint);
  [CallingConvention(PlatformConvention)]
-  TglNamedBufferStorage = public method(buffer : GLuint; size : GLsizei; const data : PGLVoid; flags : GLbitfield);
+  TglNamedBufferStorage = public method(buffer : GLuint; size : GLsizei; const data : PGLvoid; flags : GLbitfield);
  [CallingConvention(PlatformConvention)]
-  TglNamedBufferData = public method(buffer : GLuint; size : GLsizei; const data : PGLVoid; usage : GLenum);
+  TglNamedBufferData = public method(buffer : GLuint; size : GLsizei; const data : PGLvoid; usage : GLenum);
  [CallingConvention(PlatformConvention)]
-  TglNamedBufferSubData = public method(buffer : GLuint; offset : GLintptr; size : GLsizei; data : PGLVoid);
+  TglNamedBufferSubData = public method(buffer : GLuint; offset : GLintptr; size : GLsizei; data : PGLvoid);
  [CallingConvention(PlatformConvention)]
   TglCopyNamedBufferSubData = public method(readBuffer : GLuint; writeBuffer : GLuint; readOffset : GLintptr; writeOffset : GLintptr; size : GLsizei);
  [CallingConvention(PlatformConvention)]
-  TglClearNamedBufferData = public method(buffer : GLuint; internalformat : GLenum; format : GLenum; _type : GLenum; data : PGLVoid);
+  TglClearNamedBufferData = public method(buffer : GLuint; internalformat : GLenum; format : GLenum; _type : GLenum; data : PGLvoid);
  [CallingConvention(PlatformConvention)]
-  TglClearNamedBufferSubData = public method(buffer : GLuint; internalformat : GLenum; offset : GLintptr; size : GLsizei; format : GLenum; _type : GLenum; data : PGLVoid);
+  TglClearNamedBufferSubData = public method(buffer : GLuint; internalformat : GLenum; offset : GLintptr; size : GLsizei; format : GLenum; _type : GLenum; data : PGLvoid);
  [CallingConvention(PlatformConvention)]
   TglMapNamedBuffer = public method(buffer : GLuint; access : GLenum) : PGLvoid;
  [CallingConvention(PlatformConvention)]
@@ -2170,13 +2170,13 @@ type
  [CallingConvention(PlatformConvention)]
   TglGetNamedBufferParameteri64v = public method(buffer : GLuint; pname : GLenum; param_ : PGLint64);
  [CallingConvention(PlatformConvention)]
-  TglGetNamedBufferPointerv = public method(buffer : GLuint; pname : GLenum; params_ : PGLVoid);
+  TglGetNamedBufferPointerv = public method(buffer : GLuint; pname : GLenum; params_ : PGLvoid);
  [CallingConvention(PlatformConvention)]
-  TglGetNamedBufferSubData = public method(buffer : GLuint; offset : GLintptr; size : GLsizei; data : PGLVoid);
+  TglGetNamedBufferSubData = public method(buffer : GLuint; offset : GLintptr; size : GLsizei; data : PGLvoid);
  [CallingConvention(PlatformConvention)]
   TglCreateFramebuffers = public method(n : GLsizei; framebuffers : PGLuint);
  [CallingConvention(PlatformConvention)]
-  TglNamedFramebufferRenderbuffer = public method(framebuffer : GLuint; attachment : GLenum ; renderbuffertarget : GLEnum; renderbuffer : GLUInt);
+  TglNamedFramebufferRenderbuffer = public method(framebuffer : GLuint; attachment : GLenum ; renderbuffertarget : GLenum; renderbuffer : GLuint);
  [CallingConvention(PlatformConvention)]
   TglNamedFramebufferParameteri = public method(framebuffer : GLuint; pname : GLenum; param_ : GLint);
  [CallingConvention(PlatformConvention)]
@@ -2186,19 +2186,19 @@ type
  [CallingConvention(PlatformConvention)]
   TglNamedFramebufferDrawBuffer = public method(framebuffer : GLuint; buf : GLenum);
  [CallingConvention(PlatformConvention)]
-  TglNamedFramebufferDrawBuffers = public method(framebuffer : GLuint; n : GLsizei; bufs : PGLEnum);
+  TglNamedFramebufferDrawBuffers = public method(framebuffer : GLuint; n : GLsizei; bufs : PGLenum);
  [CallingConvention(PlatformConvention)]
   TglNamedFramebufferReadBuffer = public method(framebuffer : GLuint; src : GLenum);
  [CallingConvention(PlatformConvention)]
-  TglInvalidateNamedFramebufferData = public method(framebuffer : GLuint; numAttachments : GLSizei; attachments : PGLEnum);
+  TglInvalidateNamedFramebufferData = public method(framebuffer : GLuint; numAttachments : GLsizei; attachments : PGLenum);
  [CallingConvention(PlatformConvention)]
-  TglInvalidateNamedFramebufferSubData = public method(framebuffer : GLuint; numAttachments : GLSizei; attachments : PGLEnum; x : GLint; y : GLint; width : GLsizei; height : GLsizei);
+  TglInvalidateNamedFramebufferSubData = public method(framebuffer : GLuint; numAttachments : GLsizei; attachments : PGLenum; x : GLint; y : GLint; width : GLsizei; height : GLsizei);
  [CallingConvention(PlatformConvention)]
-  TglClearNamedFramebufferiv = public method(framebuffer : GLuint; buffer : GLenum; drawbuffer : GLint; value : PGLInt);
+  TglClearNamedFramebufferiv = public method(framebuffer : GLuint; buffer : GLenum; drawbuffer : GLint; value : PGLint);
  [CallingConvention(PlatformConvention)]
-  TglClearNamedFramebufferuiv = public method(framebuffer : GLuint; buffer : GLenum; drawbuffer : GLint; value : PGLInt);
+  TglClearNamedFramebufferuiv = public method(framebuffer : GLuint; buffer : GLenum; drawbuffer : GLint; value : PGLint);
  [CallingConvention(PlatformConvention)]
-  TglClearNamedFramebufferfv = public method(framebuffer : GLuint; buffer : GLenum; drawbuffer : GLint; value : PGLFloat);
+  TglClearNamedFramebufferfv = public method(framebuffer : GLuint; buffer : GLenum; drawbuffer : GLint; value : PGLfloat);
  [CallingConvention(PlatformConvention)]
   TglClearNamedFramebufferfi = public method(framebuffer : GLuint; buffer : GLenum; const depth : GLfloat; stencil : GLint);
  [CallingConvention(PlatformConvention)]
@@ -2210,15 +2210,15 @@ type
  [CallingConvention(PlatformConvention)]
   TglGetNamedFramebufferAttachmentParameteriv = public method(framebuffer : GLuint; attachment : GLenum; pname : GLenum; params_ : PGLint);
  [CallingConvention(PlatformConvention)]
-  TglCreateRenderbuffers = public method(n : GLsizei; renderbuffers : PGLUInt);
+  TglCreateRenderbuffers = public method(n : GLsizei; renderbuffers : PGLuint);
  [CallingConvention(PlatformConvention)]
-  TglNamedRenderbufferStorage = public method(renderbuffer : GLUInt; internalformat : GLenum ; width : GLsizei; height : GLsizei);
+  TglNamedRenderbufferStorage = public method(renderbuffer : GLuint; internalformat : GLenum ; width : GLsizei; height : GLsizei);
  [CallingConvention(PlatformConvention)]
-  TglNamedRenderbufferStorageMultisample = public method(renderbuffer : GLUInt; samples : GLSizei; internalformat : GLenum ; width : GLSizei; height : GLSizei);
+  TglNamedRenderbufferStorageMultisample = public method(renderbuffer : GLuint; samples : GLsizei; internalformat : GLenum ; width : GLsizei; height : GLsizei);
  [CallingConvention(PlatformConvention)]
-  TglGetNamedRenderbufferParameteriv = public method(renderbuffer : GLUInt; pname : GLenum; param_ : PGLint);
+  TglGetNamedRenderbufferParameteriv = public method(renderbuffer : GLuint; pname : GLenum; param_ : PGLint);
  [CallingConvention(PlatformConvention)]
-  TglCreateTextures = public method(target : GLenum ; n : GLsizei; textures : PGLUInt);
+  TglCreateTextures = public method(target : GLenum ; n : GLsizei; textures : PGLuint);
  [CallingConvention(PlatformConvention)]
   TglTextureBuffer = public method(texture : GLuint; internalformat : GLenum; buffer : GLuint);
  [CallingConvention(PlatformConvention)]
@@ -5115,7 +5115,7 @@ type
   TglReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN = public method(const rc: PGLuint; const tc: PGLfloat; const c: PGLfloat; const n: PGLfloat; const v: PGLfloat);
 {$ENDREGION}
 
-
+{$ENDIF}
 
 
 end.

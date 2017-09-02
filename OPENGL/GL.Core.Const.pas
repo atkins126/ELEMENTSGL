@@ -11,7 +11,7 @@ https://github.com/ProHolz/ELEMENTSGL
 
 
  ======================================
- These is a translation form 
+ These is a translation form
 https://bitbucket.org/saschawillems/dglopengl
 Originale Headers:
 
@@ -19,14 +19,14 @@ Originale Headers:
 
        OpenGL 4.5 - Headertranslation
 
-       
+
        Supported environments and targets :
         - (Win32) Delphi 6 and up
         - (Win32, Win64) Delphi XE2
         - (Win32, Win64, Linux, MacOSX) FreePascal (1.9.3 and up)
 
 ==============================================================================
-  
+
 
        Copyright (C) DGL-OpenGL-Portteam
        All Rights Reserved
@@ -57,6 +57,7 @@ Originale Headers:
 
 
 Namespace OpenGl;
+{$IF ISLAND}
 {$GLOBALS ON}
 
 const
@@ -5546,6 +5547,6 @@ const
   GLU_ERROR = GLU_TESS_ERROR;
   GLU_EDGE_FLAG = GLU_TESS_EDGE_FLAG;
 
-
+{$ENDIF}
 
 end.
