@@ -6,7 +6,7 @@ uses
   OpenGL;
 
 type
-  GLAPPMaterial = class(Appinterface)
+  GL_Example_3 = class(ExampleAppInterface)
   private
 
     FLightingShader: Shader;
@@ -47,7 +47,7 @@ type
 implementation
 
 
-method GLAPPMaterial.initialize: Boolean;
+method GL_Example_3.initialize: Boolean;
 const
 
   BOX_VERTICES: array  of Single = [
@@ -136,14 +136,14 @@ begin
 end;
 
 
-method GLAPPMaterial.UpdateLight(const LightColor : TVector3);
+method GL_Example_3.UpdateLight(const LightColor : TVector3);
 var
   DiffuseColor, AmbientColor: TVector3;
 
   NormalMatrix: TMatrix3;
 begin
-  var  LIGHT_POS := TVector3.Vector3(0.2, 0.2, 8.0);
-  var  VIEW_POS := TVector3.Vector3(0.2, 0.0, 3.0);
+  var  LIGHT_POS := new TVector3(0.2, 0.2, 8.0);
+  var  VIEW_POS := new TVector3(0.2, 0.0, 3.0);
 
   glUniform3f(FUniformLightPosition, LIGHT_POS.X, LIGHT_POS.Y, LIGHT_POS.Z);
   glUniform3f(FUniformViewPos,VIEW_POS.X, VIEW_POS.Y, VIEW_POS.Z);
@@ -169,7 +169,7 @@ begin
 
 end;
 
-method GLAPPMaterial.UpdateDrawSettings;
+method GL_Example_3.UpdateDrawSettings;
 
 begin
 
@@ -191,7 +191,7 @@ begin
 end;
 
 
-method GLAPPMaterial.UpdateViewAndProjection(const width, Height : Single);
+method GL_Example_3.UpdateViewAndProjection(const width, Height : Single);
 var Projection, View : TMatrix4;
 begin
   var rot : Single := 345;
@@ -211,7 +211,7 @@ begin
   glUniformMatrix4fv(FUniformContainerProjection, 1, GL_FALSE, Projection.getPglMatrix4f);
 end;
 
-method GLAPPMaterial.Update(width, Height : Integer; const ATotalTimeSec : Double := 0.3);
+method GL_Example_3.Update(width, Height : Integer; const ATotalTimeSec : Double := 0.3);
 
 var
   Model,  Translate, Scale, Rotate: TMatrix4;
@@ -240,7 +240,7 @@ begin
   for face := 0 to 5 do
     begin
       // Rotation of Logo
-    Model.InitRotationYawPitchRoll(Radians(-FmodelRotation), Radians(0), Radians(0));
+    Model.InitRotationYawPitchRoll(Radians(-FmodelRotation*3), Radians(0), Radians(0));
  // Model.Init;
 
     Rotate.Init;
@@ -266,7 +266,7 @@ begin
 
 
  { Draw the container 2. Time }
-  Model.InitRotationYawPitchRoll(Radians(FmodelRotation), Radians(0), Radians(0));
+  Model.InitRotationYawPitchRoll(Radians(FmodelRotation*3), Radians(0), Radians(0));
     // Move Right and up
   Translate.InitTranslation(0.4,0,1.10);
  // Sclae the Logo a little bit in x and y direction
@@ -284,7 +284,8 @@ begin
   glUniformMatrix4fv(FUniformContainerModel, 1, GL_FALSE, Model.getPglMatrix4f);
 
  // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // GL_LINE  // GL_POINT //GL_FILL
-  var boxcol := TVector3.Vector3(0.7,0.7,0.5);
+
+  var boxcol := new TVector3(0.7,0.7,0.5);
   UpdateLight(boxcol);
 
   FBox.Render;
@@ -297,7 +298,7 @@ begin
 
 end;
 
-method GLAPPMaterial.ChangeFillmode;
+method GL_Example_3.ChangeFillmode;
 begin
   FFilled := not FFilled;
 end;

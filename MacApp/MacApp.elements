@@ -65,21 +65,21 @@
       <DependentUpon>MainWindowController.pas</DependentUpon>
     </Xib>
     <Xib Include="Resources\MainMenu.xib" />
-    <Compile Include="myGlView.pas" />
     <AppResource Include="Resources\basic.fs" />
     <AppResource Include="Resources\basic.vs" />
     <AppResource Include="Resources\coral.jpg" />
-    <Compile Include="glApptex.pas" />
     <AppResource Include="Resources\texture.fs" />
     <AppResource Include="Resources\texture.vs" />
     <AppResource Include="Resources\Tex1.JPG" />
     <AppResource Include="Resources\gears.png" />
-    <Compile Include="glAPP1.pas" />
-    <Compile Include="glApp.pas" />
     <AppResource Include="Resources\materials.fs" />
     <AppResource Include="Resources\materials.vs" />
     <AppResource Include="Resources\remobjects1.Shape" />
-    <Compile Include="MacAppDelegates.pas" />
+    <Compile Include="glExample1.pas" />
+    <Compile Include="glExample2.pas" />
+    <Compile Include="glExample3.pas" />
+    <Compile Include="ExampleGlView.pas" />
+    <Compile Include="glExampleBase.pas" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Toffee.targets" />
   <Import Project="..\GlHelper\GlHelper.projitems" Label="Shared" />

@@ -7,7 +7,7 @@ uses
   OpenGL;
 
 type
-  GLAPP = class(Appinterface)
+  GL_Example_1 = class(ExampleAppInterface)
   private
     shader : Shader;
     fVertexArray : VertexArray;
@@ -22,7 +22,7 @@ type
 implementation
 
 
-method GLAPP.initialize: Boolean;
+method GL_Example_1.initialize: Boolean;
 
 const
   { Each vertex consists of a 3-element position and 3-element color. }
@@ -56,7 +56,7 @@ begin
   result := true;
 end;
 
-method GLAPP.Update(width, Height : Integer; const ATotalTimeSec : Double := 0.3);
+method GL_Example_1.Update(width, Height : Integer; const ATotalTimeSec : Double := 0.3);
 begin
 
 
@@ -75,7 +75,7 @@ begin
 
 end;
 
-method GLAPP.ChangeFillmode;
+method GL_Example_1.ChangeFillmode;
 begin
 end;
 

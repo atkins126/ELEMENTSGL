@@ -51,7 +51,7 @@ begin
     // One of the 3 app should be activ!!!
     TimeLabel.label := 'Example 1';
 
-    var app := new GLAPP();
+    var app := new GL_Example_1();
 
     app.initialize;
     ViewGL.app := app;
@@ -74,11 +74,11 @@ end;
 method MainWindowController.pressAppButton(sender: id);
 begin
   var tag := NSToolbarItem(sender).tag;
-  var App : Appinterface := nil;
+  var App : ExampleAppInterface := nil;
   case tag of
-    0 : App := new GLAPP();
-    1 : App := new GLAPP2();
-    2 : App := new GLAPPMaterial();
+    0 : App := new GL_Example_1();
+    1 : App := new GL_Example_2();
+    2 : App := new GL_Example_3();
   end;
 
   TimeLabel.label := 'Example '+(tag+1).ToString;

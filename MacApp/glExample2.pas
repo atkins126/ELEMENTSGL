@@ -8,7 +8,7 @@ uses
   OpenGL;
 
 type
-  GLAPP2 = class(Appinterface)
+  GL_Example_2 = class(ExampleAppInterface)
   private
    // fTexture : Texture;
     shader : Shader;
@@ -28,7 +28,7 @@ type
 implementation
 
 
-method GLAPP2.initialize: Boolean;
+method GL_Example_2.initialize: Boolean;
 
 const
   { Each vertex consists of a 3-element position and 3-element color. }
@@ -71,7 +71,7 @@ begin
   result := true;
 end;
 
-method GLAPP2.Update(width, height : Integer; const ATotalTimeSec : Double := 0.3);
+method GL_Example_2.Update(width, height : Integer; const ATotalTimeSec : Double := 0.3);
 begin
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   shader.Use;
@@ -90,7 +90,7 @@ begin
 
 end;
 
-method GLAPP2.ChangeFillmode;
+method GL_Example_2.ChangeFillmode;
 begin
 end;
 

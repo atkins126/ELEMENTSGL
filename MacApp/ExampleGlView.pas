@@ -11,7 +11,7 @@ uses
   [IBObject]
 type Gl_View = public class(NSOpenGLView)
 private
-  fApp: Appinterface;
+  fApp: ExampleAppInterface;
   fwx  : GLint;
   fwy  : GLint;
   fww :   GLsizei;
@@ -41,7 +41,7 @@ public
   method Repaint;
 
 
-  property app : Appinterface read fApp write fApp;
+  property app : ExampleAppInterface read fApp write fApp;
 end;
 
 implementation
