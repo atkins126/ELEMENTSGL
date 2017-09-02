@@ -79,7 +79,6 @@
     <AppResource Include="Resources\materials.fs" />
     <AppResource Include="Resources\materials.vs" />
     <AppResource Include="Resources\remobjects1.Shape" />
-    <Compile Include="glShapeRead.pas" />
     <Compile Include="MacAppDelegates.pas" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Toffee.targets" />

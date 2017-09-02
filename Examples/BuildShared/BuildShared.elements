@@ -2,36 +2,35 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProductVersion>3.5</ProductVersion>
-    <RootNamespace>Materials</RootNamespace>
-    <ProjectGuid>{1e11248b-171b-4ad1-b341-d99dabf45b12}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <AssemblyName>Materials</AssemblyName>
+    <RootNamespace>BuildShared</RootNamespace>
+    <ProjectGuid>{4B4371E8-9F15-4283-9962-26C54606CE5F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>BuildShared</AssemblyName>
     <AllowGlobals>False</AllowGlobals>
     <AllowLegacyWith>False</AllowLegacyWith>
     <AllowLegacyOutParams>False</AllowLegacyOutParams>
     <AllowLegacyCreate>False</AllowLegacyCreate>
     <AllowUnsafeCode>False</AllowUnsafeCode>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <Name>Materials</Name>
-    <OutputPath>..\bin</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <DefaultUses>RemObjects.Elements.RTL</DefaultUses>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <Optimize>False</Optimize>
-    <OutputPath>..\bin</OutputPath>
+    <OutputPath>.\bin\Debug</OutputPath>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
     <GenerateDebugInfo>True</GenerateDebugInfo>
     <CaptureConsoleOutput>False</CaptureConsoleOutput>
     <StartMode>Project</StartMode>
     <CpuType>x86</CpuType>
     <RuntimeVersion>v25</RuntimeVersion>
-    <Architecture>i386</Architecture>
     <XmlDoc>False</XmlDoc>
     <XmlDocWarningLevel>WarningOnPublicMembers</XmlDocWarningLevel>
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <Optimize>true</Optimize>
+    <OutputPath>.\bin\Release</OutputPath>
     <GenerateDebugInfo>False</GenerateDebugInfo>
     <EnableAsserts>False</EnableAsserts>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
@@ -45,21 +44,17 @@
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="gc" />
+    <Reference Include="Island" />
+    <Reference Include="rtl" />
     <Reference Include="Elements">
       <HintPath>C:\Program Files (x86)\RemObjects Software\Elements\Island\Reference Libraries\Windows\i386\Elements.fx</HintPath>
     </Reference>
-    <Reference Include="gc" />
-    <Reference Include="GLFW">
-      <HintPath>Y:\Elements\ELEMENTSGL\Imp\GLFW.fx</HintPath>
-    </Reference>
-    <Reference Include="Island" />
-    <Reference Include="rtl" />
     <Reference Include="STB">
       <HintPath>Y:\Elements\ELEMENTSGL\Imp\STB.fx</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="glApp.pas" />
     <Compile Include="Program.pas" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Island.Windows.targets" />

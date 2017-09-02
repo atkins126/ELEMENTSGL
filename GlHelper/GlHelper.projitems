@@ -25,5 +25,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)glImage.Toffee.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)glImage.Island.pas" />
     <Compile Include="$(MSBuildThisFileDirectory)glShape.pas" />
+    <Compile Include="$(MSBuildThisFileDirectory)glShapeReader.pas" />
   </ItemGroup>
 </Project>

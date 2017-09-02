@@ -9,7 +9,6 @@ type
   GLAPPMaterial = class(Appinterface)
   private
 
-
     FLightingShader: Shader;
     FRemObjectsVAO: array of VertexArray;
     FBox :  VertexArray;

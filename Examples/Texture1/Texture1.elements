@@ -46,15 +46,17 @@
     <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Elements" />
+    <Reference Include="Elements">
+      <HintPath>C:\Program Files (x86)\RemObjects Software\Elements\Island\Reference Libraries\Windows\i386\Elements.fx</HintPath>
+    </Reference>
     <Reference Include="gc" />
     <Reference Include="GLFW">
-      <HintPath>..\..\Imp\GLFW.fx</HintPath>
+      <HintPath>Y:\Elements\ELEMENTSGL\Imp\GLFW.fx</HintPath>
     </Reference>
     <Reference Include="Island" />
     <Reference Include="rtl" />
     <Reference Include="STB">
-      <HintPath>..\..\Imp\STB.fx</HintPath>
+      <HintPath>Y:\Elements\ELEMENTSGL\Imp\STB.fx</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
