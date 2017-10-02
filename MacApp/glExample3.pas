@@ -6,7 +6,7 @@ uses
   OpenGL;
 
 type
-  GL_Example_3 = class(ExampleAppInterface)
+  GL_Example_3 = class(IAppInterface)
   private
 
     FLightingShader: Shader;

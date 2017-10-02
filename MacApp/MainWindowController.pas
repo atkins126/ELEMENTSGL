@@ -74,7 +74,7 @@ end;
 method MainWindowController.pressAppButton(sender: id);
 begin
   var tag := NSToolbarItem(sender).tag;
-  var App : ExampleAppInterface := nil;
+  var App : IAppInterface := nil;
   case tag of
     0 : App := new GL_Example_1();
     1 : App := new GL_Example_2();

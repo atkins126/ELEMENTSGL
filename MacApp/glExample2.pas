@@ -8,7 +8,7 @@ uses
   OpenGL;
 
 type
-  GL_Example_2 = class(ExampleAppInterface)
+  GL_Example_2 = class(IAppInterface)
   private
    // fTexture : Texture;
     shader : Shader;

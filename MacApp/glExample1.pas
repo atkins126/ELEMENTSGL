@@ -7,7 +7,7 @@ uses
   OpenGL;
 
 type
-  GL_Example_1 = class(ExampleAppInterface)
+  GL_Example_1 = class(IAppInterface)
   private
     shader : Shader;
     fVertexArray : VertexArray;
