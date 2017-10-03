@@ -64,6 +64,7 @@ begin
 
   FTexture1 := new Texture('textures\container.jpg');
   FTexture2 := new Texture('textures\coral.jpg');
+ // FTexture2 := new Texture('textures\container.jpg');
 
 
 

@@ -96,7 +96,7 @@ type
 
       Returns:
         (A.X - B.X, A.Y - B.Y) }
-    class operator Subtract(const A, B: TVector2): TVector2; {$IF FM_INLINE }inline;{$ENDIF}
+    class operator Subtract(const A, B: TVector2): TVector2; inline;
 
     { Multiplies a vector with a scalar value.
 

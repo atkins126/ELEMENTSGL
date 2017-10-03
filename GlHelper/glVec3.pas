@@ -34,7 +34,7 @@ type
         method SetLengthSquared(const AValue: Single);
   {$ENDREGION 'Internal Declarations'}
     public
-      //  constructor (const A1, A2, A3: Single);
+      constructor (const A1, A2, A3: Single);
       class method Vector3(const A1, A2, A3: Single): TVector3;
 
     { Sets the three elements (X, Y and Z) to 0. }
@@ -756,7 +756,7 @@ end;
 
 method TVector3.GetComponent(const AIndex: Integer): Single;
 begin
-  
+
     case AIndex of
         0 : result := X;
         1 : result := Y;
@@ -905,7 +905,7 @@ end;
 
 method TVector3.SetComponent(const AIndex: Integer; const Value: Single);
 begin
- 
+
     case AIndex of
         0 : X := Value;
         1 : Y := Value;
@@ -951,6 +951,13 @@ end;
 class method TVector3.Vector3(const A1: Single; const A2: Single; const A3: Single): TVector3;
 begin
  result.Init(A1, A2, A3);
+end;
+
+constructor TVector3(const A1: Single; const A2: Single; const A3: Single);
+begin
+  X := A1;
+  Y := A2;
+  Z := A3;
 end;
 
 

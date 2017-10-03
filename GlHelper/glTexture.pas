@@ -76,7 +76,7 @@ begin
       3: format := GL_RGB;
       4: format := GL_RGBA;
       else
-        format := GL_RGB;
+        format := GL_RGBA;
     end;
 
 

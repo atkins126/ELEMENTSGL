@@ -1,11 +1,9 @@
 ﻿namespace GlHelper;
 {$IF ISLAND}
-{$DEFINE STBUSE}
+
 interface
 uses rtl,
-{$IF STBUSE}
 STB,
-{$ENDIF}
 RemObjects.Elements.RTL;
 
 type GlImage = public class
@@ -30,9 +28,8 @@ begin
   if length(memData) > 0 then
     begin
     //  writeLn('Fullname '+Fullname);
-    {$IF STBUSE}
-     fImg.imgData := stbi_load_from_memory(@memData[0],length(memData), var fImg.width, var fImg.Height, var fImg.Components, 4);
-    {$ENDIF}
+     fImg.imgData := stbi_load_from_memory(@memData[0],length(memData), var fImg.width, var fImg.Height, var fImg.Components, 3);
+
     //  var s := String.Format('W {0} H {1} C{3}',[fImg.width, fImg.Height, fImg.Components]);
    // writeLn('w '+fImg.width.ToString + ' H '+fImg.Height.ToString+' C '+fImg.Components.ToString);
     end;
@@ -49,10 +46,9 @@ end;
 
 finalizer GlImage;
 begin
-    {$IF STBUSE}
   if fValid then if fImg.imgData <> nil then
     stbi_image_free(fImg.imgData);
-    {$ENDIF}
 end;
-{$ENDIF}
+
+{$ENDIF} // Island
 end.
