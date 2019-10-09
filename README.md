@@ -21,4 +21,4 @@ Ported from https://github.com/SaschaWillems/dglOpenGL
 
 # Version 1.0    
 - Initial Release
-- There willnot be an change anymore here, because Opnegl id deprecated on tha Apple Plattforms so it do not make sence anymore
+- There will not be an change anymore here, because Opnegl id deprecated on tha Apple Plattforms so it do not make sence anymore
